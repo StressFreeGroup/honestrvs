@@ -1,18 +1,18 @@
 import { useState } from 'react'
 
 const rvs = [
-  { id: 1, name: '2024 Grand Design Solitude 391DL', type: 'Fifth Wheel', sleeps: 6, image: 'https://www.dropbox.com/scl/fi/5e7suf0dg80awbicko4pt/70-SOLITUDE-PHOTO-2025.11.19_1.jpg?rlkey=0bagmv3u8dze0erg6tftmw1nf&raw=1', price: 275, badges: ['NEW'] },
-  { id: 2, name: '2023 Grand Design Solitude 390RK', type: 'Fifth Wheel', sleeps: 4, image: 'https://www.dropbox.com/scl/fi/70083j29on1l3qsx75h6v/71-PHOTOS-PrelimIntake-exist-dam-1.jpg?rlkey=m310iefzbyyeq9du9xc9b0puv&raw=1', price: 265, badges: ['Luxury'] },
-  { id: 3, name: '2021 Grand Design Momentum 29G', type: 'Toy Hauler', sleeps: 8, image: 'https://www.dropbox.com/scl/fi/o0r7meo4ystl8mmouc4ju/17-MOMENTUM-PHOTOS-2025.10.06-1.jpg?rlkey=wjmdom1p9rsfg8ryjw4wpjjxb&raw=1', price: 245, badges: ['Toy Hauler'] },
-  { id: 4, name: '2022 Coachmen Cross Trail 23XG', type: 'Class B+', sleeps: 4, image: 'https://www.dropbox.com/scl/fi/64whcge34s73yuukr1epv/27-PHOTOS-2025.07.20-1.jpg?rlkey=mq0jtogjg9e2ty7x3aoavnh3h&raw=1', price: 225, badges: ['Adventure'] },
-  { id: 5, name: '2019 Winnebago Outlook 25J', type: 'Class C', sleeps: 6, image: 'https://www.dropbox.com/scl/fi/9kgodt3f62c3r2tiuk46y/20260326_144007.jpg?rlkey=74e5nmckur6ntr9417lhv7ryb&raw=1', price: 195, badges: ['Family'] },
-  { id: 6, name: '2018 Winnebago Fuse 23T', type: 'Class C', sleeps: 4, image: 'https://www.dropbox.com/scl/fi/ndb63h6he1melxgxrcbgy/FUZE23T-web-1.jpg?rlkey=86ylpr3kjdl019lsi6zos741q&raw=1', price: 175, badges: ['Efficient'] },
-  { id: 7, name: '2022 Thor Sequence 20J', type: 'Class B', sleeps: 2, image: 'https://www.dropbox.com/scl/fi/21wsgvf31t75b944mnz8y/2022-Sequence-20J-2025.08.05-1.jpg?rlkey=8qg8a9dstuec3o73zztnd7tfx&raw=1', price: 185, badges: ['Couples'] },
-  { id: 8, name: '2021 Jayco Redhawk 26M', type: 'Class C', sleeps: 6, image: 'https://www.dropbox.com/scl/fi/9vet3j16lqe9q1qsymx7a/46-PHOTOS-2026.06.22_01.jpg?rlkey=emycug5kz18adpcu61nsb7khc&raw=1', price: 205, badges: ['Bunkhouse'] },
-  { id: 9, name: '2019 Jayco Redhawk 26XD', type: 'Class C', sleeps: 8, image: 'https://www.dropbox.com/scl/fi/9n0x6rg40mfzid16dfvag/20260316_161711.jpg?rlkey=7gbqnoys1k24lnspkixz0t23k&raw=1', price: 195, badges: ['Bunkhouse'] },
-  { id: 10, name: '2019 Coachmen Freelander 31BH', type: 'Class C', sleeps: 10, image: 'https://www.dropbox.com/scl/fi/wffe1vkt919cjjbxt9qos/20260227_130655.jpg?rlkey=1hkhqxi4l869hu8yi5ojaupc6&raw=1', price: 215, badges: ['Large Group'] },
-  { id: 11, name: '2021 Keystone Cougar 22RBS', type: 'Travel Trailer', sleeps: 4, image: 'https://www.dropbox.com/scl/fi/tf0ia2mfs5rz7lf9cvj4v/66-COUGAR-PHOTOS-2025.10.05-1.jpg?rlkey=30jy2o32a64ars08puna1qvac&raw=1', price: 125, badges: ['Towable'] },
-  { id: 12, name: '2021 Forest River Ibex 20BHS', type: 'Travel Trailer', sleeps: 6, image: 'https://www.dropbox.com/scl/fi/p9yv33364fie3doq3007e/67_TripStart_01.jpg?rlkey=bw4pz1vdj6sluzutf9wk92ccp&raw=1', price: 115, badges: ['Off-Road'] }
+  { id: 1, name: '2024 Grand Design Solitude 391DL', type: 'Fifth Wheel', sleeps: 6, image: '/images/solitude-391dl.jpg', price: 275, badges: ['NEW'] },
+  { id: 2, name: '2023 Grand Design Solitude 390RK', type: 'Fifth Wheel', sleeps: 4, image: '/images/solitude-390rk.jpg', price: 265, badges: ['Luxury'] },
+  { id: 3, name: '2021 Grand Design Momentum 29G', type: 'Toy Hauler', sleeps: 8, image: '/images/momentum-29g.jpg', price: 245, badges: ['Toy Hauler'] },
+  { id: 4, name: '2022 Coachmen Cross Trail 23XG', type: 'Class B+', sleeps: 4, image: '/images/crosstrail-23xg.jpg', price: 225, badges: ['Adventure'] },
+  { id: 5, name: '2019 Winnebago Outlook 25J', type: 'Class C', sleeps: 6, image: '/images/outlook-25j.jpg', price: 195, badges: ['Family'] },
+  { id: 6, name: '2018 Winnebago Fuse 23T', type: 'Class C', sleeps: 4, image: '/images/fuse-23t.jpg', price: 175, badges: ['Efficient'] },
+  { id: 7, name: '2022 Thor Sequence 20J', type: 'Class B', sleeps: 2, image: '/images/sequence-20j.jpg', price: 185, badges: ['Couples'] },
+  { id: 8, name: '2021 Jayco Redhawk 26M', type: 'Class C', sleeps: 6, image: '/images/redhawk-26m.jpg', price: 205, badges: ['Bunkhouse'] },
+  { id: 9, name: '2019 Jayco Redhawk 26XD', type: 'Class C', sleeps: 8, image: '/images/redhawk-26xd.jpg', price: 195, badges: ['Bunkhouse'] },
+  { id: 10, name: '2019 Coachmen Freelander 31BH', type: 'Class C', sleeps: 10, image: '/images/freelander-31bh.jpg', price: 215, badges: ['Large Group'] },
+  { id: 11, name: '2021 Keystone Cougar 22RBS', type: 'Travel Trailer', sleeps: 4, image: '/images/cougar-22rbs.jpg', price: 125, badges: ['Towable'] },
+  { id: 12, name: '2021 Forest River Ibex 20BHS', type: 'Travel Trailer', sleeps: 6, image: '/images/ibex-20bhs.jpg', price: 115, badges: ['Off-Road'] }
 ]
 
 function App() {
