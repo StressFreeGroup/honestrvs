@@ -232,7 +232,7 @@ const Header = ({ go, overHero }) => {
     <header className={`site-header${overHero && !scrolled && !mobileOpen ? ' over' : ''}`}>
       <div className="header-inner">
         <div className="logo-box" onClick={close(() => go.home())}>
-          <img src="/images/logo.png" alt="Always Honest RV Rentals" />
+          <img src="/images/logo.png?v=4" alt="Always Honest RV Rentals" />
         </div>
         <nav className={`main-nav${mobileOpen ? ' open' : ''}`}>
           {nav.map(n => <NavItem key={n.label} {...n} />)}
@@ -257,7 +257,7 @@ const Footer = ({ go }) => (
   <footer id="contact" className="site-footer">
     <div className="footer-grid">
       <div className="footer-brand">
-        <img src="/images/logo.png" alt="Always Honest RV Rentals logo" />
+        <img src="/images/logo.png?v=4" alt="Always Honest RV Rentals logo" />
         <p className="footer-tag">San Diego RV rentals, straightforward. Clear pricing, essentials included, and no surprise fees.</p>
         <p><a href={`tel:${PHONE}`} className="footer-strong">{PHONE}</a></p>
         <p><a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
@@ -775,7 +775,7 @@ const HomePage = ({ go, dates, setDates, group, setGroup }) => {
   )
 }
 
-const OWNER_PHOTO = '/images/owner/katya-headshot.jpg'
+const OWNER_PHOTO = '/images/owner/katya-headshot.jpg?v=4'
 const OWNER_GALLERY = [
   { src: '/images/owner/katya-burning-man.jpg', alt: 'Katya at Burning Man', cap: 'Burning Man', pos: 'center 20%' },
   { src: '/images/owner/katya-dolphins.jpg', alt: 'Katya swimming with dolphins', cap: 'Swimming with dolphins', wide: true, pos: 'center 35%' },
