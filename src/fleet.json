@@ -49,6 +49,8 @@
     ],
     "towing": "Towing it yourself? Your vehicle needs a rating of at least 18,000 lbs, a brake controller, and a fifth-wheel hitch in a heavy-duty truck bed. Not sure? Ask Katya before you book, or request delivery and setup.",
     "rvshare": "https://rvshare.com/rvs/details/1778363",
+    "wheelbaseId": 576523,
+    "wheelbase": null,
     "cover": "/images/units/solitude-391dl/cover.jpg",
     "fullSpecs": [
       {
@@ -195,6 +197,8 @@
     ],
     "towing": "Towing it yourself? Your vehicle needs a rating of at least 19,000 lbs, a brake controller, and a fifth-wheel hitch in a heavy-duty truck bed. Not sure? Ask Katya before you book, or request delivery and setup.",
     "rvshare": "https://rvshare.com/rvs/details/1778362",
+    "wheelbaseId": 576522,
+    "wheelbase": null,
     "cover": "/images/units/solitude-390rk/cover.jpg",
     "fullSpecs": [
       {
@@ -338,6 +342,8 @@
     ],
     "towing": null,
     "rvshare": null,
+    "wheelbaseId": 576510,
+    "wheelbase": null,
     "cover": "/images/units/discovery-lxe-38k/cover.jpg",
     "fullSpecs": [
       {
@@ -480,6 +486,8 @@
     ],
     "towing": "Towing it yourself? Your vehicle needs a rating of at least 11,000 lbs, a brake controller, and a 2-5/16 in ball hitch rated for the trailer weight. Not sure? Ask Katya before you book, or request delivery and setup.",
     "rvshare": "https://rvshare.com/rvs/details/1758130",
+    "wheelbaseId": 576516,
+    "wheelbase": null,
     "cover": "/images/units/momentum-29g/cover.jpg",
     "fullSpecs": [
       {
@@ -618,6 +626,8 @@
     "specs": [],
     "towing": "Towing it yourself? Your vehicle needs a rating of at least 11,220 lbs, a brake controller, and a weight-distribution hitch. Not sure? Ask Katya before you book, or request delivery and setup.",
     "rvshare": null,
+    "wheelbaseId": null,
+    "wheelbase": null,
     "fullSpecs": [
       {
         "title": "Vehicle",
@@ -756,6 +766,8 @@
     ],
     "towing": null,
     "rvshare": "https://rvshare.com/rvs/details/1765771",
+    "wheelbaseId": 576521,
+    "wheelbase": null,
     "cover": "/images/units/sequence-20j/cover.jpg",
     "fullSpecs": [
       {
@@ -864,6 +876,8 @@
     ],
     "towing": "Towing it yourself? Your vehicle needs a rating of at least 7,200 lbs, a brake controller, and a 2-inch ball hitch. Not sure? Ask Katya before you book, or request delivery and setup.",
     "rvshare": "https://rvshare.com/rvs/details/1778327",
+    "wheelbaseId": 576519,
+    "wheelbase": null,
     "cover": "/images/units/cougar-22rbs/cover.jpg",
     "fullSpecs": [
       {
@@ -1011,6 +1025,8 @@
     ],
     "towing": "Towing it yourself? Your vehicle needs a rating of at least 7,510 lbs, a brake controller, and a 2-inch ball hitch. Not sure? Ask Katya before you book, or request delivery and setup.",
     "rvshare": null,
+    "wheelbaseId": 576515,
+    "wheelbase": null,
     "cover": "/images/units/ibex-20bhs/cover.jpg",
     "fullSpecs": [
       {
@@ -1157,6 +1173,8 @@
     ],
     "towing": null,
     "rvshare": null,
+    "wheelbaseId": 576513,
+    "wheelbase": null,
     "cover": "/images/units/freelander-31bh/cover.jpg",
     "fullSpecs": [
       {
@@ -1281,6 +1299,8 @@
     ],
     "towing": null,
     "rvshare": null,
+    "wheelbaseId": 576511,
+    "wheelbase": null,
     "cover": "/images/units/chateau-31e/cover.jpg",
     "fullSpecs": [
       {
@@ -1411,6 +1431,8 @@
     ],
     "towing": null,
     "rvshare": null,
+    "wheelbaseId": 399439,
+    "wheelbase": "https://www.outdoorsy.com/rv-rental/el-cajon_ca/2019_jayco_redhawk_399439-listing",
     "cover": "/images/units/redhawk-26xd/cover.jpg",
     "fullSpecs": [
       {
@@ -1568,6 +1590,8 @@
     ],
     "towing": null,
     "rvshare": "https://rvshare.com/rvs/details/1765774",
+    "wheelbaseId": 576509,
+    "wheelbase": null,
     "cover": "/images/units/outlook-25j/cover.jpg",
     "fullSpecs": [
       {
