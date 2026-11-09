@@ -446,7 +446,7 @@ const SavingsTable = () => {
           </div>
           <div className="fp-item">
             <strong>Pay direct with Zelle</strong>
-            <span>The 10% system processing is waived.</span>
+            <span>Zelle to honestrvrentals@gmail.com and the 10% system processing is waived.</span>
           </div>
           <div className="fp-item">
             <strong>How "You Save" works</strong>

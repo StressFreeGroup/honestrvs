@@ -54,7 +54,7 @@ export const faqItems = (fleet) => {
     },
     {
       q: 'Is there a discount for paying directly?',
-      a: 'Yes. Pay direct with Zelle and the 10% system processing is waived.'
+      a: 'Yes. Pay direct with Zelle to honestrvrentals@gmail.com (Always Honest RV Rentals) and the 10% system processing is waived. Put your trip dates or quote number in the Zelle memo.'
     },
     {
       q: 'How many miles and generator hours are included?',
