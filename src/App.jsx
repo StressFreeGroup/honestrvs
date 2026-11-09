@@ -312,6 +312,8 @@ const Included = ({ rv }) => (
   </ul>
 )
 
+const openPicker = e => { try { e.currentTarget.showPicker && e.currentTarget.showPicker() } catch (_) { /* older browsers open on their own */ } }
+
 const Hero = ({ dates, setDates, onSearch }) => {
   const today = new Date().toISOString().slice(0, 10)
   return (
@@ -321,14 +323,14 @@ const Hero = ({ dates, setDates, onSearch }) => {
         <p className="hero-sub">San Diego RV Rentals, Straightforward</p>
         <div className="hero-rule" />
         <form className="search-card" onSubmit={e => { e.preventDefault(); onSearch() }}>
-          <label className="search-field">
+          <label className="search-field" onClick={e => { const i = e.currentTarget.querySelector('input'); if (e.target !== i) { i.focus(); openPicker({ currentTarget: i }) } }}>
             <span className="search-label">Trip Start</span>
-            <input type="date" min={today} value={dates.start}
+            <input type="date" min={today} value={dates.start} onClick={openPicker} onFocus={openPicker}
               onChange={e => setDates(d => ({ start: e.target.value, end: d.end && d.end <= e.target.value ? '' : d.end }))} />
           </label>
-          <label className="search-field">
+          <label className="search-field" onClick={e => { const i = e.currentTarget.querySelector('input'); if (e.target !== i) { i.focus(); openPicker({ currentTarget: i }) } }}>
             <span className="search-label">Trip End</span>
-            <input type="date" min={dates.start || today} value={dates.end}
+            <input type="date" min={dates.start || today} value={dates.end} onClick={openPicker} onFocus={openPicker}
               onChange={e => setDates(d => ({ ...d, end: e.target.value }))} />
           </label>
           <button type="submit" className="search-btn">
@@ -745,7 +747,7 @@ const HomePage = ({ go, dates, setDates, group, setGroup }) => {
           <div>
             <p className="eyebrow-dark" style={{ justifyContent: 'flex-start' }}>A NOTE FROM THE OWNER</p>
             <h2 style={{ fontSize: 'clamp(1.6rem, 3.2vw, 2.1rem)', fontWeight: 800, color: DARK }}>Hi, I'm Katya</h2>
-            <p style={{ color: PURPLE, fontWeight: 700, marginBottom: '14px' }}>Ekaterina Zvezdova, Owner, Always Honest RV Rentals</p>
+            <p className="owner-title">Ekaterina Zvezdova (Owner)<br />Always Honest RV Rentals</p>
             <p className="owner-p">I love doing activities and getting out and about. I'm a mom with a full-time job, and renting out RVs and trailers helps me with bills and life's expenses. It also lets me enjoy life and keep a balance. I help others have amazing trips so that I can go on my own amazing trips and adventures too.</p>
             <p className="owner-p">Yes, I've been to Burning Man, I've swam with dolphins, and I love to travel internationally. Let's enjoy life! I'm here to provide a service and do what I can so that you and your family can share amazing experiences and have fun.</p>
           </div>
@@ -766,7 +768,7 @@ const HomePage = ({ go, dates, setDates, group, setGroup }) => {
             <p>I like to have fun, and I'm not here to give anyone a hard time, fight or argue. If something's not right, just let me or my staff know. Let's all keep positive, even when something doesn't go our way. We're people, not robots, so let's treat each other fairly and with understanding, and be positive about solutions.</p>
             <p>I'm not perfect, and nobody is. An assistant helps me respond to messages and calls most of the time, and my staff on the ground handle maintenance, service, walkthrough orientations, hand-offs and inspections. I'm not an RV expert, and it's okay if you're not either. We're in this together. If anyone on my team isn't 5-star, please tell me so I can make it right.</p>
           </div>
-          <p className="owner-sign">Katya</p>
+          <p className="owner-sign">- Kat</p>
         </div>
       </section>
 
@@ -793,7 +795,7 @@ const FAQ = () => {
         <p className="eyebrow-dark"><span />GOOD QUESTIONS<span /></p>
         <h2 style={{ fontSize: 'clamp(1.6rem, 3.4vw, 2.2rem)', fontWeight: 800, color: DARK, textAlign: 'center', marginBottom: '24px' }}>Frequently Asked Questions</h2>
         {items.map((f, i) => (
-          <details key={i} className="faq-item" open={i === 0}>
+          <details key={i} className="faq-item" open>
             <summary><h3>{f.q}</h3></summary>
             <p>{f.a}</p>
           </details>
@@ -898,8 +900,21 @@ const RVDetailPage = ({ slug, onNavigate, dates = {} }) => {
           <p style={{ fontSize: '0.8rem', color: '#666', marginBottom: '16px' }}>Standard nightly rate. Your TOTAL below is the BASE STANDARD package with system processing and taxes included.</p>
           {rv.price && <TripBuilder rv={rv} dates={dates} onChange={setTrip} />}
 
-          {rv.rvshare && <a href={rv.rvshare} target="_blank" rel="noopener noreferrer" style={btn(true)}>Book on RVshare</a>}
-          <a href={`mailto:${EMAIL}?subject=${subject}&body=${body}`} style={btn(!rv.rvshare)}>Request Dates by Email</a>
+          <div className="book-ways">
+            <p className="book-ways-h">Ways to book</p>
+            <a href={`mailto:${EMAIL}?subject=${subject}&body=${body}`} className="book-opt direct">
+              <span><b>Book Direct</b><small>Best savings. The TOTAL above, with no platform fees. Pay by Zelle and save another 10%.</small></span>
+              <em>{trip && trip.subtotal ? `$${trip.subtotal.toLocaleString()}` : 'Best price'}</em>
+            </a>
+            {rv.rvshare && <a href={rv.rvshare} target="_blank" rel="noopener noreferrer" className="book-opt">
+              <span><b>Book via RVshare</b><small>Same nightly rate, plus RVshare's service fee and protection plan added at their checkout.</small></span>
+              <em>Higher</em>
+            </a>}
+            {rv.wheelbase && <a href={rv.wheelbase} target="_blank" rel="noopener noreferrer" className="book-opt">
+              <span><b>Book via Wheelbase</b><small>Same nightly rate, plus Wheelbase's fees added at their checkout.</small></span>
+              <em>Higher</em>
+            </a>}
+          </div>
           <a href={`tel:${PHONE}`} style={btn(false)}>Call or Text {PHONE}</a>
 
           <div style={{ marginTop: '8px', padding: '16px', background: '#f9f9f9', borderRadius: '8px' }}>
@@ -1025,7 +1040,7 @@ function App() {
         .search-card { display: flex; gap: 12px; background: white; padding: 12px; border-radius: 16px; box-shadow: 0 14px 40px rgba(0,0,0,0.3); max-width: 760px; }
         .search-field { flex: 1; display: flex; flex-direction: column; justify-content: center; border: 1px solid #ddd; border-radius: 12px; padding: 8px 14px; cursor: pointer; }
         .search-label { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: ${PURPLE}; }
-        .search-field input { border: none; outline: none; font-size: 1.05rem; color: #333; font-family: inherit; padding: 2px 0; background: transparent; cursor: pointer; }
+        .search-field input { border: none; outline: none; font-size: 1.05rem; color: #333; font-family: inherit; padding: 2px 0; background: transparent; cursor: pointer; width: 100%; }
         .search-btn { display: flex; align-items: center; justify-content: center; gap: 10px; background: ${PURPLE}; color: white; border: none; border-radius: 12px; padding: 0 28px; font-size: 1.15rem; font-weight: 800; cursor: pointer; white-space: nowrap; }
         .search-btn:hover { background: #5E1A70; }
 
@@ -1205,7 +1220,19 @@ function App() {
         .owner-note h3 { font-size: 1.3rem; font-weight: 800; color: ${DARK}; margin-bottom: 12px; }
         .owner-note-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
         .owner-note p { font-size: 0.98rem; line-height: 1.8; color: #333; }
-        .owner-sign { margin-top: 14px; font-size: 1.4rem !important; font-weight: 800; color: ${PURPLE} !important; font-style: italic; }
+        .owner-sign { margin-top: 14px; font-size: 1.4rem !important; font-weight: 800; color: ${PURPLE} !important; font-style: italic; text-align: right; padding-right: 8px; }
+        .book-ways { margin: 18px 0 10px; }
+        .book-ways-h { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: ${DARK}; margin-bottom: 8px; }
+        .book-opt { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; border: 1px solid #E4DCEA; border-radius: 12px; margin-bottom: 8px; text-decoration: none; color: #333; background: white; transition: background .15s; }
+        .book-opt:hover { background: #FAF6FC; }
+        .book-opt span { display: flex; flex-direction: column; gap: 4px; }
+        .book-opt b { font-size: 1rem; color: ${DARK}; }
+        .book-opt small { font-size: 0.8rem; color: #666; line-height: 1.5; }
+        .book-opt em { font-style: normal; font-weight: 800; color: #888; white-space: nowrap; font-size: 0.95rem; }
+        .book-opt.direct { background: ${PURPLE}; border-color: ${PURPLE}; }
+        .book-opt.direct b, .book-opt.direct small, .book-opt.direct em { color: white; }
+        .book-opt.direct:hover { background: ${DARK}; }
+        .owner-title { color: ${PURPLE}; font-weight: 700; line-height: 1.45; margin: 4px 0 16px; }
         @media (max-width: 900px) { .owner-gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 220px; } .owner-note-cols { grid-template-columns: 1fr; gap: 12px; } }
         @media (max-width: 520px) { .owner-gallery { grid-auto-rows: 180px; gap: 10px; } .owner-note { padding: 22px 20px; } }
         @media (max-width: 720px) { .owner-card { grid-template-columns: 1fr; text-align: center; } .owner-photo { margin: 0 auto; width: 180px; height: 180px; } .owner-card .eyebrow-dark { justify-content: center !important; } }
@@ -1215,7 +1242,9 @@ function App() {
         .faq-item summary::after { content: '+'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; font-weight: 700; color: ${PURPLE}; }
         .faq-item[open] summary::after { content: '-'; }
         .faq-item h3 { font-size: 1.02rem; font-weight: 700; color: ${DARK}; }
-        .faq-item p { padding: 0 20px 18px; color: #444; line-height: 1.7; font-size: 0.95rem; }
+        .faq-item p { padding: 2px 20px 20px; margin: 0 20px 0 0; color: #444; line-height: 1.75; font-size: 0.95rem; max-width: 760px; text-wrap: pretty; }
+        .faq-item h3 { line-height: 1.4; text-wrap: balance; }
+        .faq-item[open] summary { padding-bottom: 8px; }
         .rv-desc { color: #555; font-size: 0.88rem; margin-bottom: 14px; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
         @media (max-width: 1020px) {
