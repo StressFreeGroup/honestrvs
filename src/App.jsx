@@ -579,7 +579,7 @@ const rvs = [
     "sleepsLabel": "4",
     "length": "37' 10\"",
     "slides": 1,
-    "price": null,
+    "price": 165,
     "badges": [
       "Patio Deck"
     ],
@@ -1697,20 +1697,38 @@ const PICKUP = 'Sycuan Casino Resort, 5469 Casino Way, El Cajon, CA 92019'
 
 // Optional add-ons (same list and prices on every platform)
 const addOns = [
-  { name: 'Pre-Trip Fresh Water Fill', price: '$75' },
-  { name: 'Post-Trip Tank Dump and Flush', price: '$199' },
-  { name: 'Portable Generator', price: '$50 / night' },
-  { name: 'Starlink Internet', price: '$199' },
-  { name: 'Half Day Start - 10:00 AM Pickup', price: '$99' },
-  { name: 'Half Day End - 4:00 PM Return', price: '$99' },
-  { name: 'Electric Bike (lights and lock, up to 10)', price: '$50 / bike / night' },
-  { name: 'Dog Fee (max 2 dogs, service animals free)', price: '$100 / dog' },
-  { name: 'Camp Kit', price: '$150' },
-  { name: 'Bedding and Towels', price: '$50 / bed' },
-  { name: 'Golf Cart Rental via 3rd Party Partner', price: '$199 / night' },
-  { name: 'Golf Cart Delivery and Pickup via 3rd Party Partner', price: '$199' },
-  { name: 'Local Delivery, Setup and Pickup (trailers)', price: '$399' }
+  { id: 'water', name: 'Pre-Trip Fresh Water Fill', amount: 75, per: 'trip' },
+  { id: 'dump', name: 'Post-Trip Tank Dump and Flush', amount: 199, per: 'trip' },
+  { id: 'gen', name: 'Portable Generator', amount: 50, per: 'night' },
+  { id: 'starlink', name: 'Starlink Internet', amount: 199, per: 'trip' },
+  { id: 'early', name: 'Half Day Start - 10:00 AM Pickup', amount: 99, per: 'trip' },
+  { id: 'late', name: 'Half Day End - 4:00 PM Return', amount: 99, per: 'trip' },
+  { id: 'bike', name: 'Electric Bike (lights and lock)', amount: 50, per: 'unitNight', unit: 'bike', max: 10 },
+  { id: 'dog', name: 'Dog Fee (service animals free)', amount: 100, per: 'unit', unit: 'dog', max: 2 },
+  { id: 'campkit', name: 'Camp Kit', amount: 150, per: 'trip' },
+  { id: 'bedding', name: 'Bedding and Towels', amount: 50, per: 'unit', unit: 'bed', max: 4 },
+  { id: 'cart', name: 'Golf Cart Rental via 3rd Party Partner', amount: 199, per: 'night' },
+  { id: 'cartdel', name: 'Golf Cart Delivery and Pickup via 3rd Party Partner', amount: 199, per: 'trip' },
+  { id: 'delivery', name: 'Local Delivery, Setup and Pickup', amount: 399, per: 'trip', towableOnly: true }
 ]
+
+const addOnLabel = a => ({
+  trip: `$${a.amount}`,
+  night: `$${a.amount} / night`,
+  unit: `$${a.amount} / ${a.unit}`,
+  unitNight: `$${a.amount} / ${a.unit} / night`
+}[a.per])
+
+const addOnCost = (a, qty, nights) => ({
+  trip: a.amount, night: a.amount * nights, unit: a.amount * qty, unitNight: a.amount * qty * nights
+}[a.per])
+
+// Fees on every trip, folded into the all-in price
+const TRIP_PREP = 199
+const ESSENTIALS = 99
+const PER_TRIP = TRIP_PREP + ESSENTIALS
+const TAX = 0.0875
+const allInNight = (rate, n) => Math.round(rate + PER_TRIP / n)
 
 const PURPLE = '#4A1259'
 
@@ -1785,7 +1803,8 @@ const Header = ({ go, overHero }) => {
     ] },
     { label: 'About', items: [
       { label: 'Our Promise', onClick: close(() => go.section('promise')) },
-      { label: 'Add-Ons and Pricing', onClick: close(() => go.section('addons')) },
+      { label: 'Pricing and Savings', onClick: close(() => go.section('pricing')) },
+      { label: 'Add to Your Trip', onClick: close(() => go.section('addons')) },
       { label: 'A Note From Katya', onClick: close(() => go.section('note')) }
     ] },
     { label: 'Contact', onClick: close(() => go.section('contact')) }
@@ -1905,6 +1924,120 @@ const RVCard = ({ rv, onOpen, nights }) => {
   )
 }
 
+const PRICE_GROUPS = [
+  { label: 'Travel Trailers', match: t => t === 'Travel Trailer' },
+  { label: 'Toy Hauler and Fifth Wheels', match: t => t === 'Toy Hauler' || t === 'Fifth Wheel' },
+  { label: 'Class C', match: t => t === 'Class C' },
+  { label: 'Class B', match: t => t === 'Class B' },
+  { label: 'Class A', match: t => t === 'Class A' }
+]
+
+const SavingsTable = () => {
+  const cols = PRICE_GROUPS.map(g => {
+    const rates = rvs.filter(r => g.match(r.type) && r.price).map(r => r.price)
+    return { ...g, min: Math.min(...rates), max: Math.max(...rates), has: rates.length > 0 }
+  }).filter(c => c.has)
+  const rows = [1, 2, 3, 4, 5, 6, 7]
+  const range = (c, n) => {
+    const lo = allInNight(c.min, n), hi = allInNight(c.max, n)
+    return lo === hi ? `$${lo}` : `$${lo} to $${hi}`
+  }
+  return (
+    <section id="pricing" style={{ background: '#F7F3F9', padding: '48px 20px', scrollMarginTop: '90px' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+        <h2 style={{ fontSize: 'clamp(1.6rem, 3.4vw, 2.2rem)', fontWeight: 800, color: DARK, textAlign: 'center' }}>SAVE by Adding Nights to Your Trip!</h2>
+        <p style={{ fontSize: '1rem', color: '#555', textAlign: 'center', margin: '8px auto 24px', maxWidth: '720px', lineHeight: 1.6 }}>
+          All-in price per night, including trip preparation and Interior Essentials. Those are charged once per trip, so every extra night lowers your nightly cost.
+        </p>
+        <div className="save-wrap">
+          <table className="save-table">
+            <thead>
+              <tr>
+                <th>Trip Length</th>
+                {cols.map(c => <th key={c.label}>{c.label}</th>)}
+                <th>You Save</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map(n => (
+                <tr key={n}>
+                  <td className="len">{n === 1 ? '1 Night' : n === 7 ? '7 Nights (1 Week)' : `${n} Nights`}</td>
+                  {cols.map(c => <td key={c.label}>{range(c, n)}<span className="per">/night</span></td>)}
+                  <td className="save">{n === 1 ? '-' : `$${Math.round(PER_TRIP - PER_TRIP / n)} per night`}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p style={{ fontSize: '0.85rem', color: '#666', textAlign: 'center', marginTop: '14px' }}>
+          Standard rates before 8.75% sales tax and optional add-ons. Holiday and event dates are priced higher. "You Save" compares to a 1-night trip.
+        </p>
+      </div>
+    </section>
+  )
+}
+
+const TripBuilder = ({ rv, dates, onChange }) => {
+  const fromDates = nightsBetween(dates.start, dates.end)
+  const [nights, setNights] = useState(fromDates > 0 ? fromDates : 3)
+  const [sel, setSel] = useState({})
+  const options = addOns.filter(a => !(a.towableOnly && rv.motorized))
+  const toggle = (a) => setSel(s => { const n = { ...s }; if (n[a.id]) delete n[a.id]; else n[a.id] = 1; return n })
+  const setQty = (a, q) => setSel(s => ({ ...s, [a.id]: q }))
+  const chosen = options.filter(a => sel[a.id])
+  const addTotal = chosen.reduce((t, a) => t + addOnCost(a, sel[a.id], nights), 0)
+  const rental = rv.price * nights
+  const subtotal = rental + PER_TRIP + addTotal
+  const tax = Math.round(subtotal * TAX)
+  useEffect(() => {
+    onChange && onChange({ nights, chosen: chosen.map(a => `${a.name}${a.unit ? ' x' + sel[a.id] : ''}`), subtotal })
+  }, [nights, JSON.stringify(sel)])
+  const row = (label, val, strong) => (
+    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', padding: '5px 0', fontSize: strong ? '1rem' : '0.9rem', fontWeight: strong ? 800 : 400, color: strong ? DARK : '#444' }}>
+      <span>{label}</span><span>{val}</span>
+    </div>
+  )
+  return (
+    <div className="trip-builder">
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px', marginBottom: '12px' }}>
+        <span style={{ fontWeight: 700, color: DARK }}>Nights</span>
+        <div className="stepper">
+          <button onClick={() => setNights(n => Math.max(1, n - 1))} aria-label="Fewer nights">-</button>
+          <span>{nights}</span>
+          <button onClick={() => setNights(n => Math.min(30, n + 1))} aria-label="More nights">+</button>
+        </div>
+      </div>
+      <p style={{ fontSize: '0.85rem', color: ACCENT, fontWeight: 700, marginBottom: '12px' }}>
+        ${allInNight(rv.price, nights)} per night all-in for {nights} night{nights > 1 ? 's' : ''}{nights < 7 ? `. Add a night and it drops to $${allInNight(rv.price, nights + 1)}.` : '.'}
+      </p>
+      <details className="addon-picker">
+        <summary>Add to your trip{chosen.length ? ` (${chosen.length} selected)` : ''}</summary>
+        {options.map(a => (
+          <label key={a.id} className="addon-row">
+            <input type="checkbox" checked={!!sel[a.id]} onChange={() => toggle(a)} />
+            <span className="addon-name">{a.name}</span>
+            {a.unit && sel[a.id] ? (
+              <select value={sel[a.id]} onClick={e => e.preventDefault()} onChange={e => setQty(a, +e.target.value)}>
+                {Array.from({ length: a.max }, (_, i) => i + 1).map(q => <option key={q} value={q}>{q}</option>)}
+              </select>
+            ) : null}
+            <span className="addon-price">{addOnLabel(a)}</span>
+          </label>
+        ))}
+      </details>
+      <div style={{ borderTop: '1px solid #eee', marginTop: '12px', paddingTop: '10px' }}>
+        {row(`$${rv.price} x ${nights} night${nights > 1 ? 's' : ''}`, `$${rental.toLocaleString()}`)}
+        {row('Trip preparation', `$${TRIP_PREP}`)}
+        {row('Interior Essentials', `$${ESSENTIALS}`)}
+        {chosen.map(a => row(`${a.name}${a.unit ? ` x ${sel[a.id]}` : ''}`, `$${addOnCost(a, sel[a.id], nights).toLocaleString()}`))}
+        {row('Sales tax (8.75%)', `$${tax.toLocaleString()}`)}
+        {row('Estimated total', `$${(subtotal + tax).toLocaleString()}`, true)}
+      </div>
+      <p style={{ fontSize: '0.78rem', color: '#777', marginTop: '6px' }}>Estimate at the standard rate. Holiday and event dates are priced higher. Katya confirms the final price with you.</p>
+    </div>
+  )
+}
+
 const HomePage = ({ go, dates, setDates, group, setGroup }) => {
   const [sleepsFilter, setSleepsFilter] = useState('')
   const g = TYPE_GROUPS.find(x => x.key === group)
@@ -1953,6 +2086,8 @@ const HomePage = ({ go, dates, setDates, group, setGroup }) => {
         </div>
       </main>
 
+      <SavingsTable />
+
       <section id="location" style={{ background: '#F7F3F9', padding: '44px 20px', scrollMarginTop: '90px' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
           <div style={{ background: 'white', borderRadius: '14px', padding: '24px', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
@@ -1968,17 +2103,18 @@ const HomePage = ({ go, dates, setDates, group, setGroup }) => {
 
       <section id="addons" style={{ background: 'white', padding: '44px 20px', scrollMarginTop: '90px' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '16px', color: DARK, textAlign: 'center' }}>Optional Add-Ons</h3>
+          <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '6px', color: DARK, textAlign: 'center' }}>Add to Your Trip</h3>
+          <p style={{ fontSize: '0.95rem', color: '#555', textAlign: 'center', marginBottom: '18px' }}>Select from our available options. Pick them on any RV's page to see your trip total.</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '8px 24px' }}>
             {addOns.map(a => (
               <div key={a.name} style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', padding: '8px 0', borderBottom: '1px solid #eee', fontSize: '0.9rem' }}>
                 <span style={{ color: '#444' }}>{a.name}</span>
-                <span style={{ color: PURPLE, fontWeight: 600, whiteSpace: 'nowrap' }}>{a.price}</span>
+                <span style={{ color: PURPLE, fontWeight: 600, whiteSpace: 'nowrap' }}>{addOnLabel(a)}</span>
               </div>
             ))}
           </div>
           <p style={{ fontSize: '0.85rem', color: '#666', marginTop: '14px', textAlign: 'center' }}>
-            Every rental includes an upgraded smart LED TV for streaming. A $199 trip preparation fee applies to every booking.
+            Every trip includes Interior Essentials ($99 per trip), trip preparation ($199 per trip) and an upgraded smart LED TV for streaming.
           </p>
         </div>
       </section>
@@ -2030,6 +2166,7 @@ const RVDetailPage = ({ slug, onNavigate, dates = {} }) => {
   const rv = rvs.find(r => r.slug === slug)
   const [idx, setIdx] = useState(0)
   const [showFloorplan, setShowFloorplan] = useState(false)
+  const [trip, setTrip] = useState(null)
 
   if (!rv) {
     return (
@@ -2041,7 +2178,7 @@ const RVDetailPage = ({ slug, onNavigate, dates = {} }) => {
   }
 
   const subject = encodeURIComponent(`Rental request: ${rv.name}`)
-  const body = encodeURIComponent(`Hi Katya,\n\nI'd like to check availability for the ${rv.name}.\n\nDates: ${dates.start && dates.end ? fmtDate(dates.start) + ' to ' + fmtDate(dates.end) : ''}\nNumber of guests:\nPickup or delivery:\n\nThanks!`)
+  const body = encodeURIComponent(`Hi Katya,\n\nI'd like to check availability for the ${rv.name}.\n\nDates: ${dates.start && dates.end ? fmtDate(dates.start) + ' to ' + fmtDate(dates.end) : ''}\nNights: ${trip ? trip.nights : ''}\nAdd-ons: ${trip && trip.chosen.length ? trip.chosen.join(', ') : 'none'}\nEstimate before tax: ${trip && rv.price ? '$' + trip.subtotal.toLocaleString() : ''}\nNumber of guests:\nPickup or delivery:\n\nThanks!`)
   const mainSrc = showFloorplan && rv.floorplan ? rv.floorplan : rv.images[idx]
 
   const btn = (filled) => ({
@@ -2108,7 +2245,8 @@ const RVDetailPage = ({ slug, onNavigate, dates = {} }) => {
               <span style={{ color: '#666', fontSize: '1rem' }}>/ night</span>
             </> : <span style={{ fontSize: '1.6rem', fontWeight: 700, color: PURPLE }}>Call for rate</span>}
           </div>
-          <p style={{ fontSize: '0.8rem', color: '#666', marginBottom: '20px' }}>Standard rate before 8.75% sales tax and add-ons. Holiday and event dates are priced higher.</p>
+          <p style={{ fontSize: '0.8rem', color: '#666', marginBottom: '16px' }}>Standard nightly rate. Every trip adds $199 trip preparation and $99 Interior Essentials, once per trip.</p>
+          {rv.price && <TripBuilder rv={rv} dates={dates} onChange={setTrip} />}
 
           {rv.rvshare && <a href={rv.rvshare} target="_blank" rel="noopener noreferrer" style={btn(true)}>Book on RVshare</a>}
           <a href={`mailto:${EMAIL}?subject=${subject}&body=${body}`} style={btn(!rv.rvshare)}>Request Dates by Email</a>
@@ -2249,6 +2387,31 @@ function App() {
         .spec-card th { text-align: left; font-weight: 600; color: #555; padding: 8px 12px 8px 0; vertical-align: top; width: 42%; border-bottom: 1px solid #eee; }
         .spec-card td { color: #222; padding: 8px 0; border-bottom: 1px solid #eee; }
         .spec-card tr:last-child th, .spec-card tr:last-child td { border-bottom: none; }
+        .save-wrap { overflow-x: auto; background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+        .save-table { width: 100%; border-collapse: collapse; min-width: 760px; font-size: 0.95rem; }
+        .save-table th { background: ${PURPLE}; color: white; font-weight: 700; padding: 14px 12px; text-align: center; font-size: 0.9rem; }
+        .save-table th:first-child { text-align: left; padding-left: 20px; }
+        .save-table td { padding: 12px; text-align: center; border-bottom: 1px solid #eee; color: #333; font-weight: 600; white-space: nowrap; }
+        .save-table tr:last-child td { border-bottom: none; }
+        .save-table tr:nth-child(even) td { background: #FBF8FC; }
+        .save-table td.len { text-align: left; padding-left: 20px; color: ${DARK}; font-weight: 800; }
+        .save-table th:first-child { position: sticky; left: 0; z-index: 1; }
+        .save-table td.len { position: sticky; left: 0; background: white; z-index: 1; }
+        .save-table tr:nth-child(even) td.len { background: #FBF8FC; }
+        .save-table td.save { color: #1E7B45; font-weight: 800; }
+        .save-table .per { color: #777; font-weight: 400; font-size: 0.8rem; margin-left: 2px; }
+        .trip-builder { border: 1px solid #eee; border-radius: 12px; padding: 16px; margin-bottom: 16px; background: #FCFAFD; }
+        .stepper { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 10px; overflow: hidden; background: white; }
+        .stepper button { width: 38px; height: 36px; border: none; background: white; font-size: 1.2rem; font-weight: 700; color: ${PURPLE}; cursor: pointer; }
+        .stepper span { min-width: 36px; text-align: center; font-weight: 800; }
+        .addon-picker summary { cursor: pointer; font-weight: 700; color: ${PURPLE}; padding: 10px 12px; background: white; border: 1px solid #ddd; border-radius: 10px; list-style: none; }
+        .addon-picker summary::after { content: ' +'; }
+        .addon-picker[open] summary::after { content: ' -'; }
+        .addon-row { display: flex; align-items: center; gap: 8px; padding: 8px 4px; border-bottom: 1px solid #f0f0f0; font-size: 0.85rem; cursor: pointer; }
+        .addon-row input { accent-color: ${PURPLE}; width: 16px; height: 16px; flex-shrink: 0; }
+        .addon-name { flex: 1; color: #333; }
+        .addon-price { color: ${PURPLE}; font-weight: 700; white-space: nowrap; font-size: 0.8rem; }
+        .addon-row select { border: 1px solid #ddd; border-radius: 6px; padding: 2px 4px; font-size: 0.85rem; }
         .rv-desc { color: #555; font-size: 0.88rem; margin-bottom: 14px; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
         @media (max-width: 1020px) {
