@@ -179,7 +179,7 @@ const rvs = [
       "/images/units/discovery-lxe-38k/06.jpg",
       "/images/units/discovery-lxe-38k/07.jpg"
     ],
-    "floorplan": null,
+    "floorplan": "/images/floorplans/discovery-lxe-38k-floorplan.jpg",
     "description": "A full-size diesel coach that lives like a small apartment: king bedroom, a bath and a half, washer and dryer, and a residential fridge with an ice maker. Built for groups who want real space and a quiet, smooth ride on long highway days.",
     "sleeping": [
       "King bed in a private rear bedroom",
@@ -280,7 +280,7 @@ const rvs = [
       "/images/units/chateau-31e/09.jpg",
       "/images/units/chateau-31e/10.jpg"
     ],
-    "floorplan": null,
+    "floorplan": "/images/floorplans/chateau-31e-floorplan.jpg",
     "description": "A bunkhouse motorhome that gives every kind of traveler a spot: a queen for the adults, two bunks for the kids, and an over-cab bed for whoever gets there first. Automatic leveling and one-touch controls make setup quick when you pull in.",
     "sleeping": [
       "Rear queen bed",
@@ -332,7 +332,7 @@ const rvs = [
       "/images/units/redhawk-26m/09.jpg",
       "/images/units/redhawk-26m/10.jpg"
     ],
-    "floorplan": null,
+    "floorplan": "/images/floorplans/redhawk-26m-floorplan.jpg",
     "description": "A newer Jayco with the stronger 7.3L V8 and Jayco's smoother ride suspension. The queen bed folds away into the wall during the day, opening up a living room with an electric fireplace and TV.",
     "sleeping": [
       "Queen Murphy bed that folds away by day",
@@ -374,7 +374,18 @@ const rvs = [
     ],
     "motorized": true,
     "images": [
-      "/images/units/redhawk-26xd/01.jpg"
+      "/images/units/redhawk-26xd/01.jpg",
+      "/images/units/redhawk-26xd/02.jpg",
+      "/images/units/redhawk-26xd/03.jpg",
+      "/images/units/redhawk-26xd/04.jpg",
+      "/images/units/redhawk-26xd/05.jpg",
+      "/images/units/redhawk-26xd/06.jpg",
+      "/images/units/redhawk-26xd/07.jpg",
+      "/images/units/redhawk-26xd/08.jpg",
+      "/images/units/redhawk-26xd/09.jpg",
+      "/images/units/redhawk-26xd/10.jpg",
+      "/images/units/redhawk-26xd/11.jpg",
+      "/images/units/redhawk-26xd/12.jpg"
     ],
     "floorplan": "/images/floorplans/redhawk-26xd-floorplan.jpg",
     "description": "A compact Class C with two slideouts, so it drives like a smaller rig and opens up wide once you park. Good for families, couples or a small group heading to national parks, the desert or a relaxed weekend away.",
@@ -478,7 +489,7 @@ const rvs = [
       "/images/units/sequence-20j/06.jpg",
       "/images/units/sequence-20j/07.jpg"
     ],
-    "floorplan": null,
+    "floorplan": "/images/floorplans/sequence-20j-floorplan.jpg",
     "description": "A Ram ProMaster camper van that handles like a large van, not a motorhome, and fits where bigger rigs cannot. Swivel cab seats, a center galley and a rear sofa that folds into a bed make it an easy base for two.",
     "sleeping": [
       "Rear sofa that folds into a bed"
@@ -522,7 +533,7 @@ const rvs = [
       "/images/units/cougar-22rbs/06.jpg",
       "/images/units/cougar-22rbs/07.jpg"
     ],
-    "floorplan": null,
+    "floorplan": "/images/floorplans/cougar-22rbs-floorplan.jpg",
     "description": "A half-ton towable built for two, with a king bed up front and a rear bath with a radius shower. Heated tanks and a 60 gal fresh tank make it comfortable for longer stays and cooler seasons.",
     "sleeping": [
       "Front king bed (72 x 80 in)",
@@ -637,29 +648,91 @@ const PlatformLogos = () => (
   </div>
 )
 
-const Header = ({ onNavigate }) => (
-  <header style={{ background: PURPLE, padding: '10px 20px', position: 'sticky', top: 0, zIndex: 100 }}>
-    <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <div onClick={() => onNavigate('')} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <img src="/images/logo.png" alt="Always Honest RV Rentals" style={{ height: '50px', borderRadius: '4px' }} />
-      </div>
-      <a href={`tel:${PHONE}`} style={{ background: 'white', color: PURPLE, padding: '8px 16px', borderRadius: '6px', fontWeight: 600, fontSize: '0.9rem' }}>
-        {PHONE}
-      </a>
-    </div>
-  </header>
+const DARK = '#3A0E47'
+const ACCENT = '#A23BC0'
+
+const TYPE_GROUPS = [
+  { key: 'motorhome', label: 'Motorhomes', match: t => /^Class/.test(t) },
+  { key: 'trailer', label: 'Travel Trailers', match: t => t === 'Travel Trailer' },
+  { key: 'fifth', label: 'Fifth Wheels', match: t => t === 'Fifth Wheel' },
+  { key: 'toy', label: 'Toy Haulers', match: t => t === 'Toy Hauler' }
+]
+
+const fmtDate = d => d ? new Date(d + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''
+
+const Chevron = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6" /></svg>
 )
 
+const PhoneIcon = ({ size = 18 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.6a1 1 0 01-.25 1z" /></svg>
+)
+
+const NavItem = ({ label, items, onClick }) => {
+  const [open, setOpen] = useState(false)
+  if (!items) {
+    return <button className="nav-link" onClick={onClick}>{label}</button>
+  }
+  return (
+    <div className="nav-item" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+      <button className="nav-link" onClick={() => setOpen(!open)}>{label} <Chevron /></button>
+      {open && (
+        <div className="nav-menu">
+          {items.map(it => (
+            <button key={it.label} className="nav-menu-item" onClick={() => { setOpen(false); it.onClick() }}>{it.label}</button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+const Header = ({ go }) => {
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const close = fn => () => { setMobileOpen(false); fn() }
+  const nav = [
+    { label: 'RV Rentals', items: TYPE_GROUPS.map(g => ({ label: g.label, onClick: close(() => go.filter(g.key)) })) },
+    { label: 'Fleet', items: [{ label: 'View All RVs', onClick: close(() => go.filter('')) }, ...rvs.map(r => ({ label: r.name.replace(/^\d{4} /, ''), onClick: close(() => go.unit(r.slug)) }))] },
+    { label: 'Locations', items: [
+      { label: 'Pickup at Sycuan Casino Resort', onClick: close(() => go.section('location')) },
+      { label: 'Delivery and Setup', onClick: close(() => go.section('location')) }
+    ] },
+    { label: 'About', items: [
+      { label: 'Our Promise', onClick: close(() => go.section('promise')) },
+      { label: 'Add-Ons and Pricing', onClick: close(() => go.section('addons')) },
+      { label: 'A Note From Katya', onClick: close(() => go.section('note')) }
+    ] },
+    { label: 'Contact', onClick: close(() => go.section('contact')) }
+  ]
+  return (
+    <header className="site-header">
+      <div className="header-inner">
+        <div className="logo-box" onClick={close(() => go.home())}>
+          <img src="/images/logo.png" alt="Always Honest RV Rentals" />
+        </div>
+        <nav className={`main-nav${mobileOpen ? ' open' : ''}`}>
+          {nav.map(n => <NavItem key={n.label} {...n} />)}
+        </nav>
+        <div className="header-right">
+          <span className="header-divider" />
+          <a className="phone-pill" href={`tel:${PHONE}`}><PhoneIcon /> {PHONE}</a>
+          <button className="menu-btn" aria-label="Menu" onClick={() => setMobileOpen(!mobileOpen)}>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+  )
+}
+
 const Footer = () => (
-  <footer style={{ background: PURPLE, color: 'white', padding: '40px 20px', textAlign: 'center' }}>
-    <img src="/images/logo.png" alt="Always Honest RV Rentals" style={{ height: '60px', marginBottom: '16px', borderRadius: '4px' }} />
-    <p style={{ fontSize: '0.95rem', marginBottom: '8px' }}>Always Honest RV Rentals</p>
-    <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.85)', marginBottom: '8px' }}>
-      {PHONE} | {EMAIL}
+  <footer id="contact" style={{ background: DARK, color: 'white', padding: '48px 20px', textAlign: 'center' }}>
+    <img src="/images/logo.png" alt="Always Honest RV Rentals" style={{ height: '70px', marginBottom: '18px', borderRadius: '8px', background: 'white', padding: '4px' }} />
+    <p style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '10px' }}>Always Honest RV Rentals</p>
+    <p style={{ fontSize: '1rem', marginBottom: '8px' }}>
+      <a href={`tel:${PHONE}`} style={{ fontWeight: 700 }}>{PHONE}</a> | <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
     </p>
-    <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.85)', marginBottom: '16px' }}>
-      Pickup and return: {PICKUP}
-    </p>
+    <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.85)', marginBottom: '16px' }}>Pickup and return: {PICKUP}</p>
     <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.75)' }}>San Diego, CA | 2026 Always Honest RV Rentals</p>
   </footer>
 )
@@ -671,96 +744,139 @@ const Included = ({ rv }) => (
     <li>Pickup 2:00 PM, return by 12:00 PM</li>
     {rv.motorized
       ? <li>150 miles per night included, $0.35 per mile after. Onboard generator: 6 hours per night included, $5 per hour after</li>
-      : <li>Tow it yourself or add local delivery, setup and pickup</li>}
+      : <li>Unlimited mileage. Tow it yourself or add local delivery, setup and pickup</li>}
   </ul>
 )
 
-const HomePage = ({ onNavigate }) => {
-  const [typeFilter, setTypeFilter] = useState('')
-  const [sleepsFilter, setSleepsFilter] = useState('')
+const Hero = ({ dates, setDates, onSearch }) => {
+  const today = new Date().toISOString().slice(0, 10)
+  return (
+    <section className="hero">
+      <div className="hero-inner">
+        <h1 className="hero-title">San Diego RV Rentals</h1>
+        <p className="hero-sub">with Clear Pricing and No Surprise Fees</p>
+        <div className="hero-rule" />
+        <form className="search-card" onSubmit={e => { e.preventDefault(); onSearch() }}>
+          <label className="search-field">
+            <span className="search-label">Start Date</span>
+            <input type="date" min={today} value={dates.start}
+              onChange={e => setDates(d => ({ start: e.target.value, end: d.end && d.end <= e.target.value ? '' : d.end }))} />
+          </label>
+          <label className="search-field">
+            <span className="search-label">End Date</span>
+            <input type="date" min={dates.start || today} value={dates.end}
+              onChange={e => setDates(d => ({ ...d, end: e.target.value }))} />
+          </label>
+          <button type="submit" className="search-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+            Find My RV
+          </button>
+        </form>
+      </div>
+    </section>
+  )
+}
 
+const nightsBetween = (a, b) => a && b ? Math.round((new Date(b) - new Date(a)) / 86400000) : 0
+
+const RVCard = ({ rv, onOpen, nights }) => {
+  const [showFp, setShowFp] = useState(false)
+  return (
+    <div className="rv-card" onClick={onOpen}>
+      <div className="rv-card-img">
+        <img src={showFp && rv.floorplan ? rv.floorplan : rv.images[0]} alt={rv.name} loading="lazy"
+          style={{ objectFit: showFp ? 'contain' : 'cover', background: showFp ? 'white' : '#f0f0f0', padding: showFp ? '10px' : 0 }} />
+        <div className="rv-tags">
+          {rv.badges.filter(b => b !== rv.type).map((b, i) => <span key={i} className="tag tag-dark">{b}</span>)}
+          <span className="tag tag-light">{rv.type}</span>
+        </div>
+        {rv.floorplan && (
+          <div className="fp-toggle" onClick={e => e.stopPropagation()}>
+            <button className={!showFp ? 'on' : ''} onClick={() => setShowFp(false)}>Photo</button>
+            <button className={showFp ? 'on' : ''} onClick={() => setShowFp(true)}>Floorplan</button>
+          </div>
+        )}
+      </div>
+      <div style={{ padding: '18px' }}>
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '8px', lineHeight: 1.3 }}>{rv.name}</h3>
+        <p className="rv-desc">{rv.description}</p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '10px' }}>
+          <span style={{ color: '#555', fontSize: '0.9rem' }}>Sleeps {rv.sleepsLabel} | {rv.length}</span>
+          <span style={{ textAlign: 'right' }}>
+            <span style={{ color: PURPLE, fontWeight: 800, fontSize: '1.3rem' }}>${rv.price}</span>
+            <span style={{ color: PURPLE, fontSize: '0.85rem' }}>/night</span>
+            {nights > 0 && <span style={{ display: 'block', color: '#555', fontSize: '0.8rem' }}>{nights} nights from ${(rv.price * nights).toLocaleString()}</span>}
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const HomePage = ({ go, dates, setDates, group, setGroup }) => {
+  const [sleepsFilter, setSleepsFilter] = useState('')
+  const g = TYPE_GROUPS.find(x => x.key === group)
   const filteredRVs = rvs.filter(rv => {
-    if (typeFilter && rv.type !== typeFilter) return false
+    if (g && !g.match(rv.type)) return false
     if (sleepsFilter && rv.sleeps < parseInt(sleepsFilter)) return false
     return true
   })
-  const types = [...new Set(rvs.map(r => r.type))]
+  const nights = nightsBetween(dates.start, dates.end)
 
   return (
     <>
-      <section style={{ background: `linear-gradient(135deg, ${PURPLE} 0%, #6B2D7B 100%)`, padding: '50px 20px', textAlign: 'center' }}>
-        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-          <img src="/images/logo.png" alt="Always Honest RV Rentals" style={{ height: '120px', marginBottom: '16px', borderRadius: '8px' }} />
-          <p style={{ color: 'rgba(255,255,255,0.95)', fontSize: '1.1rem', marginBottom: '24px' }}>
-            San Diego RV rentals with clear pricing and no surprise fees
+      <Hero dates={dates} setDates={setDates} onSearch={() => go.section('fleet')} />
+
+      <section style={{ background: 'white', padding: '22px 20px', textAlign: 'center', borderBottom: '1px solid #eee' }}>
+        <p style={{ color: '#666', fontSize: '0.8rem', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '1.5px' }}>Also Listed On</p>
+        <PlatformLogos />
+      </section>
+
+      <main id="fleet" style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px', scrollMarginTop: '90px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '14px', marginBottom: '10px' }}>
+          <h2 style={{ fontSize: '1.7rem', fontWeight: 800, color: DARK }}>Our Fleet</h2>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+            {[{ key: '', label: 'All' }, ...TYPE_GROUPS.filter(t => rvs.some(r => t.match(r.type)))].map(t => (
+              <button key={t.key} className={`pill${group === t.key ? ' on' : ''}`} onClick={() => setGroup(t.key)}>{t.label}</button>
+            ))}
+            <select value={sleepsFilter} onChange={e => setSleepsFilter(e.target.value)} className="pill-select">
+              <option value="">Any Sleeps</option>
+              <option value="4">Sleeps 4+</option>
+              <option value="6">Sleeps 6+</option>
+              <option value="8">Sleeps 8+</option>
+            </select>
+          </div>
+        </div>
+        {dates.start && dates.end && (
+          <p style={{ background: '#F4ECF7', color: DARK, borderRadius: '10px', padding: '12px 16px', fontSize: '0.95rem', marginBottom: '12px' }}>
+            Your dates: <strong>{fmtDate(dates.start)} to {fmtDate(dates.end)}</strong> ({nights} nights). Pick an RV to request these dates. Katya confirms availability, usually the same day.
           </p>
-          <div style={{ background: 'white', borderRadius: '12px', padding: '20px', boxShadow: '0 8px 30px rgba(0,0,0,0.2)' }}>
-            <div style={{ display: 'flex', gap: '12px' }}>
-              <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)}
-                style={{ flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '0.95rem' }}>
-                <option value="">All Types</option>
-                {types.map(t => <option key={t} value={t}>{t}</option>)}
-              </select>
-              <select value={sleepsFilter} onChange={e => setSleepsFilter(e.target.value)}
-                style={{ flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '0.95rem' }}>
-                <option value="">Any Sleeps</option>
-                <option value="2">2+ guests</option>
-                <option value="4">4+ guests</option>
-                <option value="6">6+ guests</option>
-                <option value="8">8+ guests</option>
-              </select>
-            </div>
+        )}
+        <p style={{ color: '#666', fontSize: '0.85rem', marginBottom: '24px' }}>
+          Standard nightly rates shown, before 8.75% sales tax and optional add-ons. Holiday and event dates are priced higher. {filteredRVs.length} of {rvs.length} RVs shown.
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '22px' }}>
+          {filteredRVs.map(rv => <RVCard key={rv.slug} rv={rv} nights={nights} onOpen={() => go.unit(rv.slug)} />)}
+        </div>
+      </main>
+
+      <section id="location" style={{ background: '#F7F3F9', padding: '44px 20px', scrollMarginTop: '90px' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
+          <div style={{ background: 'white', borderRadius: '14px', padding: '24px', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
+            <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: DARK, marginBottom: '10px' }}>Pickup and Return</h3>
+            <p style={{ fontSize: '0.95rem', color: '#444', lineHeight: 1.7 }}>{PICKUP}<br />Pickup 2:00 PM, return by 12:00 PM.</p>
+          </div>
+          <div style={{ background: 'white', borderRadius: '14px', padding: '24px', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
+            <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: DARK, marginBottom: '10px' }}>Delivery and Setup</h3>
+            <p style={{ fontSize: '0.95rem', color: '#444', lineHeight: 1.7 }}>Trailers can be delivered, set up and picked up at your campsite in the San Diego area for $399. Ask about other locations.</p>
           </div>
         </div>
       </section>
 
-      <section style={{ background: 'white', padding: '28px 20px', textAlign: 'center', borderBottom: '1px solid #eee' }}>
-        <p style={{ color: '#777', fontSize: '0.8rem', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '1.5px' }}>Also Listed On</p>
-        <PlatformLogos />
-      </section>
-
-      <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '8px' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 600 }}>Our Fleet</h2>
-          <span style={{ color: '#777', fontSize: '0.9rem' }}>{filteredRVs.length} available</span>
-        </div>
-        <p style={{ color: '#666', fontSize: '0.85rem', marginBottom: '24px' }}>
-          Standard nightly rates shown, before 8.75% sales tax and optional add-ons. Holiday and event dates are priced higher.
-        </p>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
-          {filteredRVs.map(rv => (
-            <div key={rv.slug} onClick={() => onNavigate(`rv/${rv.slug}`)}
-              style={{ background: 'white', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.08)', cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.12)' }}
-              onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.08)' }}>
-              <div style={{ position: 'relative', height: '200px' }}>
-                <img src={rv.images[0]} alt={rv.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', background: '#f0f0f0' }} />
-                <div style={{ position: 'absolute', top: '10px', left: '10px', display: 'flex', gap: '6px' }}>
-                  {rv.badges.map((b, i) => (
-                    <span key={i} style={{ background: PURPLE, color: 'white', padding: '4px 10px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600 }}>{b}</span>
-                  ))}
-                  <span style={{ background: 'white', color: PURPLE, padding: '4px 10px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600 }}>{rv.type}</span>
-                </div>
-              </div>
-              <div style={{ padding: '16px' }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '8px', lineHeight: 1.3 }}>{rv.name}</h3>
-                <p style={{ color: '#666', fontSize: '0.85rem', marginBottom: '12px', lineHeight: 1.5 }}>{rv.description}</p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ color: '#666', fontSize: '0.85rem' }}>Sleeps {rv.sleepsLabel} | {rv.length}</span>
-                  <span style={{ color: PURPLE, fontWeight: 700, fontSize: '1.2rem' }}>
-                    ${rv.price}<span style={{ fontSize: '0.8rem', fontWeight: 400 }}>/night</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </main>
-
-      <section style={{ background: 'white', padding: '40px 20px', borderTop: '1px solid #eee' }}>
+      <section id="addons" style={{ background: 'white', padding: '44px 20px', scrollMarginTop: '90px' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h3 style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '16px', color: PURPLE, textAlign: 'center' }}>Optional Add-Ons</h3>
+          <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '16px', color: DARK, textAlign: 'center' }}>Optional Add-Ons</h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '8px 24px' }}>
             {addOns.map(a => (
               <div key={a.name} style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', padding: '8px 0', borderBottom: '1px solid #eee', fontSize: '0.9rem' }}>
@@ -770,12 +886,12 @@ const HomePage = ({ onNavigate }) => {
             ))}
           </div>
           <p style={{ fontSize: '0.85rem', color: '#666', marginTop: '14px', textAlign: 'center' }}>
-            Every rental includes an upgraded smart LED TV for streaming. Pickup and return at {PICKUP}.
+            Every rental includes an upgraded smart LED TV for streaming. A $199 trip preparation fee applies to every booking.
           </p>
         </div>
       </section>
 
-      <section style={{ background: '#f5f5f5', padding: '40px 20px', borderTop: '1px solid #eee' }}>
+      <section id="promise" style={{ background: '#f5f5f5', padding: '44px 20px', scrollMarginTop: '90px' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '28px' }}>
             <p style={{ fontSize: '0.85rem', color: '#666', marginBottom: '10px' }}>Professional Cleaning by</p>
@@ -785,7 +901,7 @@ const HomePage = ({ onNavigate }) => {
             </div>
             <p style={{ fontSize: '0.85rem', color: '#666', marginTop: '6px' }}>Licensed & Certified 3rd Party Cleaning</p>
           </div>
-          <div style={{ background: 'white', borderRadius: '10px', padding: '24px', fontSize: '0.95rem', lineHeight: 1.8, color: '#444' }}>
+          <div style={{ background: 'white', borderRadius: '12px', padding: '24px', fontSize: '0.95rem', lineHeight: 1.8, color: '#444' }}>
             <p style={{ marginBottom: '10px' }}><strong style={{ color: PURPLE }}>✓</strong> All units provided clean inside and out</p>
             <p style={{ marginBottom: '10px' }}><strong style={{ color: PURPLE }}>✓</strong> Complete walkthrough tutorial with every reservation</p>
             <p style={{ marginBottom: '10px' }}><strong style={{ color: PURPLE }}>✓</strong> These are rental units — some wear and tear over time is expected</p>
@@ -795,9 +911,9 @@ const HomePage = ({ onNavigate }) => {
         </div>
       </section>
 
-      <section style={{ background: 'white', padding: '40px 20px' }}>
+      <section id="note" style={{ background: 'white', padding: '44px 20px', scrollMarginTop: '90px' }}>
         <div style={{ maxWidth: '700px', margin: '0 auto', textAlign: 'center' }}>
-          <h3 style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '16px', color: PURPLE }}>A Note From Me</h3>
+          <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '16px', color: DARK }}>A Note From Me</h3>
           <p style={{ fontSize: '0.95rem', lineHeight: 1.8, color: '#555' }}>
             This is a 2nd job for me — I have a full-time day job, am a mom of an infant, and am not super experienced with RVs.
             I hire independent contractors and vendors to help with showings, hand-offs, inspections, and maintenance.
@@ -818,7 +934,7 @@ const ListBlock = ({ title, items }) => items && items.length ? (
   </div>
 ) : null
 
-const RVDetailPage = ({ slug, onNavigate }) => {
+const RVDetailPage = ({ slug, onNavigate, dates = {} }) => {
   const rv = rvs.find(r => r.slug === slug)
   const [idx, setIdx] = useState(0)
   const [showFloorplan, setShowFloorplan] = useState(false)
@@ -833,7 +949,7 @@ const RVDetailPage = ({ slug, onNavigate }) => {
   }
 
   const subject = encodeURIComponent(`Rental request: ${rv.name}`)
-  const body = encodeURIComponent(`Hi Katya,\n\nI'd like to check availability for the ${rv.name}.\n\nDates:\nNumber of guests:\nPickup or delivery:\n\nThanks!`)
+  const body = encodeURIComponent(`Hi Katya,\n\nI'd like to check availability for the ${rv.name}.\n\nDates: ${dates.start && dates.end ? fmtDate(dates.start) + ' to ' + fmtDate(dates.end) : ''}\nNumber of guests:\nPickup or delivery:\n\nThanks!`)
   const mainSrc = showFloorplan && rv.floorplan ? rv.floorplan : rv.images[idx]
 
   const btn = (filled) => ({
@@ -921,6 +1037,8 @@ const RVDetailPage = ({ slug, onNavigate }) => {
 
 function App() {
   const [route, setRoute] = useState('')
+  const [dates, setDates] = useState({ start: '', end: '' })
+  const [group, setGroup] = useState('')
 
   useEffect(() => {
     const handleHashChange = () => setRoute(window.location.hash.slice(1))
@@ -934,22 +1052,102 @@ function App() {
     window.scrollTo(0, 0)
   }
 
+  const scrollTo = (id) => {
+    const run = () => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (route.startsWith('rv/')) { window.location.hash = ''; setTimeout(run, 120) } else run()
+  }
+
+  const go = {
+    home: () => navigate(''),
+    unit: slug => navigate(`rv/${slug}`),
+    section: scrollTo,
+    filter: key => { setGroup(key); scrollTo('fleet') }
+  }
+
   const content = route.startsWith('rv/')
-    ? <RVDetailPage key={route} slug={route.replace('rv/', '')} onNavigate={navigate} />
-    : <HomePage onNavigate={navigate} />
+    ? <RVDetailPage key={route} slug={route.replace('rv/', '')} onNavigate={navigate} dates={dates} />
+    : <HomePage go={go} dates={dates} setDates={setDates} group={group} setGroup={setGroup} />
 
   return (
     <>
       <style>{`
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; }
         a { text-decoration: none; color: inherit; }
+        button { font-family: inherit; }
         img { max-width: 100%; }
+
+        .site-header { position: sticky; top: 0; z-index: 100; background: ${DARK}; box-shadow: 0 2px 14px rgba(0,0,0,0.18); }
+        .header-inner { max-width: 1240px; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 24px; }
+        .logo-box { background: white; border-radius: 12px; padding: 4px 8px; cursor: pointer; flex-shrink: 0; box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+        .logo-box img { height: 64px; display: block; }
+        .main-nav { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+        .nav-item { position: relative; }
+        .nav-link { background: none; border: none; color: white; font-size: 1.02rem; font-weight: 700; padding: 10px 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; border-radius: 8px; }
+        .nav-link:hover { background: rgba(255,255,255,0.1); }
+        .nav-menu { position: absolute; top: 100%; left: 0; min-width: 250px; background: white; border-radius: 12px; box-shadow: 0 12px 34px rgba(0,0,0,0.22); padding: 8px; max-height: 70vh; overflow-y: auto; }
+        .nav-menu-item { display: block; width: 100%; text-align: left; background: none; border: none; padding: 10px 12px; font-size: 0.95rem; color: #333; border-radius: 8px; cursor: pointer; }
+        .nav-menu-item:hover { background: #F4ECF7; color: ${PURPLE}; }
+        .header-right { display: flex; align-items: center; gap: 18px; }
+        .header-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.3); }
+        .phone-pill { display: inline-flex; align-items: center; gap: 8px; background: white; color: ${PURPLE}; padding: 10px 18px; border-radius: 12px; font-weight: 800; font-size: 1.1rem; white-space: nowrap; }
+        .menu-btn { display: none; background: none; border: none; color: white; cursor: pointer; }
+
+        .hero { position: relative; color: white; background: ${DARK}; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 62%; background: url('/images/hero-rv.jpg') center right / cover no-repeat;
+          -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.55) 22%, #000 48%); mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.55) 22%, #000 48%); }
+        .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(58,14,71,0.35) 0%, rgba(58,14,71,0) 60%), linear-gradient(0deg, rgba(58,14,71,0.35) 0%, rgba(58,14,71,0) 35%); pointer-events: none; }
+        .hero-inner { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 70px 24px 80px; min-height: 480px; display: flex; flex-direction: column; justify-content: center; }
+        .hero-title { font-size: clamp(2.4rem, 5.2vw, 4.1rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; text-shadow: 0 2px 16px rgba(0,0,0,0.3); }
+        .hero-sub { font-size: clamp(1.25rem, 2.6vw, 2.1rem); font-weight: 400; margin-top: 10px; text-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+        .hero-rule { width: min(560px, 80%); height: 4px; border-radius: 2px; background: ${ACCENT}; margin: 18px 0 30px; }
+        .search-card { display: flex; gap: 12px; background: white; padding: 12px; border-radius: 16px; box-shadow: 0 14px 40px rgba(0,0,0,0.3); max-width: 760px; }
+        .search-field { flex: 1; display: flex; flex-direction: column; justify-content: center; border: 1px solid #ddd; border-radius: 12px; padding: 8px 14px; cursor: pointer; }
+        .search-label { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: ${PURPLE}; }
+        .search-field input { border: none; outline: none; font-size: 1.05rem; color: #333; font-family: inherit; padding: 2px 0; background: transparent; cursor: pointer; }
+        .search-btn { display: flex; align-items: center; justify-content: center; gap: 10px; background: ${PURPLE}; color: white; border: none; border-radius: 12px; padding: 0 28px; font-size: 1.15rem; font-weight: 800; cursor: pointer; white-space: nowrap; }
+        .search-btn:hover { background: #5E1A70; }
+
+        .pill { background: white; border: 1px solid #ddd; color: #444; padding: 8px 16px; border-radius: 999px; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+        .pill.on { background: ${PURPLE}; border-color: ${PURPLE}; color: white; }
+        .pill-select { border: 1px solid #ddd; border-radius: 999px; padding: 8px 14px; font-size: 0.9rem; font-family: inherit; background: white; }
+
+        .rv-card { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .rv-card:hover { transform: translateY(-4px); box-shadow: 0 10px 26px rgba(0,0,0,0.13); }
+        .rv-card-img { position: relative; height: 215px; }
+        .rv-card-img img { width: 100%; height: 100%; display: block; }
+        .rv-tags { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; max-width: 85%; }
+        .tag { padding: 5px 11px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+        .tag-dark { background: ${PURPLE}; color: white; }
+        .tag-light { background: white; color: ${PURPLE}; }
+        .fp-toggle { position: absolute; bottom: 10px; right: 10px; display: flex; background: rgba(255,255,255,0.95); border-radius: 8px; padding: 3px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .fp-toggle button { border: none; background: none; padding: 6px 12px; font-size: 0.8rem; font-weight: 700; color: ${PURPLE}; border-radius: 6px; cursor: pointer; }
+        .fp-toggle button.on { background: ${PURPLE}; color: white; }
+        .rv-desc { color: #555; font-size: 0.88rem; margin-bottom: 14px; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+        @media (max-width: 1020px) {
+          .menu-btn { display: block; }
+          .header-divider { display: none; }
+          .main-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: ${DARK}; flex-direction: column; align-items: stretch; padding: 10px 16px 18px; gap: 0; max-height: 80vh; overflow-y: auto; }
+          .main-nav.open { display: flex; }
+          .nav-menu { position: static; box-shadow: none; margin: 4px 0 8px; }
+          .header-right { margin-left: auto; }
+        }
         @media (max-width: 768px) {
           main > div { grid-template-columns: 1fr !important; }
+          .logo-box img { height: 48px; }
+          .phone-pill { font-size: 0.95rem; padding: 8px 12px; }
+          .hero::before { width: 100%; height: 300px; bottom: auto; background-position: 70% center; -webkit-mask-image: linear-gradient(180deg, #000 45%, transparent 100%); mask-image: linear-gradient(180deg, #000 45%, transparent 100%); }
+          .hero-inner { padding: 190px 20px 40px; min-height: 0; }
+          .search-card { flex-direction: column; }
+          .search-btn { padding: 14px; }
+        }
+        @media (max-width: 480px) {
+          .phone-pill span, .phone-pill { font-size: 0.85rem; }
         }
       `}</style>
-      <Header onNavigate={navigate} />
+      <Header go={go} />
       {content}
       <Footer />
     </>
