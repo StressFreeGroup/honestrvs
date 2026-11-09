@@ -1902,6 +1902,8 @@ const Header = ({ go, overHero }) => {
     { label: 'About', items: [
       { label: 'Our Promise', onClick: close(() => go.section('promise')) },
       { label: 'Pricing and Savings', onClick: close(() => go.section('pricing')) },
+      { label: "What's Included", onClick: close(() => go.section('included')) },
+      { label: 'Cancellation Policy', onClick: close(() => go.section('cancellation')) },
       { label: 'Add to Your Trip', onClick: close(() => go.section('addons')) },
       { label: 'A Note From Katya', onClick: close(() => go.section('note')) }
     ] },
@@ -2041,7 +2043,9 @@ const SavingsTable = () => {
   return (
     <section id="pricing" style={{ background: '#F7F3F9', padding: '48px 20px', scrollMarginTop: '90px' }}>
       <div style={{ maxWidth: '1140px', margin: '0 auto' }}>
+        <p className="eyebrow-dark"><span />CLEAR AND TRANSPARENT PRICING<span /></p>
         <h2 style={{ fontSize: 'clamp(1.6rem, 3.4vw, 2.2rem)', fontWeight: 800, color: DARK, textAlign: 'center' }}>SAVE by Adding Nights to Your Trip!</h2>
+        <p style={{ textAlign: 'center', fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.18em', color: PURPLE, marginTop: '6px' }}>BROUGHT TO YOU BY ALWAYS HONEST RV RENTALS</p>
         <p style={{ fontSize: '1rem', color: '#555', textAlign: 'center', margin: '8px auto 24px', maxWidth: '760px', lineHeight: 1.6 }}>
           TOTAL price for the BASE STANDARD package, system processing and taxes included. The per-trip costs are spread over every night you stay, so the longer the trip, the lower your nightly cost.
         </p>
@@ -2070,17 +2074,152 @@ const SavingsTable = () => {
             </tbody>
           </table>
         </div>
-        <p style={{ fontSize: '0.85rem', color: '#666', textAlign: 'center', margin: '14px 0 26px' }}>
-          Standard dates. Holiday and event dates are priced higher. TOTAL includes 10% system processing and 8.75% taxes. Pay direct with Zelle and the 10% processing is waived. "You Save" compares to a 1-night trip.
-        </p>
-        <PackageIncludes />
-        <p style={{ textAlign: 'center', marginTop: '22px', fontSize: '1.05rem', color: DARK, fontWeight: 700 }}>
-          Want to enhance your experience? <a href="#" onClick={e => { e.preventDefault(); document.getElementById('addons')?.scrollIntoView({ behavior: 'smooth' }) }} style={{ color: ACCENT, textDecoration: 'underline' }}>Please select from our available add-on options.</a>
-        </p>
+        <div className="fine-print">
+          <div className="fp-item fp-wide">
+            <strong>Excludes holidays and special events.</strong>
+            <span>Please <a href="#" onClick={e => { e.preventDefault(); document.getElementById('fleet')?.scrollIntoView({ behavior: 'smooth' }) }}>start a quote</a> or <a href={`tel:${PHONE}`}>contact us</a> for special event rates.</span>
+          </div>
+          <div className="fp-item">
+            <strong>Everything in one TOTAL</strong>
+            <span>Includes 10% system processing and 8.75% taxes.</span>
+          </div>
+          <div className="fp-item">
+            <strong>Pay direct with Zelle</strong>
+            <span>The 10% system processing is waived.</span>
+          </div>
+          <div className="fp-item">
+            <strong>How "You Save" works</strong>
+            <span>Compared to the nightly cost of a 1-night trip.</span>
+          </div>
+        </div>
       </div>
     </section>
   )
 }
+
+const WI = ({ n }) => {
+  const p = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' }
+  const I = {
+    rv: <g {...p}><path d="M2.5 16V7.5A1.5 1.5 0 014 6h12.5l3 4.5H21.5V16H2.5z" /><path d="M5 9h3M10 9h3v4h-3z" /><circle cx="7" cy="17" r="1.8" /><circle cx="17" cy="17" r="1.8" /></g>,
+    mtn: <g {...p}><path d="M2 19l6.5-11 4 6.5 2.5-3.5 7 8z" /><path d="M5 19v-2.5M4 17l1-2.5 1 2.5M19.5 19v-2.5M18.5 17l1-2.5 1 2.5" /></g>,
+    plug: <g {...p}><path d="M8.5 3v5M15.5 3v5M6.5 8h11v3a5.5 5.5 0 01-11 0V8zM12 16.5V21" /></g>,
+    hose: <g {...p}><ellipse cx="12" cy="9" rx="8.5" ry="3.5" /><path d="M3.5 9v6c0 1.9 3.8 3.5 8.5 3.5s8.5-1.6 8.5-3.5V9M3.5 12c0 1.9 3.8 3.5 8.5 3.5s8.5-1.6 8.5-3.5" /><ellipse cx="12" cy="9" rx="4" ry="1.5" /></g>,
+    tap: <g {...p}><path d="M4 9h7a3 3 0 013 3v2M4 6.5v5M11 9V6h7a2 2 0 012 2v1h-6" /><path d="M14 17.5c0 1.1-.9 2-2 2s-2-.9-2-2c0-1 2-3 2-3s2 2 2 3z" /></g>,
+    house: <g {...p}><path d="M3 11l9-7 9 7M5.5 9.5V20h13V9.5M10 20v-5.5h4V20" /></g>,
+    tp: <g {...p}><ellipse cx="8" cy="9.5" rx="4.5" ry="5.5" /><ellipse cx="8" cy="9.5" rx="1.5" ry="1.8" /><path d="M8 4h9a4.5 5.5 0 010 11v5H8" /></g>,
+    soap: <g {...p}><path d="M9 3h4M11 3v3M8 6h6v3H8zM7 9h8a1 1 0 011 1v9.5a1.5 1.5 0 01-1.5 1.5h-7A1.5 1.5 0 016 19.5V10a1 1 0 011-1z" /></g>,
+    dish: <g {...p}><path d="M10 2.5h4M10.5 2.5V6h3V2.5M9 6h6l1.5 3v10.5A1.5 1.5 0 0115 21H9a1.5 1.5 0 01-1.5-1.5V9z" /><path d="M12 12l.8 1.6 1.7.3-1.2 1.2.3 1.7-1.6-.8-1.6.8.3-1.7-1.2-1.2 1.7-.3z" /></g>,
+    sponge: <g {...p}><path d="M4 10c0-2 1.5-3 3.5-3h9c2 0 3.5 1 3.5 3v4c0 2-1.5 3-3.5 3h-9C5.5 17 4 16 4 14z" /><circle cx="8" cy="11" r=".8" /><circle cx="12" cy="10" r=".8" /><circle cx="15.5" cy="12" r=".8" /><circle cx="10" cy="14" r=".8" /></g>,
+    wipes: <g {...p}><rect x="4" y="8" width="16" height="11" rx="2" /><path d="M9 8c0-2 1.3-4 3-4s3 2 3 4M8 13h8" /></g>,
+    towel: <g {...p}><path d="M6 4.5h7a3 3 0 013 3V19.5H9a3 3 0 01-3-3z" /><ellipse cx="6" cy="7.5" rx="2.5" ry="3" /><path d="M16 7.5h2.5V18" /></g>,
+    plates: <g {...p}><ellipse cx="12" cy="8" rx="8.5" ry="3" /><path d="M3.5 8v2.5c0 1.7 3.8 3 8.5 3s8.5-1.3 8.5-3V8M3.5 13v2.5c0 1.7 3.8 3 8.5 3s8.5-1.3 8.5-3V13" /></g>,
+    pot: <g {...p}><path d="M5 10h14v7a2 2 0 01-2 2H7a2 2 0 01-2-2zM3 10h18M9.5 7h5M12 7V5.5" /></g>,
+    trash: <g {...p}><path d="M4.5 6.5h15M9.5 6.5V4.5h5v2M6.5 6.5l1 13h9l1-13M10 10v6M14 10v6" /></g>,
+    broom: <g {...p}><path d="M19.5 3.5l-7 9M9.5 11l4.5 3.5-4 6.5c-2-1-5-3.5-6.5-5.5z" /><path d="M7.5 17.5L10 14M5.5 15.5l2.5-3" /></g>,
+    spray: <g {...p}><path d="M8 7h6v3.5l1.5 2V20a1 1 0 01-1 1h-7a1 1 0 01-1-1v-7.5L8 10.5zM8 7V4.5h4l2 1.5M14 5h2" /><path d="M18 3v2M20 5h-2M19.5 8.5l1 1M17.5 9.5l1 1" /></g>,
+    check: <path fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" d="M5 12.5l4.5 4.5L19 7.5" />
+  }
+  return <svg viewBox="0 0 24 24" width="100%" height="100%">{I[n]}</svg>
+}
+
+const INCLUDE_ROWS = [
+  ['Nightly rental rate'],
+  ['Smart TV upgrade with streaming', 'Wi-Fi or hotspot required'],
+  ['Essential supplies with every rental'],
+  ['Tutorial orientation walkthrough'],
+  ['Trip start and trip end inspections'],
+  ['Commercial coverage insurance / insurance waiver', 'for deliveries'],
+  ['Interior damage protection liability waiver', 'for common occurrences'],
+  ['System processing fee, 10%', 'waived when you pay direct with Zelle'],
+  ['Taxes, 8.75%', 'county, city, state, federal and sales tax']
+]
+const OUTDOOR = [['plug', 'Power cable'], ['hose', 'Fresh water hose'], ['tap', 'Septic hose']]
+const INDOOR = [
+  ['tp', 'Septic-safe toilet paper'], ['soap', 'Hand soap'], ['dish', 'Dish soap'], ['sponge', 'Sponge'], ['wipes', 'Surface wipes'],
+  ['towel', 'Paper towel roll'], ['plates', 'Plates, bowls, cups and silverware'], ['pot', 'A pot and a pan'], ['trash', 'Small trash can with garbage bag'], ['broom', 'Broom and mop']
+]
+
+const WhatsIncluded = () => (
+  <section id="included" style={{ background: '#FAF8FB', paddingBottom: '48px', scrollMarginTop: '90px' }}>
+    <div className="addons-banner">
+      <svg className="addons-mtn" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 120V70l120-35 110 30 140-55 150 50 120-30 160 45 130-40 150 35 140-45 120 30 100-15V120z" fill="rgba(255,255,255,0.08)" />
+        <path d="M0 120V95l160-30 140 25 170-35 160 30 150-20 170 28 160-30 170 25 160-15V120z" fill="rgba(255,255,255,0.06)" />
+      </svg>
+      <p className="addons-eyebrow"><span />ALWAYS HONEST RV RENTALS<span /></p>
+      <h2 className="addons-title">What's Included</h2>
+      <p className="addons-sub">Our standard package has the essentials included for you to have a great trip!</p>
+    </div>
+    <div className="wi-grid">
+      <div className="wi-card">
+        <div className="wi-head"><span className="wi-head-icon"><WI n="rv" /></span>Every Base Standard Package Includes</div>
+        <ul className="wi-checks">
+          {INCLUDE_ROWS.map(([t, sub]) => (
+            <li key={t}><span className="wi-check"><WI n="check" /></span><span><strong>{t}</strong>{sub && <small>({sub})</small>}</span></li>
+          ))}
+        </ul>
+      </div>
+      <div className="wi-right">
+        <div className="wi-card">
+          <div className="wi-head"><span className="wi-head-icon"><WI n="mtn" /></span>Essential Supplies, Outdoor</div>
+          <div className="wi-items wi-out">
+            {OUTDOOR.map(([i, t]) => <div key={t} className="wi-item"><span className="wi-ico"><WI n={i} /></span>{t}</div>)}
+          </div>
+          <p className="wi-note">Blocks and chocks can be added on request the day of pickup.</p>
+        </div>
+        <div className="wi-card">
+          <div className="wi-head"><span className="wi-head-icon"><WI n="house" /></span>Essential Supplies, Indoor</div>
+          <div className="wi-items wi-in">
+            {INDOOR.map(([i, t]) => <div key={t} className="wi-item"><span className="wi-ico"><WI n={i} /></span>{t}</div>)}
+          </div>
+          <p className="wi-note">4 camping sets included. Need more plates, cups, bowls or silverware? Just let us know the day of pickup.<br />Extras are at no additional charge.</p>
+        </div>
+      </div>
+    </div>
+    <div className="wi-bar">
+      <span className="wi-bar-badge"><WI n="spray" /></span>
+      <p className="wi-bar-title">Every Trip Also<br />Comes With:</p>
+      <div className="wi-bar-item"><span className="wi-bar-check"><WI n="check" /></span>Interior professionally cleaned and exterior washed between each rental.</div>
+      <div className="wi-bar-item"><span className="wi-bar-check"><WI n="check" /></span>Full propane and full fuel at the start of each trip. Please return with the same levels.</div>
+    </div>
+    <p style={{ textAlign: 'center', marginTop: '26px', fontSize: '1.1rem', color: DARK, fontWeight: 700, padding: '0 20px' }}>
+      Want to enhance your experience? <a href="#" onClick={e => { e.preventDefault(); document.getElementById('addons')?.scrollIntoView({ behavior: 'smooth' }) }} style={{ color: ACCENT, textDecoration: 'underline' }}>Please select from our available add-on options.</a>
+    </p>
+  </section>
+)
+
+const CancellationPolicy = () => (
+  <section id="cancellation" style={{ background: 'white', padding: '52px 20px', scrollMarginTop: '90px' }}>
+    <div style={{ maxWidth: '1140px', margin: '0 auto' }}>
+      <p className="eyebrow-dark"><span />BOOK WITH CONFIDENCE<span /></p>
+      <h2 style={{ fontSize: 'clamp(1.6rem, 3.4vw, 2.2rem)', fontWeight: 800, color: DARK, textAlign: 'center', marginBottom: '26px' }}>Cancellation Policy</h2>
+      <div className="cx-grid">
+        <div className="cx-card">
+          <p className="cx-when">Same Day Cancellation</p>
+          <p className="cx-what">FREE Full Refund</p>
+          <p className="cx-tag">Courtesy</p>
+          <p className="cx-desc">Cancel the same day you book and get every dollar back. Things happen, and we're here for you when you're ready.</p>
+        </div>
+        <div className="cx-card">
+          <p className="cx-when">30 or More Days Before Your Trip</p>
+          <p className="cx-what">Future Trip Credit</p>
+          <p className="cx-tag">Less the 10% system processing</p>
+          <p className="cx-desc">Your payment becomes a credit toward a future trip. The 10% processing is not returned, because the booking and payment systems charge us fees for taking and refunding payments.</p>
+        </div>
+        <div className="cx-card">
+          <p className="cx-when">Within 30 Days of Your Trip</p>
+          <p className="cx-what">Non-Refundable</p>
+          <p className="cx-tag">The RV is held for you</p>
+          <p className="cx-desc">Inside 30 days your dates are reserved and turned away from other renters, so we are not able to offer a refund or credit.</p>
+        </div>
+      </div>
+      <div className="cx-human">
+        <strong>We're human too.</strong>
+        <span>Extenuating circumstances and emergencies are reviewed case by case. Reach out to Katya and we'll be as compassionate as we possibly can.</span>
+      </div>
+    </div>
+  </section>
+)
 
 const TripBuilder = ({ rv, dates, onChange }) => {
   const fromDates = nightsBetween(dates.start, dates.end)
@@ -2199,6 +2338,8 @@ const HomePage = ({ go, dates, setDates, group, setGroup }) => {
 
       <SavingsTable />
 
+      <WhatsIncluded />
+
       <section id="location" style={{ background: '#F7F3F9', padding: '44px 20px', scrollMarginTop: '90px' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
           <div style={{ background: 'white', borderRadius: '14px', padding: '24px', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
@@ -2213,6 +2354,8 @@ const HomePage = ({ go, dates, setDates, group, setGroup }) => {
       </section>
 
       <AddOnsSection />
+
+      <CancellationPolicy />
 
       <section id="promise" style={{ background: '#f5f5f5', padding: '44px 20px', scrollMarginTop: '90px' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
@@ -2538,6 +2681,70 @@ function App() {
           .addon-text h3 { font-size: 1rem; } .addon-text p { font-size: 0.85rem; }
           .addon-pill { min-width: 0; font-size: 1rem; padding: 8px 10px; }
           .addons-eyebrow span { width: 40px; }
+        }
+        .eyebrow-dark { display: flex; align-items: center; justify-content: center; gap: 16px; color: ${PURPLE}; font-weight: 800; letter-spacing: 0.28em; font-size: 0.85rem; margin-bottom: 10px; text-align: center; }
+        .eyebrow-dark span { width: 56px; height: 2px; background: ${ACCENT}; flex-shrink: 0; }
+        .fine-print { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 18px 0 0; }
+        .fp-item { background: white; border-radius: 12px; padding: 14px 18px; box-shadow: 0 2px 10px rgba(58,14,71,0.06); display: flex; flex-direction: column; gap: 4px; }
+        .fp-item strong { color: ${DARK}; font-size: 0.95rem; }
+        .fp-item span { color: #555; font-size: 0.88rem; line-height: 1.5; }
+        .fp-item a { color: ${ACCENT}; font-weight: 700; text-decoration: underline; }
+        .fp-wide { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; justify-content: center; background: #EDE3F1; }
+        .wi-grid { max-width: 1240px; margin: 28px auto 0; padding: 0 24px; display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 20px; }
+        .wi-right { display: flex; flex-direction: column; gap: 20px; }
+        .wi-card { background: white; border-radius: 16px; padding: 12px 18px 18px; box-shadow: 0 3px 14px rgba(58,14,71,0.08); border: 1px solid #EFEAF2; }
+        .wi-head { display: flex; align-items: center; gap: 14px; background: #F1EAF4; border-radius: 10px; padding: 10px 16px; font-size: 1.25rem; font-weight: 800; color: ${DARK}; }
+        .wi-head-icon { width: 40px; height: 40px; color: ${PURPLE}; flex-shrink: 0; }
+        .wi-checks { list-style: none; margin-top: 14px; display: grid; gap: 12px; }
+        .wi-checks li { display: flex; gap: 12px; align-items: flex-start; }
+        .wi-check { width: 22px; height: 22px; color: ${PURPLE}; flex-shrink: 0; margin-top: 2px; }
+        .wi-checks strong { display: block; font-size: 1.02rem; color: #222; font-weight: 600; line-height: 1.35; }
+        .wi-checks small { display: block; font-size: 0.88rem; color: #555; margin-top: 1px; }
+        .wi-items { display: grid; margin-top: 14px; }
+        .wi-out { grid-template-columns: repeat(3, 1fr); }
+        .wi-in { grid-template-columns: repeat(5, 1fr); row-gap: 6px; }
+        .wi-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; font-size: 0.95rem; font-weight: 600; color: #222; line-height: 1.3; border-right: 1px solid #EAE3EE; }
+        .wi-out .wi-item:last-child, .wi-in .wi-item:nth-child(5n) { border-right: none; }
+        .wi-in .wi-item { flex-direction: column; text-align: center; gap: 6px; font-size: 0.88rem; }
+        .wi-ico { width: 38px; height: 38px; color: ${PURPLE}; flex-shrink: 0; }
+        .wi-note { margin-top: 12px; background: #F1EAF4; border-radius: 10px; padding: 10px 14px; text-align: center; font-style: italic; color: ${DARK}; font-size: 0.92rem; line-height: 1.5; }
+        .wi-bar { max-width: 1192px; margin: 26px auto 0; display: flex; align-items: center; gap: 22px; background: linear-gradient(90deg, #4A1259, #6E2A86); color: white; border-radius: 16px; padding: 20px 30px; }
+        .wi-bar-badge { width: 70px; height: 70px; border-radius: 50%; background: white; color: ${PURPLE}; padding: 15px; flex-shrink: 0; }
+        .wi-bar-title { font-size: 1.5rem; font-weight: 800; line-height: 1.2; padding: 0 22px; border-left: 1px solid rgba(255,255,255,0.4); border-right: 1px solid rgba(255,255,255,0.4); }
+        .wi-bar-item { flex: 1; display: flex; align-items: center; gap: 14px; font-size: 1.05rem; line-height: 1.45; }
+        .wi-bar-item + .wi-bar-item { border-left: 1px solid rgba(255,255,255,0.4); padding-left: 22px; }
+        .wi-bar-check { width: 30px; height: 30px; flex-shrink: 0; }
+        .cx-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .cx-card { background: #FAF8FB; border: 1px solid #EFEAF2; border-radius: 16px; padding: 24px; text-align: center; box-shadow: 0 3px 14px rgba(58,14,71,0.06); }
+        .cx-when { font-size: 0.85rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #555; }
+        .cx-what { font-size: 1.5rem; font-weight: 800; color: ${DARK}; margin-top: 8px; }
+        .cx-tag { display: inline-block; margin-top: 8px; background: ${PURPLE}; color: white; font-weight: 700; font-size: 0.82rem; padding: 4px 12px; border-radius: 999px; }
+        .cx-desc { margin-top: 12px; font-size: 0.92rem; color: #444; line-height: 1.6; }
+        .cx-human { margin-top: 18px; background: #EDE3F1; border-radius: 12px; padding: 16px 22px; text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 10px; }
+        .cx-human strong { color: ${DARK}; }
+        .cx-human span { color: #444; line-height: 1.5; }
+        @media (max-width: 1000px) {
+          .wi-grid { grid-template-columns: 1fr; }
+          .wi-in { grid-template-columns: repeat(3, 1fr); }
+          .wi-in .wi-item:nth-child(5n) { border-right: 1px solid #EAE3EE; }
+          .wi-in .wi-item:nth-child(3n) { border-right: none; }
+          .wi-bar { flex-wrap: wrap; margin: 22px 24px 0; }
+          .wi-bar-title { border: none; padding: 0; }
+          .wi-bar-item { flex-basis: 100%; }
+          .wi-bar-item + .wi-bar-item { border-left: none; padding-left: 0; }
+          .cx-grid, .fine-print { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 520px) {
+          .wi-in { grid-template-columns: repeat(2, 1fr); }
+          .wi-out { grid-template-columns: repeat(3, 1fr); }
+          .wi-out .wi-item { font-size: 0.82rem; padding: 8px 4px; }
+          .addons-eyebrow { letter-spacing: 0.2em; font-size: 0.85rem; gap: 10px; }
+          .addons-eyebrow span { width: 22px; }
+          .eyebrow-dark { letter-spacing: 0.16em; font-size: 0.75rem; gap: 10px; }
+          .eyebrow-dark span { width: 22px; }
+          .wi-out .wi-item, .wi-in .wi-item { border-right: none !important; }
+          .wi-out .wi-item { flex-direction: column; text-align: center; }
+          .wi-head { font-size: 1.05rem; }
         }
         .rv-desc { color: #555; font-size: 0.88rem; margin-bottom: 14px; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
