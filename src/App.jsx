@@ -224,7 +224,7 @@ const Header = ({ go, overHero }) => {
       { label: "What's Included", onClick: close(() => go.section('included')) },
       { label: 'Cancellation Policy', onClick: close(() => go.section('cancellation')) },
       { label: 'Add to Your Trip', onClick: close(() => go.section('addons')) },
-      { label: 'A Note From Katya', onClick: close(() => go.section('note')) }
+      { label: 'Meet the Owner', onClick: close(() => go.section('note')) }
     ] },
     { label: 'Contact', onClick: close(() => go.section('contact')) }
   ]
@@ -288,7 +288,7 @@ const Footer = ({ go }) => (
         <ul>
           <FooterLink href="/#location" onClick={() => go.section('location')}>Pickup and Delivery</FooterLink>
           <FooterLink href="/#promise" onClick={() => go.section('promise')}>Our Promise and Cleaning</FooterLink>
-          <FooterLink href="/#note" onClick={() => go.section('note')}>A Note From the Owner</FooterLink>
+          <FooterLink href="/#note" onClick={() => go.section('note')}>Meet the Owner</FooterLink>
           <FooterLink href="/#fleet" onClick={() => go.section('fleet')}>Start a Quote</FooterLink>
           <FooterLink href={`tel:${PHONE}`}>Call or Text {PHONE}</FooterLink>
         </ul>
@@ -737,21 +737,36 @@ const HomePage = ({ go, dates, setDates, group, setGroup }) => {
         </div>
       </section>
 
-      <section id="note" style={{ background: 'white', padding: '44px 20px', scrollMarginTop: '90px' }}>
+      <section id="note" style={{ background: 'white', padding: '56px 20px', scrollMarginTop: '90px' }}>
         <div className="owner-card">
           <div className="owner-photo">
-            {OWNER_PHOTO ? <img src={OWNER_PHOTO} alt="Ekaterina Zvezdova, owner of Always Honest RV Rentals" /> : <span>EZ</span>}
+            <img src={OWNER_PHOTO} alt="Ekaterina (Katya) Zvezdova, owner of Always Honest RV Rentals" />
           </div>
           <div>
-          <p className="eyebrow-dark" style={{ justifyContent: 'flex-start' }}>A NOTE FROM THE OWNER</p>
-          <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: DARK }}>Ekaterina Zvezdova</h2>
-          <p style={{ color: PURPLE, fontWeight: 700, marginBottom: '14px' }}>Owner, Always Honest RV Rentals</p>
-          <p style={{ fontSize: '1rem', lineHeight: 1.8, color: '#444' }}>
-            This is a 2nd job for me — I have a full-time day job, am a mom of an infant, and am not super experienced with RVs.
-            I hire independent contractors and vendors to help with showings, hand-offs, inspections, and maintenance.
-            If they aren't 5-star status, please let me know so I can address it.
-          </p>
+            <p className="eyebrow-dark" style={{ justifyContent: 'flex-start' }}>A NOTE FROM THE OWNER</p>
+            <h2 style={{ fontSize: 'clamp(1.6rem, 3.2vw, 2.1rem)', fontWeight: 800, color: DARK }}>Hi, I'm Katya</h2>
+            <p style={{ color: PURPLE, fontWeight: 700, marginBottom: '14px' }}>Ekaterina Zvezdova, Owner, Always Honest RV Rentals</p>
+            <p className="owner-p">I love doing activities and getting out and about. I'm a mom with a full-time job, and renting out RVs and trailers helps me with bills and life's expenses. It also lets me enjoy life and keep a balance. I help others have amazing trips so that I can go on my own amazing trips and adventures too.</p>
+            <p className="owner-p">Yes, I've been to Burning Man, I've swum with dolphins, and I love to travel internationally. Let's enjoy life! I'm here to provide a service and do what I can so that you and your family can share amazing experiences and have fun.</p>
           </div>
+        </div>
+
+        <div className="owner-gallery">
+          {OWNER_GALLERY.map(g => (
+            <figure key={g.src} className={g.wide ? 'wide' : ''}>
+              <img src={g.src} alt={g.alt} loading="lazy" style={{ objectPosition: g.pos || 'center' }} />
+              <figcaption>{g.cap}</figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <div className="owner-note">
+          <h3>How we work together</h3>
+          <div className="owner-note-cols">
+            <p>I like to have fun, and I'm not here to give anyone a hard time, fight or argue. If something's not right, just let me or my staff know. Let's all keep positive, even when something doesn't go our way. We're people, not robots, so let's treat each other fairly and with understanding, and be positive about solutions.</p>
+            <p>I'm not perfect, and nobody is. An assistant helps me respond to messages and calls most of the time, and my staff on the ground handle maintenance, service, walkthrough orientations, hand-offs and inspections. I'm not an RV expert, and it's okay if you're not either. We're in this together. If anyone on my team isn't 5-star, please tell me so I can make it right.</p>
+          </div>
+          <p className="owner-sign">Katya</p>
         </div>
       </section>
 
@@ -760,7 +775,15 @@ const HomePage = ({ go, dates, setDates, group, setGroup }) => {
   )
 }
 
-const OWNER_PHOTO = null // set to '/images/owner-ekaterina.jpg' once a photo is chosen
+const OWNER_PHOTO = '/images/owner/katya-headshot.jpg'
+const OWNER_GALLERY = [
+  { src: '/images/owner/katya-burning-man.jpg', alt: 'Katya at Burning Man', cap: 'Burning Man', pos: 'center 20%' },
+  { src: '/images/owner/katya-dolphins.jpg', alt: 'Katya swimming with dolphins', cap: 'Swimming with dolphins', wide: true, pos: 'center 35%' },
+  { src: '/images/owner/katya-sunflowers.jpg', alt: 'Katya in a sunflower light room', cap: 'Always up for something new', pos: 'center 20%' },
+  { src: '/images/owner/katya-mom-life.jpg', alt: 'Katya with her son', cap: 'Mom life', wide: true, pos: 'center 30%' },
+  { src: '/images/owner/katya-night-out.jpg', alt: 'Katya on a night out', cap: 'Night out', pos: 'center 2%' },
+  { src: '/images/owner/katya-out-and-about.jpg', alt: 'Katya out and about', cap: 'Out and about', pos: 'center 25%' }
+]
 
 const FAQ = () => {
   const items = faqItems(rvs)
@@ -1171,6 +1194,20 @@ function App() {
         .owner-photo { width: 240px; height: 240px; border-radius: 50%; overflow: hidden; background: linear-gradient(135deg, #4A1259, #8A4AA3); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(58,14,71,0.25); border: 6px solid white; }
         .owner-photo img { width: 100%; height: 100%; object-fit: cover; }
         .owner-photo span { color: white; font-size: 4rem; font-weight: 800; letter-spacing: 0.04em; }
+        .owner-p { font-size: 1.02rem; line-height: 1.8; color: #333; margin-bottom: 12px; }
+        .owner-gallery { max-width: 1100px; margin: 36px auto 0; display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 260px; gap: 14px; grid-auto-flow: dense; }
+        .owner-gallery figure { position: relative; border-radius: 16px; overflow: hidden; box-shadow: 0 6px 20px rgba(58,14,71,0.12); }
+        .owner-gallery figure.wide { grid-column: span 2; }
+        .owner-gallery img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+        .owner-gallery figure:hover img { transform: scale(1.04); }
+        .owner-gallery figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 14px 12px; color: white; font-weight: 700; font-size: 0.92rem; background: linear-gradient(0deg, rgba(40,10,50,0.75), rgba(40,10,50,0)); }
+        .owner-note { max-width: 1100px; margin: 30px auto 0; background: #F4ECF7; border-radius: 18px; padding: 28px 32px; }
+        .owner-note h3 { font-size: 1.3rem; font-weight: 800; color: ${DARK}; margin-bottom: 12px; }
+        .owner-note-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+        .owner-note p { font-size: 0.98rem; line-height: 1.8; color: #333; }
+        .owner-sign { margin-top: 14px; font-size: 1.4rem !important; font-weight: 800; color: ${PURPLE} !important; font-style: italic; }
+        @media (max-width: 900px) { .owner-gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 220px; } .owner-note-cols { grid-template-columns: 1fr; gap: 12px; } }
+        @media (max-width: 520px) { .owner-gallery { grid-auto-rows: 180px; gap: 10px; } .owner-note { padding: 22px 20px; } }
         @media (max-width: 720px) { .owner-card { grid-template-columns: 1fr; text-align: center; } .owner-photo { margin: 0 auto; width: 180px; height: 180px; } .owner-card .eyebrow-dark { justify-content: center !important; } }
         .faq-item { background: white; border: 1px solid #EFEAF2; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(58,14,71,0.05); }
         .faq-item summary { cursor: pointer; list-style: none; padding: 16px 52px 16px 20px; position: relative; }
