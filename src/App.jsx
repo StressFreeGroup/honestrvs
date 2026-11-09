@@ -1,6 +1,7 @@
 import fleet from './fleet.json'
 import { SITE_URL, faqItems } from './site.js'
 import { useState, useEffect } from 'react'
+import { availability, bookedRanges, codeFor, overlapsAny, requestBooking } from './booking.js'
 
 // ============================================================
 // FLEET DATA
@@ -345,10 +346,11 @@ const Hero = ({ dates, setDates, onSearch }) => {
 
 const nightsBetween = (a, b) => a && b ? Math.round((new Date(b) - new Date(a)) / 86400000) : 0
 
-const RVCard = ({ rv, onOpen, nights }) => {
+const RVCard = ({ rv, onOpen, nights, live }) => {
   const [showFp, setShowFp] = useState(false)
+  const booked = live && !live.available
   return (
-    <div className="rv-card" onClick={onOpen}>
+    <div className={`rv-card${booked ? ' rv-booked' : ''}`} onClick={onOpen}>
       <div className="rv-card-img">
         <img src={showFp && rv.floorplan ? rv.floorplan : (rv.cover || rv.images[0])} alt={rv.name} loading="lazy"
           style={{ objectFit: showFp ? 'contain' : 'cover', background: showFp ? 'white' : '#f0f0f0', padding: showFp ? '10px' : 0 }} />
@@ -376,7 +378,9 @@ const RVCard = ({ rv, onOpen, nights }) => {
             <span style={{ textAlign: 'right' }}>
               <span style={{ color: PURPLE, fontWeight: 800, fontSize: '1.3rem' }}>${rv.price}</span>
               <span style={{ color: PURPLE, fontSize: '0.85rem' }}>/night</span>
-              {nights > 0 && <span style={{ display: 'block', color: '#555', fontSize: '0.8rem' }}>{nights} nights from ${(rv.price * nights).toLocaleString()}</span>}
+              {nights > 0 && !live && <span style={{ display: 'block', color: '#555', fontSize: '0.8rem' }}>{nights} nights from ${(rv.price * nights).toLocaleString()}</span>}
+              {live && live.available && live.price && <span className="live-ok">Available · {nights} nights ${Math.round(live.price.total).toLocaleString()} total</span>}
+              {booked && <span className="live-no">Booked for your dates</span>}
             </span>
           ) : <span style={{ color: PURPLE, fontWeight: 800, fontSize: '1rem' }}>Call for rate</span>}
         </div>
@@ -658,6 +662,19 @@ const HomePage = ({ go, dates, setDates, group, setGroup }) => {
     return true
   })
   const nights = nightsBetween(dates.start, dates.end)
+  const [live, setLive] = useState(null)
+  const [liveMsg, setLiveMsg] = useState('')
+  useEffect(() => {
+    setLive(null); setLiveMsg('')
+    if (!dates.start || !dates.end || dates.end <= dates.start) return
+    let on = true
+    availability(dates.start, dates.end)
+      .then(r => { if (!on) return; if (r.error) setLiveMsg(r.error); else setLive(r.units) })
+      .catch(() => on && setLiveMsg('Live availability is not loading right now. Pick an RV and request your dates, and Katya will confirm.'))
+    return () => { on = false }
+  }, [dates.start, dates.end])
+  const shown = live ? [...filteredRVs].sort((a, b) => (live[b.slug]?.available ? 1 : 0) - (live[a.slug]?.available ? 1 : 0)) : filteredRVs
+  const openCount = live ? filteredRVs.filter(rv => live[rv.slug]?.available).length : 0
 
   return (
     <>
@@ -685,7 +702,8 @@ const HomePage = ({ go, dates, setDates, group, setGroup }) => {
         </div>
         {dates.start && dates.end && (
           <p style={{ background: '#F4ECF7', color: DARK, borderRadius: '10px', padding: '12px 16px', fontSize: '0.95rem', marginBottom: '12px' }}>
-            Your dates: <strong>{fmtDate(dates.start)} to {fmtDate(dates.end)}</strong> ({nights} nights). Pick an RV to request these dates. Katya confirms availability, usually the same day.
+            Your dates: <strong>{fmtDate(dates.start)} to {fmtDate(dates.end)}</strong> ({nights} nights).{' '}
+            {live ? <>Live availability: <strong>{openCount} of {filteredRVs.length}</strong> RVs are open for these dates. Pick one to see your TOTAL and book.</> : liveMsg ? liveMsg : 'Checking live availability...'}
           </p>
         )}
         <p style={{ color: '#666', fontSize: '0.85rem', marginBottom: '24px' }}>
@@ -693,7 +711,7 @@ const HomePage = ({ go, dates, setDates, group, setGroup }) => {
         </p>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '22px' }}>
-          {filteredRVs.map(rv => <RVCard key={rv.slug} rv={rv} nights={nights} onOpen={() => go.unit(rv.slug)} />)}
+          {shown.map(rv => <RVCard key={rv.slug} rv={rv} nights={nights} live={live ? live[rv.slug] : null} onOpen={() => go.unit(rv.slug)} />)}
         </div>
       </main>
 
@@ -814,8 +832,98 @@ const ListBlock = ({ title, items }) => items && items.length ? (
   </div>
 ) : null
 
+// ---- Live availability + request to book (RVFMS) --------------------------------------
+const useBooked = (slug) => {
+  const [state, setState] = useState({ code: null, booked: [], ready: false, failed: false })
+  useEffect(() => {
+    let on = true
+    codeFor(slug).then(code => code ? bookedRanges(code).then(booked => on && setState({ code, booked, ready: true, failed: false })) : on && setState(s => ({ ...s, ready: true, failed: true })))
+      .catch(() => on && setState(s => ({ ...s, ready: true, failed: true })))
+    return () => { on = false }
+  }, [slug])
+  return state
+}
+const bookingState = {}
+const tomorrow = () => { const d = new Date(); d.setDate(d.getDate() + 1); return d.toISOString().slice(0, 10) }
+
+const StayDates = ({ rv, stay, setStay }) => {
+  const live = useBooked(rv.slug)
+  bookingState[rv.slug] = live
+  const min = tomorrow()
+  const has = stay.start && stay.end && stay.end > stay.start
+  const clash = has && overlapsAny(stay.start, stay.end, live.booked)
+  const nights = has ? nightsBetween(stay.start, stay.end) : 0
+  const next = live.booked.filter(b => b.end >= min).slice(0, 4)
+  return (
+    <div className="bk-dates">
+      <div className="bk-row">
+        <label><span>Trip Start</span><input type="date" min={min} value={stay.start} onClick={openPicker} onFocus={openPicker}
+          onChange={e => setStay(s => ({ start: e.target.value, end: s.end && s.end <= e.target.value ? '' : s.end }))} /></label>
+        <label><span>Trip End</span><input type="date" min={stay.start || min} value={stay.end} onClick={openPicker} onFocus={openPicker}
+          onChange={e => setStay(s => ({ ...s, end: e.target.value }))} /></label>
+      </div>
+      {!has && <p className="bk-note">Pick your dates to check live availability.</p>}
+      {has && !live.ready && <p className="bk-note">Checking availability...</p>}
+      {has && live.ready && !live.failed && (clash
+        ? <p className="bk-status no">Already booked for some of these dates. Try different dates or another RV.</p>
+        : nights < 2 ? <p className="bk-status no">The minimum stay is 2 nights.</p>
+        : <p className="bk-status ok">Available for {fmtDate(stay.start)} to {fmtDate(stay.end)} ({nights} nights).</p>)}
+      {live.ready && !live.failed && next.length > 0 && (
+        <p className="bk-note">Already booked: {next.map(b => `${fmtDate(b.start)} to ${fmtDate(b.end)}`).join('; ')}{live.booked.length > next.length ? '; and more' : ''}</p>
+      )}
+    </div>
+  )
+}
+
+const RequestToBook = ({ rv, stay, trip, mailto }) => {
+  const [f, setF] = useState({ first_name: '', last_name: '', email: '', phone: '', guests: '', message: '', company_website: '' })
+  const [sending, setSending] = useState(false)
+  const [err, setErr] = useState('')
+  const [done, setDone] = useState(null)
+  const set = k => e => setF(s => ({ ...s, [k]: e.target.value }))
+  const live = bookingState[rv.slug] || {}
+  const has = stay.start && stay.end && stay.end > stay.start
+  const clash = has && overlapsAny(stay.start, stay.end, live.booked || [])
+  const submit = async (e) => {
+    e.preventDefault(); setErr('')
+    if (!has) return setErr('Pick your trip start and trip end dates above.')
+    if (clash) return setErr('Those dates are already booked. Try different dates.')
+    const code = live.code || await codeFor(rv.slug).catch(() => null)
+    if (!code) return setErr('Online booking is not available for this RV right now. Use Email Katya below or call or text us.')
+    setSending(true)
+    try {
+      const extras = trip && trip.chosen && trip.chosen.length ? `Add-ons requested: ${trip.chosen.join(', ')}.` : ''
+      const r = await requestBooking({ ...f, unit: code, start: stay.start, end: stay.end, message: [f.message, extras].filter(Boolean).join('\n') })
+      setDone(r)
+    } catch (e2) { setErr(e2.message) } finally { setSending(false) }
+  }
+  if (done) return (
+    <div className="bk-done">
+      <p className="bk-done-h">Request received</p>
+      <p>Your quote <b>Q-{done.quote_number}</b> for the {rv.name}, {fmtDate(stay.start)} to {fmtDate(stay.end)}, is ready{done.total ? <>: <b>${Math.round(done.total).toLocaleString()}</b> TOTAL</> : ''}.</p>
+      <p>Open it to review, accept and pay. Your dates are held as soon as you accept. We also have your details and will follow up.</p>
+      {done.quote_url && <a className="bk-btn" href={done.quote_url} target="_blank" rel="noopener noreferrer">Review and pay your quote</a>}
+    </div>
+  )
+  return (
+    <form className="bk-form" onSubmit={submit}>
+      <p className="book-ways-h">Book direct</p>
+      <p className="bk-sub">Best savings: the TOTAL above with no platform fees. Pay by Zelle and the 10% processing is waived.</p>
+      <div className="bk-row"><input placeholder="First name" value={f.first_name} onChange={set('first_name')} required autoComplete="given-name" /><input placeholder="Last name" value={f.last_name} onChange={set('last_name')} required autoComplete="family-name" /></div>
+      <div className="bk-row"><input type="email" placeholder="Email" value={f.email} onChange={set('email')} required autoComplete="email" /><input type="tel" placeholder="Phone" value={f.phone} onChange={set('phone')} required autoComplete="tel" /></div>
+      <div className="bk-row"><input type="number" min="1" max="20" placeholder="Guests" value={f.guests} onChange={set('guests')} /><span /></div>
+      <textarea rows={3} placeholder="Anything we should know? Pickup or delivery, pets, event, questions..." value={f.message} onChange={set('message')} />
+      <input className="bk-trap" tabIndex={-1} autoComplete="off" value={f.company_website} onChange={set('company_website')} aria-hidden="true" />
+      {err && <p className="bk-status no">{err}</p>}
+      <button type="submit" className="bk-btn" disabled={sending || clash}>{sending ? 'Sending...' : 'Request to Book'}</button>
+      <p className="bk-note">No charge yet. You get your quote right away to review, accept and pay. Prefer email? <a href={mailto}>Email Katya</a>.</p>
+    </form>
+  )
+}
+
 const RVDetailPage = ({ slug, onNavigate, dates = {} }) => {
   const rv = rvs.find(r => r.slug === slug)
+  const [stay, setStay] = useState({ start: dates.start || '', end: dates.end || '' })
   const [idx, setIdx] = useState(0)
   const [showFloorplan, setShowFloorplan] = useState(false)
   const [trip, setTrip] = useState(null)
@@ -830,7 +938,7 @@ const RVDetailPage = ({ slug, onNavigate, dates = {} }) => {
   }
 
   const subject = encodeURIComponent(`Rental request: ${rv.name}`)
-  const body = encodeURIComponent(`Hi Katya,\n\nI'd like to check availability for the ${rv.name}.\n\nDates: ${dates.start && dates.end ? fmtDate(dates.start) + ' to ' + fmtDate(dates.end) : ''}\nNights: ${trip ? trip.nights : ''}\nAdd-ons: ${trip && trip.chosen.length ? trip.chosen.join(', ') : 'none'}\nEstimated TOTAL: ${trip && rv.price ? '$' + trip.subtotal.toLocaleString() : ''}\nNumber of guests:\nPickup or delivery:\n\nThanks!`)
+  const body = encodeURIComponent(`Hi Katya,\n\nI'd like to check availability for the ${rv.name}.\n\nDates: ${stay.start && stay.end ? fmtDate(stay.start) + ' to ' + fmtDate(stay.end) : ''}\nNights: ${trip ? trip.nights : ''}\nAdd-ons: ${trip && trip.chosen.length ? trip.chosen.join(', ') : 'none'}\nEstimated TOTAL: ${trip && rv.price ? '$' + trip.subtotal.toLocaleString() : ''}\nNumber of guests:\nPickup or delivery:\n\nThanks!`)
   const mainSrc = showFloorplan && rv.floorplan ? rv.floorplan : rv.images[idx]
 
   const btn = (filled) => ({
@@ -898,14 +1006,12 @@ const RVDetailPage = ({ slug, onNavigate, dates = {} }) => {
             </> : <span style={{ fontSize: '1.6rem', fontWeight: 700, color: PURPLE }}>Call for rate</span>}
           </div>
           <p style={{ fontSize: '0.8rem', color: '#666', marginBottom: '16px' }}>Standard nightly rate. Your TOTAL below is the BASE STANDARD package with system processing and taxes included.</p>
-          {rv.price && <TripBuilder rv={rv} dates={dates} onChange={setTrip} />}
+          {rv.price && <StayDates rv={rv} stay={stay} setStay={setStay} />}
+          {rv.price && <TripBuilder key={`${stay.start}|${stay.end}`} rv={rv} dates={stay} onChange={setTrip} />}
+          {rv.price && <RequestToBook rv={rv} stay={stay} trip={trip} mailto={`mailto:${EMAIL}?subject=${subject}&body=${body}`} />}
 
           <div className="book-ways">
-            <p className="book-ways-h">Ways to book</p>
-            <a href={`mailto:${EMAIL}?subject=${subject}&body=${body}`} className="book-opt direct">
-              <span><b>Book Direct</b><small>Best savings. The TOTAL above, with no platform fees. Pay by Zelle and save another 10%.</small></span>
-              <em>{trip && trip.subtotal ? `$${trip.subtotal.toLocaleString()}` : 'Best price'}</em>
-            </a>
+            <p className="book-ways-h">Other ways to book</p>
             {rv.rvshare && <a href={rv.rvshare} target="_blank" rel="noopener noreferrer" className="book-opt">
               <span><b>Book via RVshare</b><small>Same nightly rate, plus RVshare's service fee and protection plan added at their checkout.</small></span>
               <em>Higher</em>
@@ -1221,6 +1327,28 @@ function App() {
         .owner-note-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
         .owner-note p { font-size: 0.98rem; line-height: 1.8; color: #333; }
         .owner-sign { margin-top: 14px; font-size: 1.4rem !important; font-weight: 800; color: ${PURPLE} !important; font-style: italic; text-align: right; padding-right: 8px; }
+        .rv-booked { opacity: 0.55; }
+        .live-ok { display: block; font-size: 0.8rem; font-weight: 700; color: ${PURPLE}; margin-top: 2px; }
+        .live-no { display: block; font-size: 0.8rem; font-weight: 700; color: #8a1c1c; margin-top: 2px; }
+        .bk-dates { background: #FCFAFD; border: 1px solid #eee; border-radius: 12px; padding: 14px; margin-bottom: 14px; }
+        .bk-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .bk-row label { display: flex; flex-direction: column; gap: 4px; }
+        .bk-row label span { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: ${DARK}; }
+        .bk-row input, .bk-form textarea { width: 100%; padding: 11px 12px; border: 1px solid #DDD3E3; border-radius: 9px; font-size: 0.95rem; font-family: inherit; background: white; }
+        .bk-form textarea { margin-bottom: 10px; resize: vertical; }
+        .bk-status { font-size: 0.88rem; font-weight: 700; padding: 9px 12px; border-radius: 9px; margin: 4px 0 8px; }
+        .bk-status.ok { background: #F1E6F6; color: ${DARK}; }
+        .bk-status.no { background: #FBEAEA; color: #7a1b1b; }
+        .bk-note { font-size: 0.8rem; color: #666; line-height: 1.5; margin: 4px 0; }
+        .bk-form { margin: 16px 0 6px; }
+        .bk-sub { font-size: 0.85rem; color: #555; margin-bottom: 10px; line-height: 1.5; }
+        .bk-btn { display: block; width: 100%; padding: 14px; border-radius: 10px; font-size: 1rem; font-weight: 700; text-align: center; background: ${PURPLE}; color: white; border: 2px solid ${PURPLE}; cursor: pointer; text-decoration: none; margin: 6px 0; }
+        .bk-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+        .bk-trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+        .bk-done { background: #F4ECF7; border-radius: 12px; padding: 18px; margin: 16px 0; color: #333; line-height: 1.6; font-size: 0.95rem; }
+        .bk-done p { margin-bottom: 8px; }
+        .bk-done-h { font-size: 1.15rem; font-weight: 800; color: ${DARK}; }
+        @media (max-width: 480px) { .bk-row { grid-template-columns: 1fr; } }
         .book-ways { margin: 18px 0 10px; }
         .book-ways-h { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: ${DARK}; margin-bottom: 8px; }
         .book-opt { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; border: 1px solid #E4DCEA; border-radius: 12px; margin-bottom: 8px; text-decoration: none; color: #333; background: white; transition: background .15s; }
