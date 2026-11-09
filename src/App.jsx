@@ -14,7 +14,7 @@ const rvs = [
     "sleepsLabel": "8",
     "length": "42' 5\"",
     "slides": 5,
-    "price": 285,
+    "price": 249,
     "badges": [
       "Two Bedroom"
     ],
@@ -55,7 +55,7 @@ const rvs = [
       "Fresh / Grey / Black: 81 / 106 / 106 gal | Two propane tanks"
     ],
     "towing": "Towing it yourself? Your vehicle needs a rating of at least 18,000 lbs, a brake controller, and a fifth-wheel hitch in a heavy-duty truck bed. Not sure? Ask Katya before you book, or request delivery and setup.",
-    "rvshare": null
+    "rvshare": "https://rvshare.com/rvs/details/1778363"
   },
   {
     "slug": "solitude-390rk",
@@ -65,7 +65,7 @@ const rvs = [
     "sleepsLabel": "6",
     "length": "42' 5\"",
     "slides": 5,
-    "price": 275,
+    "price": 249,
     "badges": [
       "Luxury"
     ],
@@ -105,7 +105,7 @@ const rvs = [
       "Fresh / Grey / Black: 83 / 106 / 53 gal | Two propane tanks"
     ],
     "towing": "Towing it yourself? Your vehicle needs a rating of at least 19,000 lbs, a brake controller, and a fifth-wheel hitch in a heavy-duty truck bed. Not sure? Ask Katya before you book, or request delivery and setup.",
-    "rvshare": null
+    "rvshare": "https://rvshare.com/rvs/details/1778362"
   },
   {
     "slug": "momentum-29g",
@@ -544,7 +544,7 @@ const rvs = [
       "Fresh / Grey / Black: 60 / 30 / 30 gal | Two propane tanks"
     ],
     "towing": "Towing it yourself? Your vehicle needs a rating of at least 7,200 lbs, a brake controller, and a 2-inch ball hitch. Not sure? Ask Katya before you book, or request delivery and setup.",
-    "rvshare": null
+    "rvshare": "https://rvshare.com/rvs/details/1778327"
   },
   {
     "slug": "ibex-20bhs",
