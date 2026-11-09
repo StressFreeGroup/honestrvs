@@ -1697,26 +1697,80 @@ const PICKUP = 'Sycuan Casino Resort, 5469 Casino Way, El Cajon, CA 92019'
 
 // Optional add-ons (same list and prices on every platform)
 const addOns = [
-  { id: 'water', name: 'Pre-Trip Fresh Water Fill', amount: 75, per: 'trip' },
-  { id: 'dump', name: 'Post-Trip Tank Dump and Flush', amount: 199, per: 'trip' },
-  { id: 'gen', name: 'Portable Generator', amount: 50, per: 'night' },
-  { id: 'starlink', name: 'Starlink Internet', amount: 199, per: 'trip' },
-  { id: 'early', name: 'Half Day Start - 10:00 AM Pickup', amount: 99, per: 'trip' },
-  { id: 'late', name: 'Half Day End - 4:00 PM Return', amount: 99, per: 'trip' },
-  { id: 'bike', name: 'Electric Bike (lights and lock)', amount: 50, per: 'unitNight', unit: 'bike', max: 10 },
-  { id: 'dog', name: 'Dog Fee (service animals free)', amount: 100, per: 'unit', unit: 'dog', max: 2 },
-  { id: 'campkit', name: 'Camp Kit', amount: 150, per: 'trip' },
-  { id: 'bedding', name: 'Bedding and Towels', amount: 50, per: 'unit', unit: 'bed', max: 4 },
-  { id: 'cart', name: 'Golf Cart Rental via 3rd Party Partner', amount: 199, per: 'night' },
-  { id: 'cartdel', name: 'Golf Cart Delivery and Pickup via 3rd Party Partner', amount: 199, per: 'trip' },
-  { id: 'delivery', name: 'Local Delivery, Setup and Pickup', amount: 399, per: 'trip', towableOnly: true }
+  { id: 'water', icon: 'drop', name: 'Trip Start - Fill Fresh Water', desc: 'Start your trip with a full fresh water tank.', amount: 75, per: 'trip' },
+  { id: 'dump', icon: 'waste', name: 'Trip End - Empty Waste', desc: "We'll empty the waste tanks after your trip.", amount: 199, per: 'trip' },
+  { id: 'early', icon: 'clock', name: 'Trip Start - Early Request', desc: 'Get an early pickup (before standard time).', amount: 99, per: 'trip' },
+  { id: 'late', icon: 'clockBack', name: 'Trip End - Late Request', desc: 'Return after the standard time.', amount: 75, per: 'trip' },
+  { id: 'bike', icon: 'bike', name: 'Bike Rental - Regular', desc: 'Standard bike rental.', amount: 25, per: 'unitNight', unit: 'bike', max: 10, unitLabel: 'day' },
+  { id: 'ebike', icon: 'ebike', name: 'Bike Rental - Electric', desc: 'Electric bike rental for an easier ride.', amount: 75, per: 'unitNight', unit: 'bike', max: 10, unitLabel: 'day' },
+  { id: 'bedding', icon: 'bed', name: 'Bedding Kit', desc: 'Includes linens, pillows, and towels.', amount: 50, per: 'unit', unit: 'kit', max: 6 },
+  { id: 'campkit', icon: 'tent', name: 'Camping Kit', desc: 'Essential camping gear for a comfortable stay.', amount: 150, per: 'trip' },
+  { id: 'starlink', icon: 'wifi', name: 'Unlimited Wifi - Starlink', desc: 'High-speed, unlimited internet for your trip.', amount: 199, per: 'trip' },
+  { id: 'gen', icon: 'battery', name: 'Unlimited Generator', desc: 'On-demand power for your entire trip.', amount: 199, per: 'trip' },
+  { id: 'dog', icon: 'paw', name: 'Dog Fee', desc: 'Per dog (service animals free).', amount: 100, per: 'unit', unit: 'dog', max: 2 },
+  { id: 'delivery', icon: 'trailer', name: 'Trailer Delivery', desc: 'Local delivery, setup, and pickup (trailers).', amount: 399, per: 'trip', towableOnly: true },
+  { id: 'cart', icon: 'cart', name: 'Golf Cart Rental', desc: 'Golf cart rental via 3rd party partner.', amount: 199, per: 'night' },
+  { id: 'cartdel', icon: 'cartMove', name: 'Golf Cart Delivery', desc: 'Delivery and pickup for your rented golf cart.', amount: 199, per: 'trip' }
 ]
+
+const AddOnIcon = ({ name }) => {
+  const p = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' }
+  const wheel = (cx, cy, r = 3.2) => <circle cx={cx} cy={cy} r={r} {...p} />
+  const icons = {
+    drop: <path {...p} d="M12 3.5c3 4 5.5 7 5.5 10a5.5 5.5 0 01-11 0c0-3 2.5-6 5.5-10z" />,
+    waste: <g {...p}><path d="M2.5 15V8h11v7M13.5 10h4l3 3v2h-2" /><path d="M2.5 15h1.5M10 15h3.5M8 15h0" />{wheel(6.5, 16, 2)}{wheel(16.5, 16, 2)}<path d="M5 11h5" /></g>,
+    clock: <g {...p}><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></g>,
+    clockBack: <g {...p}><path d="M4.5 12a7.5 7.5 0 102.2-5.3" /><path d="M4 4v4h4" /><path d="M12 8v4l3 2" /></g>,
+    bike: <g {...p}>{wheel(5.5, 15.5, 3.5)}{wheel(18.5, 15.5, 3.5)}<path d="M5.5 15.5l4-7h5l4 7M9.5 8.5L12 15.5h-1M13 6h3" /></g>,
+    ebike: <g {...p}>{wheel(5.5, 16, 3.5)}{wheel(17.5, 16, 3.5)}<path d="M5.5 16l4-7h5l3 7M9.5 9L12 16" /><path d="M19.5 2.5L17.5 6h3l-2 3.5" /></g>,
+    bed: <g {...p}><path d="M3 18V8M3 14h18v4M21 14v-3a2 2 0 00-2-2H11v5" /><rect x="5" y="9.5" width="4.5" height="3" rx="1" /></g>,
+    tent: <g {...p}><path d="M12 4L3 19h18L12 4zM12 4v15M8.5 19L12 12l3.5 7M2 19h20" /></g>,
+    wifi: <g {...p}><path d="M3 9.5a13 13 0 0118 0M6 12.8a8.5 8.5 0 0112 0M9 16a4 4 0 016 0" /><circle cx="12" cy="19" r="0.8" fill="currentColor" /></g>,
+    battery: <g {...p}><rect x="3" y="7" width="16" height="10" rx="2" /><path d="M21 10.5v3M11.5 9l-2.5 3.5h3.5L10 15" /></g>,
+    paw: <g fill="currentColor"><ellipse cx="7" cy="9.5" rx="1.8" ry="2.3" /><ellipse cx="10.5" cy="6.5" rx="1.8" ry="2.3" /><ellipse cx="14.5" cy="6.5" rx="1.8" ry="2.3" /><ellipse cx="18" cy="9.5" rx="1.8" ry="2.3" /><path d="M12.5 11.5c-3 0-5.5 3.5-5.5 5.7 0 1.6 1.3 2.3 2.8 2 1-.2 1.8-.6 2.7-.6s1.7.4 2.7.6c1.5.3 2.8-.4 2.8-2 0-2.2-2.5-5.7-5.5-5.7z" /></g>,
+    trailer: <g {...p}><rect x="2.5" y="6" width="14" height="9" rx="1.5" /><path d="M16.5 13h5M5.5 9h4" />{wheel(9, 16.5, 2)}</g>,
+    cart: <g {...p}><path d="M5 6h12M7 6v6M17 6l1 6M4 12h16v3H4z" />{wheel(7.5, 17, 2)}{wheel(16.5, 17, 2)}</g>,
+    cartMove: <g {...p}><path d="M9 6h11M11 6v6M20 6l1 6M8 12h14v3H8z" />{wheel(11.5, 17, 2)}{wheel(19, 17, 2)}<path d="M1.5 9h4M2.5 12h3.5M1.5 15h4" /></g>
+  }
+  return <svg width="36" height="36" viewBox="0 0 24 24" style={{ color: PURPLE }}>{icons[name]}</svg>
+}
+
+const AddOnsSection = () => (
+  <section id="addons" style={{ background: '#FAF8FB', paddingBottom: '48px', scrollMarginTop: '90px' }}>
+    <div className="addons-banner">
+      <svg className="addons-mtn" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 120V70l120-35 110 30 140-55 150 50 120-30 160 45 130-40 150 35 140-45 120 30 100-15V120z" fill="rgba(255,255,255,0.08)" />
+        <path d="M0 120V95l160-30 140 25 170-35 160 30 150-20 170 28 160-30 170 25 160-15V120z" fill="rgba(255,255,255,0.06)" />
+      </svg>
+      <p className="addons-eyebrow"><span />RV RENTAL<span /></p>
+      <h2 className="addons-title">Optional Add-Ons</h2>
+      <p className="addons-sub">Enhance your trip with convenient upgrades, gear, and services.</p>
+    </div>
+    <div className="addons-grid">
+      {addOns.map(a => (
+        <div key={a.id} className="addon-card">
+          <div className="addon-icon"><AddOnIcon name={a.icon} /></div>
+          <div className="addon-text">
+            <h3>{a.name.replace(' - ', ' – ')}</h3>
+            <p>{a.desc}</p>
+          </div>
+          <div className="addon-pill">{addOnLabel(a)}</div>
+        </div>
+      ))}
+    </div>
+    <div className="addons-note">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={PURPLE} strokeWidth="1.8"><circle cx="12" cy="12" r="9.5" /><path d="M12 11v6M12 7.5v.5" strokeLinecap="round" /></svg>
+      <span className="addons-note-bar" />
+      <p>Every rental includes an upgraded smart LED TV for streaming. Trip preparation and Interior Essentials are included in every BASE STANDARD package. Add-on prices shown before 10% system processing and 8.75% taxes.</p>
+    </div>
+  </section>
+)
 
 const addOnLabel = a => ({
   trip: `$${a.amount}`,
   night: `$${a.amount} / night`,
-  unit: `$${a.amount} / ${a.unit}`,
-  unitNight: `$${a.amount} / ${a.unit} / night`
+  unit: a.unit === 'kit' ? `$${a.amount}` : `$${a.amount}`,
+  unitNight: `$${a.amount} / ${a.unitLabel || 'night'}`
 }[a.per])
 
 const addOnCost = (a, qty, nights) => ({
@@ -2074,7 +2128,7 @@ const TripBuilder = ({ rv, dates, onChange }) => {
                 {Array.from({ length: a.max }, (_, i) => i + 1).map(q => <option key={q} value={q}>{q}</option>)}
               </select>
             ) : null}
-            <span className="addon-price">{addOnLabel(a)}</span>
+            <span className="addon-price">{addOnLabel(a)}{a.per === 'unit' ? ` / ${a.unit}` : a.per === 'unitNight' ? ' per bike' : ''}</span>
           </label>
         ))}
       </details>
@@ -2158,23 +2212,7 @@ const HomePage = ({ go, dates, setDates, group, setGroup }) => {
         </div>
       </section>
 
-      <section id="addons" style={{ background: 'white', padding: '44px 20px', scrollMarginTop: '90px' }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '6px', color: DARK, textAlign: 'center' }}>Add to Your Trip</h3>
-          <p style={{ fontSize: '0.95rem', color: '#555', textAlign: 'center', marginBottom: '18px' }}>Want to enhance your experience? Please select from our available add-on options on any RV's page to see your trip TOTAL.</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '8px 24px' }}>
-            {addOns.map(a => (
-              <div key={a.name} style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', padding: '8px 0', borderBottom: '1px solid #eee', fontSize: '0.9rem' }}>
-                <span style={{ color: '#444' }}>{a.name}</span>
-                <span style={{ color: PURPLE, fontWeight: 600, whiteSpace: 'nowrap' }}>{addOnLabel(a)}</span>
-              </div>
-            ))}
-          </div>
-          <p style={{ fontSize: '0.85rem', color: '#666', marginTop: '14px', textAlign: 'center' }}>
-            Add-on prices shown before system processing and taxes. Your trip TOTAL on each RV page includes both.
-          </p>
-        </div>
-      </section>
+      <AddOnsSection />
 
       <section id="promise" style={{ background: '#f5f5f5', padding: '44px 20px', scrollMarginTop: '90px' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
@@ -2476,6 +2514,31 @@ function App() {
         .addon-name { flex: 1; color: #333; }
         .addon-price { color: ${PURPLE}; font-weight: 700; white-space: nowrap; font-size: 0.8rem; }
         .addon-row select { border: 1px solid #ddd; border-radius: 6px; padding: 2px 4px; font-size: 0.85rem; }
+        .addons-banner { position: relative; overflow: hidden; text-align: center; color: white; padding: 46px 20px 64px;
+          background: linear-gradient(135deg, #3A0E47 0%, #5B1E70 55%, #7A3A92 100%); border-radius: 0 0 50% 50% / 0 0 34px 34px; }
+        .addons-mtn { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 110px; }
+        .addons-eyebrow { position: relative; display: flex; align-items: center; justify-content: center; gap: 18px; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.35em; }
+        .addons-eyebrow span { width: 80px; height: 2px; background: rgba(255,255,255,0.8); }
+        .addons-title { position: relative; font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 800; letter-spacing: -0.02em; margin: 6px 0 8px; }
+        .addons-sub { position: relative; font-size: clamp(1rem, 1.8vw, 1.25rem); opacity: 0.95; }
+        .addons-grid { max-width: 1240px; margin: 28px auto 0; padding: 0 24px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 18px; }
+        .addon-card { display: flex; align-items: center; gap: 18px; background: white; border-radius: 14px; padding: 14px 18px 14px 14px; box-shadow: 0 3px 14px rgba(58,14,71,0.08); border: 1px solid #EFEAF2; }
+        .addon-icon { flex-shrink: 0; width: 74px; height: 62px; border-radius: 12px; background: #F1EAF4; display: flex; align-items: center; justify-content: center; }
+        .addon-text { flex: 1; min-width: 0; padding-right: 14px; border-right: 1px solid #E3DCE7; }
+        .addon-text h3 { font-size: 1.15rem; font-weight: 800; color: ${DARK}; line-height: 1.25; }
+        .addon-text p { font-size: 0.92rem; color: #333; margin-top: 3px; line-height: 1.4; }
+        .addon-pill { flex-shrink: 0; min-width: 100px; text-align: center; background: ${PURPLE}; color: white; font-weight: 800; font-size: 1.2rem; padding: 10px 16px; border-radius: 10px; white-space: nowrap; box-shadow: 0 3px 8px rgba(74,18,89,0.25); }
+        .addons-note { max-width: 1192px; margin: 26px auto 0; display: flex; align-items: center; gap: 18px; background: #EDE3F1; border-radius: 12px; padding: 16px 28px; }
+        .addons-note-bar { width: 1px; align-self: stretch; background: rgba(74,18,89,0.35); }
+        .addons-note p { font-size: 0.98rem; color: ${DARK}; line-height: 1.5; }
+        @media (max-width: 900px) { .addons-grid { grid-template-columns: 1fr; } .addons-note { margin: 22px 24px 0; } }
+        @media (max-width: 480px) {
+          .addon-card { gap: 12px; padding: 12px; }
+          .addon-icon { width: 54px; height: 50px; }
+          .addon-text h3 { font-size: 1rem; } .addon-text p { font-size: 0.85rem; }
+          .addon-pill { min-width: 0; font-size: 1rem; padding: 8px 10px; }
+          .addons-eyebrow span { width: 40px; }
+        }
         .rv-desc { color: #555; font-size: 0.88rem; margin-bottom: 14px; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
         @media (max-width: 1020px) {
