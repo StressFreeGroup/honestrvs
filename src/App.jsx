@@ -55,7 +55,103 @@ const rvs = [
       "Fresh / Grey / Black: 81 / 106 / 106 gal | Two propane tanks"
     ],
     "towing": "Towing it yourself? Your vehicle needs a rating of at least 18,000 lbs, a brake controller, and a fifth-wheel hitch in a heavy-duty truck bed. Not sure? Ask Katya before you book, or request delivery and setup.",
-    "rvshare": "https://rvshare.com/rvs/details/1778363"
+    "rvshare": "https://rvshare.com/rvs/details/1778363",
+    "cover": "/images/units/solitude-391dl/cover.jpg",
+    "fullSpecs": [
+      {
+        "title": "Vehicle",
+        "rows": [
+          [
+            "Year",
+            "2024"
+          ],
+          [
+            "Make and Model",
+            "Grand Design Solitude 391DL"
+          ],
+          [
+            "Type",
+            "Fifth Wheel"
+          ],
+          [
+            "Sleeps",
+            "8"
+          ]
+        ]
+      },
+      {
+        "title": "Dimensions",
+        "rows": [
+          [
+            "Length",
+            "42 ft 5 in"
+          ],
+          [
+            "Width",
+            "101 in (8 ft 5 in)"
+          ],
+          [
+            "Height",
+            "153 in (12 ft 9 in)"
+          ],
+          [
+            "Slideouts",
+            "5"
+          ]
+        ]
+      },
+      {
+        "title": "Weight",
+        "rows": [
+          [
+            "Dry Weight",
+            "15,300 lbs"
+          ],
+          [
+            "GVWR",
+            "18,000 lbs"
+          ],
+          [
+            "Hitch Weight",
+            "3,050 lbs"
+          ],
+          [
+            "Axles",
+            "7,000 lb heavy duty (some production runs use 8,000 lb axles)"
+          ]
+        ]
+      },
+      {
+        "title": "Capacities",
+        "rows": [
+          [
+            "Fresh Water",
+            "81 gal"
+          ],
+          [
+            "Grey Water",
+            "106 gal"
+          ],
+          [
+            "Black Water",
+            "106 gal"
+          ],
+          [
+            "Propane Tanks",
+            "2, 14.2 gal total"
+          ]
+        ]
+      },
+      {
+        "title": "Sleeping",
+        "rows": [
+          [
+            "Beds",
+            "Front king bed, rear private bedroom, Sky Suite loft, super sofa with trifold bed"
+          ]
+        ]
+      }
+    ]
   },
   {
     "slug": "solitude-390rk",
@@ -67,7 +163,7 @@ const rvs = [
     "slides": 5,
     "price": 249,
     "badges": [
-      "Luxury"
+      "Rear Kitchen"
     ],
     "motorized": false,
     "images": [
@@ -105,7 +201,242 @@ const rvs = [
       "Fresh / Grey / Black: 83 / 106 / 53 gal | Two propane tanks"
     ],
     "towing": "Towing it yourself? Your vehicle needs a rating of at least 19,000 lbs, a brake controller, and a fifth-wheel hitch in a heavy-duty truck bed. Not sure? Ask Katya before you book, or request delivery and setup.",
-    "rvshare": "https://rvshare.com/rvs/details/1778362"
+    "rvshare": "https://rvshare.com/rvs/details/1778362",
+    "cover": "/images/units/solitude-390rk/cover.jpg",
+    "fullSpecs": [
+      {
+        "title": "Vehicle",
+        "rows": [
+          [
+            "Year",
+            "2023"
+          ],
+          [
+            "Make and Model",
+            "Grand Design Solitude 390RK"
+          ],
+          [
+            "Type",
+            "Fifth Wheel"
+          ],
+          [
+            "Sleeps",
+            "6"
+          ]
+        ]
+      },
+      {
+        "title": "Dimensions",
+        "rows": [
+          [
+            "Length",
+            "42 ft 5 in"
+          ],
+          [
+            "Width",
+            "101 in (8 ft 5 in)"
+          ],
+          [
+            "Height",
+            "13 ft 5 in"
+          ],
+          [
+            "Slideouts",
+            "5"
+          ]
+        ]
+      },
+      {
+        "title": "Weight",
+        "rows": [
+          [
+            "Dry Weight",
+            "15,800 lbs"
+          ],
+          [
+            "GVWR",
+            "19,000 lbs"
+          ],
+          [
+            "Hitch Weight",
+            "2,794 lbs"
+          ],
+          [
+            "Axles",
+            "8,000 lb heavy duty"
+          ]
+        ]
+      },
+      {
+        "title": "Capacities",
+        "rows": [
+          [
+            "Fresh Water",
+            "83 gal"
+          ],
+          [
+            "Grey Water",
+            "106 gal"
+          ],
+          [
+            "Black Water",
+            "53 gal"
+          ],
+          [
+            "Propane Tanks",
+            "2"
+          ]
+        ]
+      },
+      {
+        "title": "Sleeping",
+        "rows": [
+          [
+            "Beds",
+            "Queen bed on slideout, 2 tri-fold sofas"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "discovery-lxe-38k",
+    "name": "2018 Fleetwood Discovery LXE 38K",
+    "type": "Class A",
+    "sleeps": 5,
+    "sleepsLabel": "4-5",
+    "length": "38' 8\"",
+    "slides": 3,
+    "price": 255,
+    "badges": [
+      "Diesel Pusher"
+    ],
+    "motorized": true,
+    "images": [
+      "/images/units/discovery-lxe-38k/01.jpg",
+      "/images/units/discovery-lxe-38k/02.jpg",
+      "/images/units/discovery-lxe-38k/03.jpg",
+      "/images/units/discovery-lxe-38k/04.jpg",
+      "/images/units/discovery-lxe-38k/05.jpg",
+      "/images/units/discovery-lxe-38k/06.jpg"
+    ],
+    "floorplan": "/images/floorplans/discovery-lxe-38k-floorplan.jpg",
+    "description": "A full-size diesel coach that lives like a small apartment: king bedroom, a bath and a half, washer and dryer, and a residential fridge with an ice maker. Built for groups who want real space and a quiet, smooth ride on long highway days.",
+    "sleeping": [
+      "King bed in a private rear bedroom",
+      "Living-area sofa and dinette convert for extra guests"
+    ],
+    "inside": [
+      "Bath and a half, so the bedroom has its own private bath",
+      "Residential refrigerator with ice maker, induction cooktop, dishwasher and microwave",
+      "Onboard washer and dryer",
+      "Multiple TVs, soundbar and Blu-ray player"
+    ],
+    "outside": [
+      "Automatic awnings with wind sensor",
+      "Outdoor TV, satellite dish and backup camera",
+      "Diesel generator, air ride suspension and automatic leveling"
+    ],
+    "specs": [
+      "Length: 38 ft 8 in | Height: 12 ft 10 in | Width: 102 in",
+      "Chassis: Freightliner XCM with Cummins 6.7L diesel, 360 hp",
+      "Transmission: Allison 6-speed automatic",
+      "Generator: Onan diesel"
+    ],
+    "towing": null,
+    "rvshare": null,
+    "cover": "/images/units/discovery-lxe-38k/cover.jpg",
+    "fullSpecs": [
+      {
+        "title": "Vehicle",
+        "rows": [
+          [
+            "Year",
+            "2018"
+          ],
+          [
+            "Make and Model",
+            "Fleetwood Discovery LXE 38K"
+          ],
+          [
+            "Type",
+            "Class A Diesel Motorhome"
+          ],
+          [
+            "Sleeps",
+            "4-5"
+          ]
+        ]
+      },
+      {
+        "title": "Dimensions",
+        "rows": [
+          [
+            "Length",
+            "38 ft 8 in"
+          ],
+          [
+            "Height",
+            "12 ft 10 in"
+          ],
+          [
+            "Width",
+            "102 in"
+          ],
+          [
+            "Interior Height",
+            "84 in"
+          ],
+          [
+            "Slideouts",
+            "3"
+          ]
+        ]
+      },
+      {
+        "title": "Chassis and Engine",
+        "rows": [
+          [
+            "Chassis",
+            "Freightliner XCM Series (Power Bridge)"
+          ],
+          [
+            "Engine",
+            "Cummins ISB 6.7L I6 diesel, 360 hp, turbocharged"
+          ],
+          [
+            "Transmission",
+            "Allison 3000 MH 6-speed automatic"
+          ]
+        ]
+      },
+      {
+        "title": "Capacities",
+        "rows": [
+          [
+            "Generator",
+            "Onan diesel generator, standard"
+          ],
+          [
+            "Suspension",
+            "Air bag suspension"
+          ]
+        ]
+      },
+      {
+        "title": "Sleeping",
+        "rows": [
+          [
+            "Beds",
+            "King bed"
+          ],
+          [
+            "Bathrooms",
+            "Bath and a half"
+          ]
+        ]
+      }
+    ]
   },
   {
     "slug": "momentum-29g",
@@ -117,7 +448,7 @@ const rvs = [
     "slides": 2,
     "price": 255,
     "badges": [
-      "Toy Hauler"
+      "Rear Garage"
     ],
     "motorized": false,
     "images": [
@@ -155,55 +486,484 @@ const rvs = [
       "Fresh / Grey / Black: 100 / 78 / 39 gal | Propane: 18 gal"
     ],
     "towing": "Towing it yourself? Your vehicle needs a rating of at least 11,000 lbs, a brake controller, and a 2-5/16 in ball hitch rated for the trailer weight. Not sure? Ask Katya before you book, or request delivery and setup.",
-    "rvshare": "https://rvshare.com/rvs/details/1758130"
+    "rvshare": "https://rvshare.com/rvs/details/1758130",
+    "cover": "/images/units/momentum-29g/cover.jpg",
+    "fullSpecs": [
+      {
+        "title": "Vehicle",
+        "rows": [
+          [
+            "Year",
+            "2021"
+          ],
+          [
+            "Make and Model",
+            "Grand Design Momentum 29G"
+          ],
+          [
+            "Type",
+            "Toy Hauler Travel Trailer"
+          ],
+          [
+            "Sleeps",
+            "8"
+          ]
+        ]
+      },
+      {
+        "title": "Dimensions and Weight",
+        "rows": [
+          [
+            "Length",
+            "34 ft"
+          ],
+          [
+            "Height",
+            "12 ft 5 in"
+          ],
+          [
+            "Dry Weight",
+            "8,300 lbs"
+          ],
+          [
+            "GVWR",
+            "11,000 lbs"
+          ],
+          [
+            "Hitch Weight",
+            "1,350 lbs"
+          ],
+          [
+            "Slideouts",
+            "2"
+          ]
+        ]
+      },
+      {
+        "title": "Capacities",
+        "rows": [
+          [
+            "Fresh Water",
+            "100 gal"
+          ],
+          [
+            "Grey Water",
+            "78 gal"
+          ],
+          [
+            "Black Water",
+            "39 gal"
+          ],
+          [
+            "Propane",
+            "18 gal"
+          ]
+        ]
+      },
+      {
+        "title": "Sleeping",
+        "rows": [
+          [
+            "Beds",
+            "Front queen bedroom, rear garage with power bunks"
+          ]
+        ]
+      }
+    ]
   },
   {
-    "slug": "discovery-lxe-38k",
-    "name": "2018 Fleetwood Discovery LXE 38K",
-    "type": "Class A",
-    "sleeps": 5,
-    "sleepsLabel": "4-5",
-    "length": "38' 8\"",
-    "slides": 3,
-    "price": 255,
+    "slug": "sequence-20j",
+    "name": "2022 Thor Sequence 20J",
+    "type": "Class B",
+    "sleeps": 4,
+    "sleepsLabel": "3-4",
+    "length": "21'",
+    "slides": 0,
+    "price": 195,
     "badges": [
-      "Luxury"
+      "Camper Van"
     ],
     "motorized": true,
     "images": [
-      "/images/units/discovery-lxe-38k/01.jpg",
-      "/images/units/discovery-lxe-38k/02.jpg",
-      "/images/units/discovery-lxe-38k/03.jpg",
-      "/images/units/discovery-lxe-38k/04.jpg",
-      "/images/units/discovery-lxe-38k/05.jpg",
-      "/images/units/discovery-lxe-38k/06.jpg",
-      "/images/units/discovery-lxe-38k/07.jpg"
+      "/images/units/sequence-20j/01.jpg",
+      "/images/units/sequence-20j/02.jpg",
+      "/images/units/sequence-20j/03.jpg",
+      "/images/units/sequence-20j/04.jpg",
+      "/images/units/sequence-20j/05.jpg",
+      "/images/units/sequence-20j/06.jpg"
     ],
-    "floorplan": "/images/floorplans/discovery-lxe-38k-floorplan.jpg",
-    "description": "A full-size diesel coach that lives like a small apartment: king bedroom, a bath and a half, washer and dryer, and a residential fridge with an ice maker. Built for groups who want real space and a quiet, smooth ride on long highway days.",
+    "floorplan": "/images/floorplans/sequence-20j-floorplan.jpg",
+    "description": "A Ram ProMaster camper van that handles like a large van, not a motorhome, and fits where bigger rigs cannot. Swivel cab seats, a center galley and a rear sofa that folds into a bed make it an easy base for two.",
     "sleeping": [
-      "King bed in a private rear bedroom",
-      "Living-area sofa and dinette convert for extra guests"
+      "Rear sofa that folds into a bed"
     ],
     "inside": [
-      "Bath and a half, so the bedroom has its own private bath",
-      "Residential refrigerator with ice maker, induction cooktop, dishwasher and microwave",
-      "Onboard washer and dryer",
-      "Multiple TVs, soundbar and Blu-ray player"
+      "Center galley with portable cooktop, microwave and compact refrigerator",
+      "Wet bath with toilet and shower",
+      "Swivel cab seats and removable table",
+      "Touchscreen control panel"
     ],
     "outside": [
-      "Automatic awnings with wind sensor",
-      "Outdoor TV, satellite dish and backup camera",
-      "Diesel generator, air ride suspension and automatic leveling"
+      "Ram ProMaster 3500 chassis",
+      "Rear bike rack"
     ],
     "specs": [
-      "Length: 38 ft 8 in | Height: 12 ft 10 in | Width: 102 in",
-      "Chassis: Freightliner XCM with Cummins 6.7L diesel, 360 hp",
-      "Transmission: Allison 6-speed automatic",
-      "Generator: Onan diesel"
+      "Length: 21 ft 1 in",
+      "Chassis: Ram ProMaster 3500, 3.6L V6 gas, 280 hp"
     ],
     "towing": null,
-    "rvshare": null
+    "rvshare": "https://rvshare.com/rvs/details/1765771",
+    "cover": "/images/units/sequence-20j/cover.jpg",
+    "fullSpecs": [
+      {
+        "title": "Vehicle",
+        "rows": [
+          [
+            "Year",
+            "2022"
+          ],
+          [
+            "Make and Model",
+            "Thor Sequence 20J"
+          ],
+          [
+            "Type",
+            "Class B Camper Van"
+          ],
+          [
+            "Sleeps",
+            "3-4"
+          ]
+        ]
+      },
+      {
+        "title": "Dimensions",
+        "rows": [
+          [
+            "Length",
+            "21 ft 1 in"
+          ],
+          [
+            "Slideouts",
+            "0"
+          ]
+        ]
+      },
+      {
+        "title": "Chassis and Engine",
+        "rows": [
+          [
+            "Chassis",
+            "Ram ProMaster 3500"
+          ],
+          [
+            "Engine",
+            "Pentastar VVT V6, 3.6L gas, 280 hp"
+          ],
+          [
+            "Transmission",
+            "Automatic"
+          ]
+        ]
+      },
+      {
+        "title": "Sleeping",
+        "rows": [
+          [
+            "Beds",
+            "Rear sofa bed system"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "cougar-22rbs",
+    "name": "2021 Keystone Cougar 22RBS",
+    "type": "Travel Trailer",
+    "sleeps": 4,
+    "sleepsLabel": "4",
+    "length": "25' 11\"",
+    "slides": 1,
+    "price": 135,
+    "badges": [
+      "Couples"
+    ],
+    "motorized": false,
+    "images": [
+      "/images/units/cougar-22rbs/02.jpg",
+      "/images/units/cougar-22rbs/01.jpg",
+      "/images/units/cougar-22rbs/03.jpg",
+      "/images/units/cougar-22rbs/04.jpg",
+      "/images/units/cougar-22rbs/05.jpg",
+      "/images/units/cougar-22rbs/06.jpg"
+    ],
+    "floorplan": "/images/floorplans/cougar-22rbs-floorplan.jpg",
+    "description": "A half-ton towable built for two, with a king bed up front and a rear bath with a radius shower. Heated tanks and a 60 gal fresh tank make it comfortable for longer stays and cooler seasons.",
+    "sleeping": [
+      "Front king bed (72 x 80 in)",
+      "U-shaped dinette converts for extra guests"
+    ],
+    "inside": [
+      "Kitchen with range, oven, microwave and a large pantry",
+      "Rear bathroom with radius shower",
+      "Bar-top seating and TV"
+    ],
+    "outside": [
+      "16 ft power awning",
+      "Smartphone control for lights, slide, awning and climate",
+      "Heated holding tanks"
+    ],
+    "specs": [
+      "Length: 25 ft 11 in | Height: 11 ft 4 in | Width: 8 ft",
+      "Dry weight: 5,607 lbs | GVWR: 7,200 lbs | Hitch weight: 630 lbs",
+      "Fresh / Grey / Black: 60 / 30 / 30 gal | Two propane tanks"
+    ],
+    "towing": "Towing it yourself? Your vehicle needs a rating of at least 7,200 lbs, a brake controller, and a 2-inch ball hitch. Not sure? Ask Katya before you book, or request delivery and setup.",
+    "rvshare": "https://rvshare.com/rvs/details/1778327",
+    "cover": "/images/units/cougar-22rbs/cover.jpg",
+    "fullSpecs": [
+      {
+        "title": "Vehicle",
+        "rows": [
+          [
+            "Year",
+            "2021"
+          ],
+          [
+            "Make and Model",
+            "Keystone Cougar 22RBS"
+          ],
+          [
+            "Type",
+            "Travel Trailer"
+          ],
+          [
+            "Sleeps",
+            "4"
+          ]
+        ]
+      },
+      {
+        "title": "Dimensions",
+        "rows": [
+          [
+            "Length",
+            "25 ft 11 in"
+          ],
+          [
+            "Width",
+            "8 ft"
+          ],
+          [
+            "Height",
+            "11 ft 4 in"
+          ],
+          [
+            "Slideouts",
+            "1"
+          ]
+        ]
+      },
+      {
+        "title": "Weight",
+        "rows": [
+          [
+            "Dry Weight",
+            "5,607 lbs"
+          ],
+          [
+            "GVWR",
+            "7,200 lbs"
+          ],
+          [
+            "Hitch Weight",
+            "630 lbs"
+          ],
+          [
+            "Payload Capacity",
+            "1,593 lbs"
+          ]
+        ]
+      },
+      {
+        "title": "Capacities",
+        "rows": [
+          [
+            "Fresh Water",
+            "60 gal"
+          ],
+          [
+            "Grey Water",
+            "30 gal"
+          ],
+          [
+            "Black Water",
+            "30 gal"
+          ],
+          [
+            "Propane Tanks",
+            "2"
+          ]
+        ]
+      },
+      {
+        "title": "Sleeping",
+        "rows": [
+          [
+            "Beds",
+            "King bed, U-shaped dinette"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "ibex-20bhs",
+    "name": "2021 Forest River Ibex 20BHS",
+    "type": "Travel Trailer",
+    "sleeps": 6,
+    "sleepsLabel": "6",
+    "length": "25'",
+    "slides": 1,
+    "price": 125,
+    "badges": [
+      "Bunkhouse"
+    ],
+    "motorized": false,
+    "images": [
+      "/images/units/ibex-20bhs/01.jpg",
+      "/images/units/ibex-20bhs/02.jpg",
+      "/images/units/ibex-20bhs/03.jpg",
+      "/images/units/ibex-20bhs/04.jpg",
+      "/images/units/ibex-20bhs/05.jpg",
+      "/images/units/ibex-20bhs/06.jpg",
+      "/images/units/ibex-20bhs/07.jpg",
+      "/images/units/ibex-20bhs/08.jpg",
+      "/images/units/ibex-20bhs/09.jpg",
+      "/images/units/ibex-20bhs/10.jpg"
+    ],
+    "floorplan": "/images/floorplans/ibex-20bhs-floorplan.jpg",
+    "description": "A light, rugged bunkhouse trailer that tows behind a wide range of trucks and SUVs. Queen up front, bunks for the kids, and an enclosed underbelly so it handles cool nights as well as summer weekends.",
+    "sleeping": [
+      "Front queen bed with under-bed storage",
+      "Two bunk beds (30 x 74 in)",
+      "Slide-out dinette converts for an extra guest"
+    ],
+    "inside": [
+      "Kitchen with range, oven, sink and refrigerator",
+      "Rear corner bathroom with shower",
+      "TV"
+    ],
+    "outside": [
+      "16 ft power awning",
+      "Power tongue jack",
+      "Pass-through storage",
+      "Enclosed underbelly"
+    ],
+    "specs": [
+      "Length: 25 ft | Height: 11 ft 3 in | Width: 8 ft",
+      "Dry weight: 4,613 lbs | GVWR: 7,510 lbs | Hitch weight: 510 lbs",
+      "Fresh / Grey / Black: 40 / 40 / 30 gal | Two propane tanks"
+    ],
+    "towing": "Towing it yourself? Your vehicle needs a rating of at least 7,510 lbs, a brake controller, and a 2-inch ball hitch. Not sure? Ask Katya before you book, or request delivery and setup.",
+    "rvshare": null,
+    "cover": "/images/units/ibex-20bhs/cover.jpg",
+    "fullSpecs": [
+      {
+        "title": "Vehicle",
+        "rows": [
+          [
+            "Year",
+            "2021"
+          ],
+          [
+            "Make and Model",
+            "Forest River Ibex 20BHS"
+          ],
+          [
+            "Type",
+            "Travel Trailer"
+          ],
+          [
+            "Sleeps",
+            "6"
+          ]
+        ]
+      },
+      {
+        "title": "Dimensions",
+        "rows": [
+          [
+            "Length",
+            "25 ft"
+          ],
+          [
+            "Width",
+            "8 ft"
+          ],
+          [
+            "Height",
+            "11 ft 3 in"
+          ],
+          [
+            "Slideouts",
+            "1"
+          ]
+        ]
+      },
+      {
+        "title": "Weight",
+        "rows": [
+          [
+            "Dry Weight",
+            "4,613 lbs"
+          ],
+          [
+            "GVWR",
+            "7,510 lbs"
+          ],
+          [
+            "Hitch Weight",
+            "510 lbs"
+          ],
+          [
+            "Payload Capacity",
+            "2,897 lbs"
+          ]
+        ]
+      },
+      {
+        "title": "Capacities",
+        "rows": [
+          [
+            "Fresh Water",
+            "40 gal"
+          ],
+          [
+            "Grey Water",
+            "40 gal"
+          ],
+          [
+            "Black Water",
+            "30 gal"
+          ],
+          [
+            "Propane Tanks",
+            "2"
+          ]
+        ]
+      },
+      {
+        "title": "Sleeping",
+        "rows": [
+          [
+            "Beds",
+            "Front queen bed, bunk beds, convertible dinette"
+          ]
+        ]
+      }
+    ]
   },
   {
     "slug": "freelander-31bh",
@@ -215,7 +975,7 @@ const rvs = [
     "slides": 2,
     "price": 225,
     "badges": [
-      "Large Group"
+      "Bunkhouse"
     ],
     "motorized": true,
     "images": [
@@ -253,7 +1013,79 @@ const rvs = [
       "Chassis: Ford E-450, 6.8L V10 gas, 305 hp"
     ],
     "towing": null,
-    "rvshare": null
+    "rvshare": null,
+    "cover": "/images/units/freelander-31bh/cover.jpg",
+    "fullSpecs": [
+      {
+        "title": "Vehicle",
+        "rows": [
+          [
+            "Year",
+            "2019"
+          ],
+          [
+            "Make and Model",
+            "Coachmen Freelander 31BH"
+          ],
+          [
+            "Type",
+            "Class C Motorhome"
+          ],
+          [
+            "Sleeps",
+            "10"
+          ]
+        ]
+      },
+      {
+        "title": "Dimensions",
+        "rows": [
+          [
+            "Length",
+            "32 ft 11 in"
+          ],
+          [
+            "Slideouts",
+            "2"
+          ]
+        ]
+      },
+      {
+        "title": "Chassis and Engine",
+        "rows": [
+          [
+            "Chassis",
+            "Ford E450"
+          ],
+          [
+            "Engine",
+            "Ford Triton V10, 6.8L gas, 305 hp"
+          ],
+          [
+            "Transmission",
+            "TorqShift automatic"
+          ]
+        ]
+      },
+      {
+        "title": "Capacities",
+        "rows": [
+          [
+            "Generator",
+            "Onboard, standard"
+          ]
+        ]
+      },
+      {
+        "title": "Sleeping",
+        "rows": [
+          [
+            "Beds",
+            "Overhead cab bunk (57in x 95in), twin bunk beds, convertible dinette and sofa bed"
+          ]
+        ]
+      }
+    ]
   },
   {
     "slug": "chateau-31e",
@@ -305,60 +1137,83 @@ const rvs = [
       "GVWR: 14,500 lbs | Hitch rating: 8,000 lbs"
     ],
     "towing": null,
-    "rvshare": null
-  },
-  {
-    "slug": "redhawk-26m",
-    "name": "2021 Jayco Redhawk 26M",
-    "type": "Class C",
-    "sleeps": 6,
-    "sleepsLabel": "6",
-    "length": "28' 8\"",
-    "slides": 1,
-    "price": 215,
-    "badges": [
-      "Murphy Bed"
-    ],
-    "motorized": true,
-    "images": [
-      "/images/units/redhawk-26m/01.jpg",
-      "/images/units/redhawk-26m/02.jpg",
-      "/images/units/redhawk-26m/03.jpg",
-      "/images/units/redhawk-26m/04.jpg",
-      "/images/units/redhawk-26m/05.jpg",
-      "/images/units/redhawk-26m/06.jpg",
-      "/images/units/redhawk-26m/07.jpg",
-      "/images/units/redhawk-26m/08.jpg",
-      "/images/units/redhawk-26m/09.jpg",
-      "/images/units/redhawk-26m/10.jpg"
-    ],
-    "floorplan": "/images/floorplans/redhawk-26m-floorplan.jpg",
-    "description": "A newer Jayco with the stronger 7.3L V8 and Jayco's smoother ride suspension. The queen bed folds away into the wall during the day, opening up a living room with an electric fireplace and TV.",
-    "sleeping": [
-      "Queen Murphy bed that folds away by day",
-      "Over-cab bed rated for 750 lbs",
-      "Dinette and sofa convert for extra guests"
-    ],
-    "inside": [
-      "Kitchen with range, oven, microwave and double sink",
-      "Full bathroom with shower",
-      "Electric fireplace with TV",
-      "Hardwood cabinetry and LED lighting"
-    ],
-    "outside": [
-      "Power awning",
-      "Backup camera",
-      "Onboard generator",
-      "Solar prep and freeze-resistant insulation"
-    ],
-    "specs": [
-      "Length: 28 ft 8 in",
-      "Chassis: Ford E-450, 7.3L V8 gas, 350 hp",
-      "Fresh / Black: 43.5 / 31 gal | Fuel: 55 gal",
-      "A/C: 15,000 BTU | Furnace: 30,000 BTU"
-    ],
-    "towing": null,
-    "rvshare": null
+    "rvshare": null,
+    "cover": "/images/units/chateau-31e/cover.jpg",
+    "fullSpecs": [
+      {
+        "title": "Vehicle",
+        "rows": [
+          [
+            "Year",
+            "2018"
+          ],
+          [
+            "Make and Model",
+            "Thor Chateau 31E"
+          ],
+          [
+            "Type",
+            "Class C Motorhome"
+          ],
+          [
+            "Sleeps",
+            "8"
+          ]
+        ]
+      },
+      {
+        "title": "Dimensions",
+        "rows": [
+          [
+            "Length",
+            "32 ft 7 in"
+          ],
+          [
+            "Slideouts",
+            "1 (3TRAX wall slide system)"
+          ]
+        ]
+      },
+      {
+        "title": "Chassis and Engine",
+        "rows": [
+          [
+            "Chassis",
+            "Ford E450"
+          ],
+          [
+            "Engine",
+            "Ford Triton V10, 6.8L gas, 305 hp"
+          ],
+          [
+            "Transmission",
+            "TorqShift automatic"
+          ]
+        ]
+      },
+      {
+        "title": "Capacities",
+        "rows": [
+          [
+            "GVWR",
+            "14,500 lbs"
+          ],
+          [
+            "Trailer Hitch",
+            "8,000 lbs"
+          ]
+        ]
+      },
+      {
+        "title": "Sleeping",
+        "rows": [
+          [
+            "Beds",
+            "Queen bed, cab-over bunk, convertible dinette"
+          ]
+        ]
+      }
+    ]
   },
   {
     "slug": "redhawk-26xd",
@@ -366,11 +1221,11 @@ const rvs = [
     "type": "Class C",
     "sleeps": 6,
     "sleepsLabel": "6",
-    "length": "29'",
+    "length": "28' 8\"",
     "slides": 2,
     "price": 205,
     "badges": [
-      "Family"
+      "Compact"
     ],
     "motorized": true,
     "images": [
@@ -412,7 +1267,111 @@ const rvs = [
       "Fresh / Grey / Black: 42 / 41 / 32 gal | Propane: 10 gal"
     ],
     "towing": null,
-    "rvshare": null
+    "rvshare": null,
+    "cover": "/images/units/redhawk-26xd/cover.jpg",
+    "fullSpecs": [
+      {
+        "title": "Vehicle",
+        "rows": [
+          [
+            "Year",
+            "2019"
+          ],
+          [
+            "Make and Model",
+            "Jayco Redhawk 26XD"
+          ],
+          [
+            "Type",
+            "Class C Motorhome"
+          ],
+          [
+            "Sleeps",
+            "6"
+          ]
+        ]
+      },
+      {
+        "title": "Dimensions",
+        "rows": [
+          [
+            "Length",
+            "28 ft 8 in"
+          ],
+          [
+            "Exterior Height",
+            "11 ft 6 in"
+          ],
+          [
+            "Interior Height",
+            "7 ft 0 in"
+          ],
+          [
+            "Width",
+            "8 ft 4 in"
+          ],
+          [
+            "Slideouts",
+            "2"
+          ]
+        ]
+      },
+      {
+        "title": "Chassis and Engine",
+        "rows": [
+          [
+            "Chassis",
+            "Ford E-450"
+          ],
+          [
+            "Engine",
+            "Ford Triton V10, 6.8L gas"
+          ],
+          [
+            "Axles",
+            "2"
+          ]
+        ]
+      },
+      {
+        "title": "Capacities",
+        "rows": [
+          [
+            "Fresh Water",
+            "43 gal"
+          ],
+          [
+            "Grey Water",
+            "41 gal"
+          ],
+          [
+            "Black Water",
+            "32 gal"
+          ],
+          [
+            "Propane",
+            "12 gal"
+          ],
+          [
+            "Fuel",
+            "55 gal"
+          ],
+          [
+            "Refrigerator",
+            "8 cu ft"
+          ]
+        ]
+      },
+      {
+        "title": "Sleeping",
+        "rows": [
+          [
+            "Beds",
+            "3 (cab-over bunk, queen slideout bed, convertible dinette/sofa)"
+          ]
+        ]
+      }
+    ]
   },
   {
     "slug": "outlook-25j",
@@ -424,7 +1383,7 @@ const rvs = [
     "slides": 0,
     "price": 205,
     "badges": [
-      "Family"
+      "Compact"
     ],
     "motorized": true,
     "images": [
@@ -465,148 +1424,119 @@ const rvs = [
       "Towing capacity: 7,500 lbs"
     ],
     "towing": null,
-    "rvshare": "https://rvshare.com/rvs/details/1765774"
-  },
-  {
-    "slug": "sequence-20j",
-    "name": "2022 Thor Sequence 20J",
-    "type": "Class B",
-    "sleeps": 4,
-    "sleepsLabel": "3-4",
-    "length": "21'",
-    "slides": 0,
-    "price": 195,
-    "badges": [
-      "Camper Van"
-    ],
-    "motorized": true,
-    "images": [
-      "/images/units/sequence-20j/01.jpg",
-      "/images/units/sequence-20j/02.jpg",
-      "/images/units/sequence-20j/03.jpg",
-      "/images/units/sequence-20j/04.jpg",
-      "/images/units/sequence-20j/05.jpg",
-      "/images/units/sequence-20j/06.jpg",
-      "/images/units/sequence-20j/07.jpg"
-    ],
-    "floorplan": "/images/floorplans/sequence-20j-floorplan.jpg",
-    "description": "A Ram ProMaster camper van that handles like a large van, not a motorhome, and fits where bigger rigs cannot. Swivel cab seats, a center galley and a rear sofa that folds into a bed make it an easy base for two.",
-    "sleeping": [
-      "Rear sofa that folds into a bed"
-    ],
-    "inside": [
-      "Center galley with portable cooktop, microwave and compact refrigerator",
-      "Wet bath with toilet and shower",
-      "Swivel cab seats and removable table",
-      "Touchscreen control panel"
-    ],
-    "outside": [
-      "Ram ProMaster 3500 chassis",
-      "Rear bike rack"
-    ],
-    "specs": [
-      "Length: 21 ft 1 in",
-      "Chassis: Ram ProMaster 3500, 3.6L V6 gas, 280 hp"
-    ],
-    "towing": null,
-    "rvshare": "https://rvshare.com/rvs/details/1765771"
-  },
-  {
-    "slug": "cougar-22rbs",
-    "name": "2021 Keystone Cougar 22RBS",
-    "type": "Travel Trailer",
-    "sleeps": 4,
-    "sleepsLabel": "4",
-    "length": "25' 11\"",
-    "slides": 1,
-    "price": 135,
-    "badges": [
-      "Couples"
-    ],
-    "motorized": false,
-    "images": [
-      "/images/units/cougar-22rbs/01.jpg",
-      "/images/units/cougar-22rbs/02.jpg",
-      "/images/units/cougar-22rbs/03.jpg",
-      "/images/units/cougar-22rbs/04.jpg",
-      "/images/units/cougar-22rbs/05.jpg",
-      "/images/units/cougar-22rbs/06.jpg",
-      "/images/units/cougar-22rbs/07.jpg"
-    ],
-    "floorplan": "/images/floorplans/cougar-22rbs-floorplan.jpg",
-    "description": "A half-ton towable built for two, with a king bed up front and a rear bath with a radius shower. Heated tanks and a 60 gal fresh tank make it comfortable for longer stays and cooler seasons.",
-    "sleeping": [
-      "Front king bed (72 x 80 in)",
-      "U-shaped dinette converts for extra guests"
-    ],
-    "inside": [
-      "Kitchen with range, oven, microwave and a large pantry",
-      "Rear bathroom with radius shower",
-      "Bar-top seating and TV"
-    ],
-    "outside": [
-      "16 ft power awning",
-      "Smartphone control for lights, slide, awning and climate",
-      "Heated holding tanks"
-    ],
-    "specs": [
-      "Length: 25 ft 11 in | Height: 11 ft 4 in | Width: 8 ft",
-      "Dry weight: 5,607 lbs | GVWR: 7,200 lbs | Hitch weight: 630 lbs",
-      "Fresh / Grey / Black: 60 / 30 / 30 gal | Two propane tanks"
-    ],
-    "towing": "Towing it yourself? Your vehicle needs a rating of at least 7,200 lbs, a brake controller, and a 2-inch ball hitch. Not sure? Ask Katya before you book, or request delivery and setup.",
-    "rvshare": "https://rvshare.com/rvs/details/1778327"
-  },
-  {
-    "slug": "ibex-20bhs",
-    "name": "2021 Forest River Ibex 20BHS",
-    "type": "Travel Trailer",
-    "sleeps": 6,
-    "sleepsLabel": "6",
-    "length": "25'",
-    "slides": 1,
-    "price": 125,
-    "badges": [
-      "Bunkhouse"
-    ],
-    "motorized": false,
-    "images": [
-      "/images/units/ibex-20bhs/01.jpg",
-      "/images/units/ibex-20bhs/02.jpg",
-      "/images/units/ibex-20bhs/03.jpg",
-      "/images/units/ibex-20bhs/04.jpg",
-      "/images/units/ibex-20bhs/05.jpg",
-      "/images/units/ibex-20bhs/06.jpg",
-      "/images/units/ibex-20bhs/07.jpg",
-      "/images/units/ibex-20bhs/08.jpg",
-      "/images/units/ibex-20bhs/09.jpg",
-      "/images/units/ibex-20bhs/10.jpg"
-    ],
-    "floorplan": "/images/floorplans/ibex-20bhs-floorplan.jpg",
-    "description": "A light, rugged bunkhouse trailer that tows behind a wide range of trucks and SUVs. Queen up front, bunks for the kids, and an enclosed underbelly so it handles cool nights as well as summer weekends.",
-    "sleeping": [
-      "Front queen bed with under-bed storage",
-      "Two bunk beds (30 x 74 in)",
-      "Slide-out dinette converts for an extra guest"
-    ],
-    "inside": [
-      "Kitchen with range, oven, sink and refrigerator",
-      "Rear corner bathroom with shower",
-      "TV"
-    ],
-    "outside": [
-      "16 ft power awning",
-      "Power tongue jack",
-      "Pass-through storage",
-      "Enclosed underbelly"
-    ],
-    "specs": [
-      "Length: 25 ft | Height: 11 ft 3 in | Width: 8 ft",
-      "Dry weight: 4,613 lbs | GVWR: 7,510 lbs | Hitch weight: 510 lbs",
-      "Fresh / Grey / Black: 40 / 40 / 30 gal | Two propane tanks"
-    ],
-    "towing": "Towing it yourself? Your vehicle needs a rating of at least 7,510 lbs, a brake controller, and a 2-inch ball hitch. Not sure? Ask Katya before you book, or request delivery and setup.",
-    "rvshare": null
+    "rvshare": "https://rvshare.com/rvs/details/1765774",
+    "cover": "/images/units/outlook-25j/cover.jpg",
+    "fullSpecs": [
+      {
+        "title": "Vehicle",
+        "rows": [
+          [
+            "Year",
+            "2019"
+          ],
+          [
+            "Make and Model",
+            "Winnebago Outlook 25J"
+          ],
+          [
+            "Type",
+            "Class C Motorhome"
+          ],
+          [
+            "Sleeps",
+            "6"
+          ]
+        ]
+      },
+      {
+        "title": "Dimensions",
+        "rows": [
+          [
+            "Length",
+            "26 ft 2 in"
+          ],
+          [
+            "Exterior Height",
+            "10 ft 9 in"
+          ],
+          [
+            "Interior Height",
+            "6 ft 10 in"
+          ],
+          [
+            "Width",
+            "8 ft 5 in"
+          ],
+          [
+            "Slideouts",
+            "0 (no slideout on this floorplan)"
+          ],
+          [
+            "Axles",
+            "1"
+          ]
+        ]
+      },
+      {
+        "title": "Chassis and Engine",
+        "rows": [
+          [
+            "Chassis",
+            "Ford E350"
+          ],
+          [
+            "Engine",
+            "Ford Triton V8, 5.4L gas, 255 hp"
+          ],
+          [
+            "Transmission",
+            "TorqShift 6-speed automatic with overdrive"
+          ]
+        ]
+      },
+      {
+        "title": "Capacities",
+        "rows": [
+          [
+            "Fresh Water",
+            "37 gal"
+          ],
+          [
+            "Grey Water",
+            "41 gal"
+          ],
+          [
+            "Black Water",
+            "41 gal"
+          ],
+          [
+            "Propane",
+            "18 gal"
+          ],
+          [
+            "Fuel",
+            "40 gal"
+          ],
+          [
+            "GVWR",
+            "11,500 lbs"
+          ],
+          [
+            "Towing Capacity",
+            "7,500 lbs"
+          ]
+        ]
+      },
+      {
+        "title": "Sleeping",
+        "rows": [
+          [
+            "Beds",
+            "2 double beds, 2 convertible sofa/dinette beds"
+          ]
+        ]
+      }
+    ]
   }
 ]
 
@@ -753,17 +1683,17 @@ const Hero = ({ dates, setDates, onSearch }) => {
   return (
     <section className="hero">
       <div className="hero-inner">
-        <h1 className="hero-title">San Diego RV Rentals</h1>
-        <p className="hero-sub">with Clear Pricing and No Surprise Fees</p>
+        <h1 className="hero-title">Always Honest RVs</h1>
+        <p className="hero-sub">San Diego RV Rentals, Straightforward</p>
         <div className="hero-rule" />
         <form className="search-card" onSubmit={e => { e.preventDefault(); onSearch() }}>
           <label className="search-field">
-            <span className="search-label">Start Date</span>
+            <span className="search-label">Trip Start</span>
             <input type="date" min={today} value={dates.start}
               onChange={e => setDates(d => ({ start: e.target.value, end: d.end && d.end <= e.target.value ? '' : d.end }))} />
           </label>
           <label className="search-field">
-            <span className="search-label">End Date</span>
+            <span className="search-label">Trip End</span>
             <input type="date" min={dates.start || today} value={dates.end}
               onChange={e => setDates(d => ({ ...d, end: e.target.value }))} />
           </label>
@@ -784,10 +1714,14 @@ const RVCard = ({ rv, onOpen, nights }) => {
   return (
     <div className="rv-card" onClick={onOpen}>
       <div className="rv-card-img">
-        <img src={showFp && rv.floorplan ? rv.floorplan : rv.images[0]} alt={rv.name} loading="lazy"
+        <img src={showFp && rv.floorplan ? rv.floorplan : (rv.cover || rv.images[0])} alt={rv.name} loading="lazy"
           style={{ objectFit: showFp ? 'contain' : 'cover', background: showFp ? 'white' : '#f0f0f0', padding: showFp ? '10px' : 0 }} />
-        <div className="rv-tags">
-          {rv.badges.filter(b => b !== rv.type).map((b, i) => <span key={i} className="tag tag-dark">{b}</span>)}
+        {rv.badges.length > 0 && (
+          <div className="rv-tags rv-tags-left">
+            {rv.badges.map((b, i) => <span key={i} className="tag tag-dark">{b}</span>)}
+          </div>
+        )}
+        <div className="rv-tags rv-tags-right">
           <span className="tag tag-light">{rv.type}</span>
         </div>
         {rv.floorplan && (
@@ -966,8 +1900,10 @@ const RVDetailPage = ({ slug, onNavigate, dates = {} }) => {
       </button>
 
       <div style={{ position: 'relative' }}>
-        <img src={mainSrc} alt={rv.name}
-          style={{ width: '100%', height: '420px', objectFit: showFloorplan ? 'contain' : 'cover', borderRadius: '12px', background: '#f0f0f0' }} />
+        <div className="viewer">
+          {!showFloorplan && <div className="viewer-bg" style={{ backgroundImage: `url(${mainSrc})` }} />}
+          <img src={mainSrc} alt={rv.name} className="viewer-img" style={{ background: showFloorplan ? 'white' : 'transparent' }} />
+        </div>
         {rv.floorplan && (
           <button onClick={() => setShowFloorplan(!showFloorplan)}
             style={{ position: 'absolute', bottom: '16px', right: '16px', background: 'rgba(255,255,255,0.95)', border: 'none', padding: '10px 20px', borderRadius: '8px', fontSize: '0.9rem', cursor: 'pointer', fontWeight: 500, boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}>
@@ -1003,7 +1939,7 @@ const RVDetailPage = ({ slug, onNavigate, dates = {} }) => {
           <ListBlock title="Sleeping" items={rv.sleeping} />
           <ListBlock title="Inside" items={rv.inside} />
           <ListBlock title="Outside and Systems" items={rv.outside} />
-          <ListBlock title="Key Specs" items={rv.specs} />
+
           {rv.towing && <p style={{ fontSize: '0.9rem', color: '#444', lineHeight: 1.7 }}>{rv.towing}</p>}
         </div>
 
@@ -1026,6 +1962,24 @@ const RVDetailPage = ({ slug, onNavigate, dates = {} }) => {
           </div>
         </div>
       </div>
+
+      {rv.fullSpecs && (
+        <section style={{ marginTop: '40px' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: DARK, marginBottom: '16px' }}>Full Specifications</h2>
+          <div className="spec-grid">
+            {rv.fullSpecs.map(sec => (
+              <div key={sec.title} className="spec-card">
+                <h3>{sec.title}</h3>
+                <table>
+                  <tbody>
+                    {sec.rows.map(([k, v]) => <tr key={k}><th>{k}</th><td>{v}</td></tr>)}
+                  </tbody>
+                </table>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       <div style={{ marginTop: '40px', padding: '30px', background: '#f9f9f9', borderRadius: '12px', textAlign: 'center' }}>
         <p style={{ color: '#777', fontSize: '0.8rem', marginBottom: '20px', textTransform: 'uppercase', letterSpacing: '1.5px' }}>Also listed on</p>
@@ -1095,10 +2049,9 @@ function App() {
         .menu-btn { display: none; background: none; border: none; color: white; cursor: pointer; }
 
         .hero { position: relative; color: white; background: ${DARK}; overflow: hidden; }
-        .hero::before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 62%; background: url('/images/hero-rv.jpg') center right / cover no-repeat;
-          -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.55) 22%, #000 48%); mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.55) 22%, #000 48%); }
-        .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(58,14,71,0.35) 0%, rgba(58,14,71,0) 60%), linear-gradient(0deg, rgba(58,14,71,0.35) 0%, rgba(58,14,71,0) 35%); pointer-events: none; }
-        .hero-inner { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 70px 24px 80px; min-height: 480px; display: flex; flex-direction: column; justify-content: center; }
+        .hero::before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 64%; background: url('/images/hero-rv.jpg') right center / cover no-repeat;
+          -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 14%); mask-image: linear-gradient(90deg, transparent 0%, #000 14%); }
+        .hero-inner { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 70px 24px 80px; min-height: 520px; display: flex; flex-direction: column; justify-content: center; }
         .hero-title { font-size: clamp(2.4rem, 5.2vw, 4.1rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; text-shadow: 0 2px 16px rgba(0,0,0,0.3); }
         .hero-sub { font-size: clamp(1.25rem, 2.6vw, 2.1rem); font-weight: 400; margin-top: 10px; text-shadow: 0 2px 12px rgba(0,0,0,0.3); }
         .hero-rule { width: min(560px, 80%); height: 4px; border-radius: 2px; background: ${ACCENT}; margin: 18px 0 30px; }
@@ -1117,13 +2070,25 @@ function App() {
         .rv-card:hover { transform: translateY(-4px); box-shadow: 0 10px 26px rgba(0,0,0,0.13); }
         .rv-card-img { position: relative; height: 215px; }
         .rv-card-img img { width: 100%; height: 100%; display: block; }
-        .rv-tags { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; max-width: 85%; }
+        .rv-tags { position: absolute; top: 10px; display: flex; gap: 6px; }
+        .rv-tags-left { left: 10px; }
+        .rv-tags-right { right: 10px; }
         .tag { padding: 5px 11px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
         .tag-dark { background: ${PURPLE}; color: white; }
         .tag-light { background: white; color: ${PURPLE}; }
         .fp-toggle { position: absolute; bottom: 10px; right: 10px; display: flex; background: rgba(255,255,255,0.95); border-radius: 8px; padding: 3px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
         .fp-toggle button { border: none; background: none; padding: 6px 12px; font-size: 0.8rem; font-weight: 700; color: ${PURPLE}; border-radius: 6px; cursor: pointer; }
         .fp-toggle button.on { background: ${PURPLE}; color: white; }
+        .viewer { position: relative; height: 460px; border-radius: 14px; overflow: hidden; background: #ECE6EF; }
+        .viewer-bg { position: absolute; inset: -20px; background-size: cover; background-position: center; filter: blur(22px) brightness(0.85); }
+        .viewer-img { position: relative; width: 100%; height: 100%; object-fit: contain; display: block; }
+        .spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+        .spec-card { background: white; border-radius: 14px; padding: 20px 22px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+        .spec-card h3 { font-size: 1.05rem; font-weight: 800; color: ${PURPLE}; margin-bottom: 10px; }
+        .spec-card table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+        .spec-card th { text-align: left; font-weight: 600; color: #555; padding: 8px 12px 8px 0; vertical-align: top; width: 42%; border-bottom: 1px solid #eee; }
+        .spec-card td { color: #222; padding: 8px 0; border-bottom: 1px solid #eee; }
+        .spec-card tr:last-child th, .spec-card tr:last-child td { border-bottom: none; }
         .rv-desc { color: #555; font-size: 0.88rem; margin-bottom: 14px; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
         @media (max-width: 1020px) {
@@ -1140,6 +2105,7 @@ function App() {
           .phone-pill { font-size: 0.95rem; padding: 8px 12px; }
           .hero::before { width: 100%; height: 300px; bottom: auto; background-position: 70% center; -webkit-mask-image: linear-gradient(180deg, #000 45%, transparent 100%); mask-image: linear-gradient(180deg, #000 45%, transparent 100%); }
           .hero-inner { padding: 190px 20px 40px; min-height: 0; }
+          .viewer { height: 300px; }
           .search-card { flex-direction: column; }
           .search-btn { padding: 14px; }
         }
