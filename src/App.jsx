@@ -1617,8 +1617,14 @@ const NavItem = ({ label, items, onClick }) => {
   )
 }
 
-const Header = ({ go }) => {
+const Header = ({ go, overHero }) => {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60)
+    onScroll(); window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
   const close = fn => () => { setMobileOpen(false); fn() }
   const nav = [
     { label: 'RV Rentals', items: TYPE_GROUPS.map(g => ({ label: g.label, onClick: close(() => go.filter(g.key)) })) },
@@ -1635,7 +1641,7 @@ const Header = ({ go }) => {
     { label: 'Contact', onClick: close(() => go.section('contact')) }
   ]
   return (
-    <header className="site-header">
+    <header className={`site-header${overHero && !scrolled && !mobileOpen ? ' over' : ''}`}>
       <div className="header-inner">
         <div className="logo-box" onClick={close(() => go.home())}>
           <img src="/images/logo.png" alt="Always Honest RV Rentals" />
@@ -2032,10 +2038,11 @@ function App() {
         button { font-family: inherit; }
         img { max-width: 100%; }
 
-        .site-header { position: sticky; top: 0; z-index: 100; background: ${DARK}; box-shadow: 0 2px 14px rgba(0,0,0,0.18); }
-        .header-inner { max-width: 1240px; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 24px; }
+        .site-header { position: sticky; top: 0; z-index: 100; background: ${DARK}; box-shadow: 0 2px 14px rgba(0,0,0,0.18); transition: background 0.25s, box-shadow 0.25s; }
+        .site-header.over { background: rgba(40,10,50,0.45); box-shadow: none; }
+        .header-inner { max-width: 1240px; margin: 0 auto; padding: 10px 24px; min-height: 116px; display: flex; align-items: center; gap: 24px; }
         .logo-box { background: white; border-radius: 12px; padding: 4px 8px; cursor: pointer; flex-shrink: 0; box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
-        .logo-box img { height: 64px; display: block; }
+        .logo-box img { height: 88px; display: block; }
         .main-nav { display: flex; align-items: center; gap: 6px; margin-left: auto; }
         .nav-item { position: relative; }
         .nav-link { background: none; border: none; color: white; font-size: 1.02rem; font-weight: 700; padding: 10px 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; border-radius: 8px; }
@@ -2048,10 +2055,9 @@ function App() {
         .phone-pill { display: inline-flex; align-items: center; gap: 8px; background: white; color: ${PURPLE}; padding: 10px 18px; border-radius: 12px; font-weight: 800; font-size: 1.1rem; white-space: nowrap; }
         .menu-btn { display: none; background: none; border: none; color: white; cursor: pointer; }
 
-        .hero { position: relative; color: white; background: ${DARK}; overflow: hidden; }
-        .hero::before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 64%; background: url('/images/hero-rv.jpg') right center / cover no-repeat;
-          -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 14%); mask-image: linear-gradient(90deg, transparent 0%, #000 14%); }
-        .hero-inner { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 70px 24px 80px; min-height: 520px; display: flex; flex-direction: column; justify-content: center; }
+        .hero { position: relative; color: white; margin-top: -116px; padding-top: 116px; background: ${DARK} url('/images/hero-scene.jpg') right bottom / cover no-repeat; }
+        .hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(58,14,71,0.55) 0%, rgba(58,14,71,0.25) 40%, rgba(58,14,71,0) 60%); pointer-events: none; }
+        .hero-inner { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 36px 24px 56px; min-height: clamp(340px, calc(100vw / 3.6 - 116px), 720px); display: flex; flex-direction: column; justify-content: center; }
         .hero-title { font-size: clamp(2.4rem, 5.2vw, 4.1rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; text-shadow: 0 2px 16px rgba(0,0,0,0.3); }
         .hero-sub { font-size: clamp(1.25rem, 2.6vw, 2.1rem); font-weight: 400; margin-top: 10px; text-shadow: 0 2px 12px rgba(0,0,0,0.3); }
         .hero-rule { width: min(560px, 80%); height: 4px; border-radius: 2px; background: ${ACCENT}; margin: 18px 0 30px; }
@@ -2103,7 +2109,9 @@ function App() {
           main > div { grid-template-columns: 1fr !important; }
           .logo-box img { height: 48px; }
           .phone-pill { font-size: 0.95rem; padding: 8px 12px; }
-          .hero::before { width: 100%; height: 300px; bottom: auto; background-position: 70% center; -webkit-mask-image: linear-gradient(180deg, #000 45%, transparent 100%); mask-image: linear-gradient(180deg, #000 45%, transparent 100%); }
+          .hero { background-position: 78% top; background-size: auto 340px; margin-top: -76px; padding-top: 76px; }
+          .hero::before { background: linear-gradient(180deg, rgba(58,14,71,0) 0%, rgba(58,14,71,0.2) 200px, ${DARK} 330px); }
+          .header-inner { min-height: 76px; }
           .hero-inner { padding: 190px 20px 40px; min-height: 0; }
           .viewer { height: 300px; }
           .search-card { flex-direction: column; }
@@ -2113,7 +2121,7 @@ function App() {
           .phone-pill span, .phone-pill { font-size: 0.85rem; }
         }
       `}</style>
-      <Header go={go} />
+      <Header go={go} overHero={!route.startsWith('rv/')} />
       {content}
       <Footer />
     </>
