@@ -1728,8 +1728,9 @@ const TRIP_PREP = 199
 const ESSENTIALS = 99
 const PER_TRIP = TRIP_PREP + ESSENTIALS
 const TAX = 0.0875
-const ZELLE_DISCOUNT = 0.10
-const packageTotal = (rate, n) => Math.round((rate * n + PER_TRIP) * (1 + TAX))
+const PROCESSING = 0.10
+const FEES = 1 + TAX + PROCESSING
+const packageTotal = (rate, n) => Math.round((rate * n + PER_TRIP) * FEES)
 const allInNight = (rate, n) => Math.round(packageTotal(rate, n) / n)
 const money = v => '$' + Math.round(v).toLocaleString()
 
@@ -1741,28 +1742,37 @@ const PACKAGE_INCLUDES = [
   'Trip start and trip end inspections',
   'Commercial coverage insurance / insurance waiver (for deliveries)',
   'Interior damage protection liability waiver (for common occurrences)',
-  'System processing (save 10% when you pay direct with Zelle)',
-  'Taxes (county, city, state, federal and sales tax)'
+  'System processing, 10% (waived when you pay direct with Zelle)',
+  'Taxes, 8.75% (county, city, state, federal and sales tax)'
 ]
 
-const ESSENTIAL_SUPPLIES = [
-  'Fresh water hose', 'Sewer hose', 'Power cord and adapter', 'Toilet paper and RV toilet treatment',
-  'Paper towels and trash bags', 'Dish soap, hand soap and sponge', 'Full propane',
-  'Interior professionally cleaned, exterior washed', 'Full fuel on motorhomes', 'Empty water and waste tanks'
+const ESSENTIALS_OUTDOOR = ['Power cable', 'Fresh water hose', 'Septic hose']
+const ESSENTIALS_INDOOR = [
+  'Septic-safe toilet paper', 'Hand soap', 'Dish soap', 'Sponge', 'Paper towel roll', 'Surface wipes',
+  'A pot and a pan', '4 camping sets of plates, bowls, cups and silverware', 'Small trash can with garbage bag', 'Broom and mop'
 ]
 
-const PackageIncludes = ({ compact }) => (
-  <div className={compact ? '' : 'pkg-box'}>
-    <p style={{ fontWeight: 800, color: DARK, marginBottom: '8px', fontSize: compact ? '0.9rem' : '1.05rem' }}>Every BASE STANDARD package includes:</p>
-    <ul className="pkg-list">
-      {PACKAGE_INCLUDES.map(i => <li key={i}>{i}</li>)}
-    </ul>
-    <p style={{ fontWeight: 800, color: DARK, margin: '12px 0 8px', fontSize: compact ? '0.9rem' : '1.05rem' }}>Essential supplies included with every rental:</p>
-    <ul className="pkg-list pkg-cols">
-      {ESSENTIAL_SUPPLIES.map(i => <li key={i}>{i}</li>)}
-    </ul>
-  </div>
-)
+const PackageIncludes = ({ compact }) => {
+  const h = { fontWeight: 800, color: DARK, margin: '14px 0 8px', fontSize: compact ? '0.9rem' : '1.05rem' }
+  const note = { fontSize: compact ? '0.8rem' : '0.88rem', color: '#555', marginTop: '6px', lineHeight: 1.5 }
+  return (
+    <div className={compact ? '' : 'pkg-box'}>
+      <p style={{ ...h, marginTop: 0 }}>Every BASE STANDARD package includes:</p>
+      <ul className="pkg-list">{PACKAGE_INCLUDES.map(i => <li key={i}>{i}</li>)}</ul>
+      <p style={h}>Essential supplies, outdoor:</p>
+      <ul className="pkg-list pkg-cols">{ESSENTIALS_OUTDOOR.map(i => <li key={i}>{i}</li>)}</ul>
+      <p style={note}>Blocks and chocks can be added on request the day of pickup.</p>
+      <p style={h}>Essential supplies, indoor:</p>
+      <ul className="pkg-list pkg-cols">{ESSENTIALS_INDOOR.map(i => <li key={i}>{i}</li>)}</ul>
+      <p style={note}>Need more camping sets? Let us know the day of pickup. Extras are no extra charge.</p>
+      <p style={h}>Every trip also comes with:</p>
+      <ul className="pkg-list">
+        <li>Interior professionally cleaned and exterior washed between each rental</li>
+        <li>Full propane and full fuel at the start of each trip. Please return it the same way.</li>
+      </ul>
+    </div>
+  )
+}
 
 const PURPLE = '#4A1259'
 
@@ -1973,13 +1983,13 @@ const SavingsTable = () => {
   }).filter(c => c.has)
   const rows = [1, 2, 3, 4, 5, 6, 7]
   const span = (lo, hi) => lo === hi ? money(lo) : `${money(lo)} to ${money(hi)}`
-  const saveNight = n => PER_TRIP * (1 + TAX) * (1 - 1 / n)
+  const saveNight = n => PER_TRIP * FEES * (1 - 1 / n)
   return (
     <section id="pricing" style={{ background: '#F7F3F9', padding: '48px 20px', scrollMarginTop: '90px' }}>
       <div style={{ maxWidth: '1140px', margin: '0 auto' }}>
         <h2 style={{ fontSize: 'clamp(1.6rem, 3.4vw, 2.2rem)', fontWeight: 800, color: DARK, textAlign: 'center' }}>SAVE by Adding Nights to Your Trip!</h2>
         <p style={{ fontSize: '1rem', color: '#555', textAlign: 'center', margin: '8px auto 24px', maxWidth: '760px', lineHeight: 1.6 }}>
-          TOTAL price for the BASE STANDARD package, taxes included. The per-trip costs are spread over every night you stay, so the longer the trip, the lower your nightly cost.
+          TOTAL price for the BASE STANDARD package, system processing and taxes included. The per-trip costs are spread over every night you stay, so the longer the trip, the lower your nightly cost.
         </p>
         <div className="save-wrap">
           <table className="save-table">
@@ -2007,7 +2017,7 @@ const SavingsTable = () => {
           </table>
         </div>
         <p style={{ fontSize: '0.85rem', color: '#666', textAlign: 'center', margin: '14px 0 26px' }}>
-          Standard dates. Holiday and event dates are priced higher. Pay direct with Zelle and save 10%. "You Save" compares to a 1-night trip.
+          Standard dates. Holiday and event dates are priced higher. TOTAL includes 10% system processing and 8.75% taxes. Pay direct with Zelle and the 10% processing is waived. "You Save" compares to a 1-night trip.
         </p>
         <PackageIncludes />
         <p style={{ textAlign: 'center', marginTop: '22px', fontSize: '1.05rem', color: DARK, fontWeight: 700 }}>
@@ -2027,8 +2037,10 @@ const TripBuilder = ({ rv, dates, onChange }) => {
   const setQty = (a, q) => setSel(s => ({ ...s, [a.id]: q }))
   const chosen = options.filter(a => sel[a.id])
   const addTotal = chosen.reduce((t, a) => t + addOnCost(a, sel[a.id], nights), 0)
-  const base = packageTotal(rv.price, nights)
-  const total = Math.round(base + addTotal * (1 + TAX))
+  const items = rv.price * nights + PER_TRIP + addTotal
+  const proc = items * PROCESSING
+  const tax = items * TAX
+  const total = Math.round(items + proc + tax)
   const subtotal = total
   useEffect(() => {
     onChange && onChange({ nights, chosen: chosen.map(a => `${a.name}${a.unit ? ' x' + sel[a.id] : ''}`), subtotal })
@@ -2049,7 +2061,7 @@ const TripBuilder = ({ rv, dates, onChange }) => {
         </div>
       </div>
       <p style={{ fontSize: '0.85rem', color: ACCENT, fontWeight: 700, marginBottom: '12px' }}>
-        {money(allInNight(rv.price, nights))} per night for {nights} night{nights > 1 ? 's' : ''}, taxes included{nights < 7 ? `. Add a night and it drops to ${money(allInNight(rv.price, nights + 1))}.` : '.'}
+        {money(allInNight(rv.price, nights))} per night for {nights} night{nights > 1 ? 's' : ''}, processing and taxes included{nights < 7 ? `. Add a night and it drops to ${money(allInNight(rv.price, nights + 1))}.` : '.'}
       </p>
       <details className="addon-picker">
         <summary>Want to enhance your experience? Select add-ons{chosen.length ? ` (${chosen.length})` : ''}</summary>
@@ -2067,10 +2079,12 @@ const TripBuilder = ({ rv, dates, onChange }) => {
         ))}
       </details>
       <div style={{ borderTop: '1px solid #eee', marginTop: '12px', paddingTop: '10px' }}>
-        {row(`BASE STANDARD package, ${nights} night${nights > 1 ? 's' : ''}`, money(base))}
-        {chosen.map(a => row(`${a.name}${a.unit ? ` x ${sel[a.id]}` : ''}`, money(addOnCost(a, sel[a.id], nights) * (1 + TAX))))}
-        {row('TOTAL (taxes included)', money(total), true)}
-        {row('Pay direct with Zelle (save 10%)', money(total * (1 - ZELLE_DISCOUNT)))}
+        {row(`BASE STANDARD package, ${nights} night${nights > 1 ? 's' : ''}`, money(rv.price * nights + PER_TRIP))}
+        {chosen.map(a => row(`${a.name}${a.unit ? ` x ${sel[a.id]}` : ''}`, money(addOnCost(a, sel[a.id], nights))))}
+        {row('System processing (10%)', money(proc))}
+        {row('Taxes (8.75%)', money(tax))}
+        {row('TOTAL', money(total), true)}
+        {row('Pay direct with Zelle (processing waived)', money(items + tax))}
       </div>
       <details style={{ marginTop: '10px' }}>
         <summary style={{ cursor: 'pointer', fontSize: '0.85rem', fontWeight: 700, color: PURPLE }}>What's included in the BASE STANDARD package</summary>
@@ -2157,7 +2171,7 @@ const HomePage = ({ go, dates, setDates, group, setGroup }) => {
             ))}
           </div>
           <p style={{ fontSize: '0.85rem', color: '#666', marginTop: '14px', textAlign: 'center' }}>
-            Add-on prices shown before tax. Your trip TOTAL on each RV page includes taxes.
+            Add-on prices shown before system processing and taxes. Your trip TOTAL on each RV page includes both.
           </p>
         </div>
       </section>
@@ -2221,7 +2235,7 @@ const RVDetailPage = ({ slug, onNavigate, dates = {} }) => {
   }
 
   const subject = encodeURIComponent(`Rental request: ${rv.name}`)
-  const body = encodeURIComponent(`Hi Katya,\n\nI'd like to check availability for the ${rv.name}.\n\nDates: ${dates.start && dates.end ? fmtDate(dates.start) + ' to ' + fmtDate(dates.end) : ''}\nNights: ${trip ? trip.nights : ''}\nAdd-ons: ${trip && trip.chosen.length ? trip.chosen.join(', ') : 'none'}\nEstimated TOTAL (taxes included): ${trip && rv.price ? '$' + trip.subtotal.toLocaleString() : ''}\nNumber of guests:\nPickup or delivery:\n\nThanks!`)
+  const body = encodeURIComponent(`Hi Katya,\n\nI'd like to check availability for the ${rv.name}.\n\nDates: ${dates.start && dates.end ? fmtDate(dates.start) + ' to ' + fmtDate(dates.end) : ''}\nNights: ${trip ? trip.nights : ''}\nAdd-ons: ${trip && trip.chosen.length ? trip.chosen.join(', ') : 'none'}\nEstimated TOTAL: ${trip && rv.price ? '$' + trip.subtotal.toLocaleString() : ''}\nNumber of guests:\nPickup or delivery:\n\nThanks!`)
   const mainSrc = showFloorplan && rv.floorplan ? rv.floorplan : rv.images[idx]
 
   const btn = (filled) => ({
@@ -2288,7 +2302,7 @@ const RVDetailPage = ({ slug, onNavigate, dates = {} }) => {
               <span style={{ color: '#666', fontSize: '1rem' }}>/ night</span>
             </> : <span style={{ fontSize: '1.6rem', fontWeight: 700, color: PURPLE }}>Call for rate</span>}
           </div>
-          <p style={{ fontSize: '0.8rem', color: '#666', marginBottom: '16px' }}>Standard nightly rate. Your TOTAL below is the BASE STANDARD package with taxes included.</p>
+          <p style={{ fontSize: '0.8rem', color: '#666', marginBottom: '16px' }}>Standard nightly rate. Your TOTAL below is the BASE STANDARD package with system processing and taxes included.</p>
           {rv.price && <TripBuilder rv={rv} dates={dates} onChange={setTrip} />}
 
           {rv.rvshare && <a href={rv.rvshare} target="_blank" rel="noopener noreferrer" style={btn(true)}>Book on RVshare</a>}
