@@ -232,7 +232,7 @@ const Header = ({ go, overHero }) => {
     <header className={`site-header${overHero && !scrolled && !mobileOpen ? ' over' : ''}`}>
       <div className="header-inner">
         <div className="logo-box" onClick={close(() => go.home())}>
-          <img src="/images/logo.png?v=4" alt="Always Honest RV Rentals" />
+          <img src="/images/logo-badge-180.png?v=5" alt="Always Honest RV Rentals" />
         </div>
         <nav className={`main-nav${mobileOpen ? ' open' : ''}`}>
           {nav.map(n => <NavItem key={n.label} {...n} />)}
@@ -257,7 +257,7 @@ const Footer = ({ go }) => (
   <footer id="contact" className="site-footer">
     <div className="footer-grid">
       <div className="footer-brand">
-        <img src="/images/logo.png?v=4" alt="Always Honest RV Rentals logo" />
+        <img src="/images/logo-v5.png?v=5" alt="Always Honest RV Rentals logo" />
         <p className="footer-tag">San Diego RV rentals, straightforward. Clear pricing, essentials included, and no surprise fees.</p>
         <p><a href={`tel:${PHONE}`} className="footer-strong">{PHONE}</a></p>
         <p><a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
@@ -1017,8 +1017,8 @@ function App() {
         .site-header { position: sticky; top: 0; z-index: 100; background: ${DARK}; box-shadow: 0 2px 14px rgba(0,0,0,0.18); transition: background 0.25s, box-shadow 0.25s; }
         .site-header.over { background: rgba(40,10,50,0.45); box-shadow: none; }
         .header-inner { max-width: 1240px; margin: 0 auto; padding: 10px 24px; min-height: 116px; display: flex; align-items: center; gap: 24px; }
-        .logo-box { background: white; border-radius: 12px; padding: 4px 8px; cursor: pointer; flex-shrink: 0; box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
-        .logo-box img { height: 88px; display: block; }
+        .logo-box { background: white; border-radius: 22px; padding: 0; cursor: pointer; flex-shrink: 0; box-shadow: 0 4px 14px rgba(0,0,0,0.2); line-height: 0; }
+        .logo-box img { height: 88px; width: 88px; display: block; border-radius: 22px; }
         .main-nav { display: flex; align-items: center; gap: 6px; margin-left: auto; }
         .nav-item { position: relative; }
         .nav-link { background: none; border: none; color: white; font-size: 1.02rem; font-weight: 700; padding: 10px 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; border-radius: 8px; }
@@ -1194,7 +1194,7 @@ function App() {
         }
         .site-footer { background: ${DARK}; color: white; padding: 52px 24px 24px; }
         .footer-grid { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 32px; }
-        .footer-brand img { height: 92px; background: white; border-radius: 12px; padding: 6px 10px; margin-bottom: 14px; }
+        .footer-brand img { width: min(320px, 100%); height: auto; background: white; border-radius: 12px; padding: 8px 12px; margin-bottom: 14px; }
         .footer-brand p, .footer-brand address { font-size: 0.92rem; color: rgba(255,255,255,0.88); margin-bottom: 8px; font-style: normal; line-height: 1.55; }
         .footer-tag { max-width: 300px; }
         .footer-strong { font-weight: 800; font-size: 1.1rem; color: white; }
@@ -1257,7 +1257,8 @@ function App() {
         }
         @media (max-width: 768px) {
           main > div { grid-template-columns: 1fr !important; }
-          .logo-box img { height: 48px; }
+          .logo-box img { height: 56px; width: 56px; border-radius: 14px; }
+          .logo-box { border-radius: 14px; }
           .phone-pill { font-size: 0.95rem; padding: 8px 12px; }
           .hero { background-position: 78% top; background-size: auto 340px; margin-top: -76px; padding-top: 76px; }
           .hero::before { background: linear-gradient(180deg, rgba(58,14,71,0) 0%, rgba(58,14,71,0.2) 200px, ${DARK} 330px); }
