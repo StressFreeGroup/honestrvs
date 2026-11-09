@@ -747,7 +747,7 @@ const HomePage = ({ go, dates, setDates, group, setGroup }) => {
             <h2 style={{ fontSize: 'clamp(1.6rem, 3.2vw, 2.1rem)', fontWeight: 800, color: DARK }}>Hi, I'm Katya</h2>
             <p style={{ color: PURPLE, fontWeight: 700, marginBottom: '14px' }}>Ekaterina Zvezdova, Owner, Always Honest RV Rentals</p>
             <p className="owner-p">I love doing activities and getting out and about. I'm a mom with a full-time job, and renting out RVs and trailers helps me with bills and life's expenses. It also lets me enjoy life and keep a balance. I help others have amazing trips so that I can go on my own amazing trips and adventures too.</p>
-            <p className="owner-p">Yes, I've been to Burning Man, I've swum with dolphins, and I love to travel internationally. Let's enjoy life! I'm here to provide a service and do what I can so that you and your family can share amazing experiences and have fun.</p>
+            <p className="owner-p">Yes, I've been to Burning Man, I've swam with dolphins, and I love to travel internationally. Let's enjoy life! I'm here to provide a service and do what I can so that you and your family can share amazing experiences and have fun.</p>
           </div>
         </div>
 
