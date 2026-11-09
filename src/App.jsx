@@ -572,6 +572,156 @@ const rvs = [
     ]
   },
   {
+    "slug": "salem-veranda-32",
+    "name": "2026 Forest River Salem Veranda 32",
+    "type": "Travel Trailer",
+    "sleeps": 4,
+    "sleepsLabel": "4",
+    "length": "37' 10\"",
+    "slides": 1,
+    "price": null,
+    "badges": [
+      "Patio Deck"
+    ],
+    "motorized": false,
+    "images": [
+      "/images/units/salem-veranda-32/01.jpg",
+      "/images/units/salem-veranda-32/02.jpg",
+      "/images/units/salem-veranda-32/03.jpg",
+      "/images/units/salem-veranda-32/04.jpg",
+      "/images/units/salem-veranda-32/05.jpg",
+      "/images/units/salem-veranda-32/06.jpg",
+      "/images/units/salem-veranda-32/07.jpg",
+      "/images/units/salem-veranda-32/08.jpg",
+      "/images/units/salem-veranda-32/09.jpg",
+      "/images/units/salem-veranda-32/10.jpg",
+      "/images/units/salem-veranda-32/11.jpg",
+      "/images/units/salem-veranda-32/12.jpg",
+      "/images/units/salem-veranda-32/13.jpg",
+      "/images/units/salem-veranda-32/14.jpg",
+      "/images/units/salem-veranda-32/15.jpg"
+    ],
+    "cover": "/images/units/salem-veranda-32/cover.jpg",
+    "floorplan": "/images/floorplans/salem-veranda-32-floorplan.jpg",
+    "description": "A brand-new trailer built around its rear patio: a railed deck with an outdoor kitchen and patio doors that open straight into the living room. Inside there is a kitchen island with seating, a fireplace and a private king bedroom up front. Made for a relaxed stay at a campground or event.",
+    "sleeping": [
+      "Private front bedroom with king bed",
+      "Sofa in the main living area"
+    ],
+    "inside": [
+      "Upgraded smart LED flat-panel TV for streaming, included with every rental",
+      "Kitchen island with seating, full-size refrigerator and pantry",
+      "Electric fireplace",
+      "Full bathroom with shower",
+      "Tankless on-demand water heater"
+    ],
+    "outside": [
+      "Rear veranda patio deck with railings",
+      "Outdoor kitchen on the patio",
+      "Patio doors plus a second entry door",
+      "20 ft power awning with LED lighting",
+      "Heated and enclosed underbelly"
+    ],
+    "specs": [],
+    "towing": "Towing it yourself? Your vehicle needs a rating of at least 11,220 lbs, a brake controller, and a weight-distribution hitch. Not sure? Ask Katya before you book, or request delivery and setup.",
+    "rvshare": null,
+    "fullSpecs": [
+      {
+        "title": "Vehicle",
+        "rows": [
+          [
+            "Year",
+            "2026"
+          ],
+          [
+            "Make and Model",
+            "Forest River Salem Veranda 32"
+          ],
+          [
+            "Type",
+            "Travel Trailer with rear patio"
+          ],
+          [
+            "Sleeps",
+            "4"
+          ]
+        ]
+      },
+      {
+        "title": "Dimensions",
+        "rows": [
+          [
+            "Length",
+            "37 ft 10 in"
+          ],
+          [
+            "Width",
+            "8 ft"
+          ],
+          [
+            "Height",
+            "11 ft 4 in"
+          ],
+          [
+            "Slideouts",
+            "1"
+          ]
+        ]
+      },
+      {
+        "title": "Weight",
+        "rows": [
+          [
+            "Dry Weight",
+            "8,993 lbs"
+          ],
+          [
+            "GVWR",
+            "11,220 lbs"
+          ],
+          [
+            "Hitch Weight",
+            "1,020 lbs"
+          ],
+          [
+            "Payload Capacity",
+            "2,227 lbs"
+          ]
+        ]
+      },
+      {
+        "title": "Capacities",
+        "rows": [
+          [
+            "Fresh Water",
+            "40 gal"
+          ],
+          [
+            "Grey Water",
+            "60 gal"
+          ],
+          [
+            "Black Water",
+            "30 gal"
+          ],
+          [
+            "Propane Tanks",
+            "2"
+          ]
+        ]
+      },
+      {
+        "title": "Sleeping",
+        "rows": [
+          [
+            "Beds",
+            "King bed in private front bedroom"
+          ]
+        ]
+      }
+    ]
+  },
+  {
     "slug": "sequence-20j",
     "name": "2022 Thor Sequence 20J",
     "type": "Class B",
@@ -1742,11 +1892,13 @@ const RVCard = ({ rv, onOpen, nights }) => {
         <p className="rv-desc">{rv.description}</p>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '10px' }}>
           <span style={{ color: '#555', fontSize: '0.9rem' }}>Sleeps {rv.sleepsLabel} | {rv.length}</span>
-          <span style={{ textAlign: 'right' }}>
-            <span style={{ color: PURPLE, fontWeight: 800, fontSize: '1.3rem' }}>${rv.price}</span>
-            <span style={{ color: PURPLE, fontSize: '0.85rem' }}>/night</span>
-            {nights > 0 && <span style={{ display: 'block', color: '#555', fontSize: '0.8rem' }}>{nights} nights from ${(rv.price * nights).toLocaleString()}</span>}
-          </span>
+          {rv.price ? (
+            <span style={{ textAlign: 'right' }}>
+              <span style={{ color: PURPLE, fontWeight: 800, fontSize: '1.3rem' }}>${rv.price}</span>
+              <span style={{ color: PURPLE, fontSize: '0.85rem' }}>/night</span>
+              {nights > 0 && <span style={{ display: 'block', color: '#555', fontSize: '0.8rem' }}>{nights} nights from ${(rv.price * nights).toLocaleString()}</span>}
+            </span>
+          ) : <span style={{ color: PURPLE, fontWeight: 800, fontSize: '1rem' }}>Call for rate</span>}
         </div>
       </div>
     </div>
@@ -1951,8 +2103,10 @@ const RVDetailPage = ({ slug, onNavigate, dates = {} }) => {
 
         <div style={{ background: 'white', border: '1px solid #e0e0e0', borderRadius: '12px', padding: '28px', alignSelf: 'start', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '6px' }}>
-            <span style={{ fontSize: '2rem', fontWeight: 700, color: PURPLE }}>${rv.price}</span>
-            <span style={{ color: '#666', fontSize: '1rem' }}>/ night</span>
+            {rv.price ? <>
+              <span style={{ fontSize: '2rem', fontWeight: 700, color: PURPLE }}>${rv.price}</span>
+              <span style={{ color: '#666', fontSize: '1rem' }}>/ night</span>
+            </> : <span style={{ fontSize: '1.6rem', fontWeight: 700, color: PURPLE }}>Call for rate</span>}
           </div>
           <p style={{ fontSize: '0.8rem', color: '#666', marginBottom: '20px' }}>Standard rate before 8.75% sales tax and add-ons. Holiday and event dates are priced higher.</p>
 
