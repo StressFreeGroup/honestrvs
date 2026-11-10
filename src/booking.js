@@ -25,19 +25,23 @@ export async function bookedRanges(code) {
   return d.booked || []
 }
 
-// RVFMS unit code for a website slug.
-let _codes = null
-export async function codeFor(slug) {
-  if (!_codes) {
+// RVFMS unit code for a website slug, and how this company takes bookings
+// ('request' = quote to accept and pay, 'instant' = pay now and it is confirmed).
+let _info = null
+async function info() {
+  if (!_info) {
     const d = await get({})
-    _codes = Object.fromEntries((d.units || []).filter((u) => u.slug).map((u) => [u.slug, u.code]))
+    _info = { mode: d.org?.booking_mode || 'request', codes: Object.fromEntries((d.units || []).filter((u) => u.slug).map((u) => [u.slug, u.code])) }
   }
-  return _codes[slug] || null
+  return _info
 }
+export async function codeFor(slug) { return (await info()).codes[slug] || null }
+export async function bookingMode() { return (await info().catch(() => ({ mode: 'request' }))).mode }
 
 export const overlapsAny = (start, end, ranges) => ranges.some((b) => start < b.end && b.start < end)
 
-// Sends the request. Returns {quote_url, quote_number, total} or throws with a friendly message.
+// Sends the booking. Returns {mode, quote_url, quote_number, total, pay_url?} or throws with a friendly message.
+// In instant mode pay_url is Stripe Checkout: send the renter there.
 export async function requestBooking(payload) {
   const r = await fetch(RVFMS_BOOK, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },

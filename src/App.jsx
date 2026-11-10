@@ -1,7 +1,7 @@
 import fleet from './fleet.json'
 import { SITE_URL, faqItems } from './site.js'
 import { useState, useEffect } from 'react'
-import { availability, bookedRanges, codeFor, overlapsAny, requestBooking } from './booking.js'
+import { availability, bookedRanges, codeFor, bookingMode, overlapsAny, requestBooking } from './booking.js'
 
 // ============================================================
 // FLEET DATA
@@ -880,6 +880,9 @@ const RequestToBook = ({ rv, stay, trip, mailto }) => {
   const [sending, setSending] = useState(false)
   const [err, setErr] = useState('')
   const [done, setDone] = useState(null)
+  const [mode, setMode] = useState('request')
+  useEffect(() => { let on = true; bookingMode().then(m => on && setMode(m)); return () => { on = false } }, [])
+  const instant = mode === 'instant'
   const set = k => e => setF(s => ({ ...s, [k]: e.target.value }))
   const live = bookingState[rv.slug] || {}
   const has = stay.start && stay.end && stay.end > stay.start
@@ -894,6 +897,7 @@ const RequestToBook = ({ rv, stay, trip, mailto }) => {
     try {
       const extras = trip && trip.chosen && trip.chosen.length ? `Add-ons requested: ${trip.chosen.join(', ')}.` : ''
       const r = await requestBooking({ ...f, unit: code, start: stay.start, end: stay.end, message: [f.message, extras].filter(Boolean).join('\n') })
+      if (r.pay_url) { window.location.href = r.pay_url; return }
       setDone(r)
     } catch (e2) { setErr(e2.message) } finally { setSending(false) }
   }
@@ -901,22 +905,22 @@ const RequestToBook = ({ rv, stay, trip, mailto }) => {
     <div className="bk-done">
       <p className="bk-done-h">Request received</p>
       <p>Your quote <b>Q-{done.quote_number}</b> for the {rv.name}, {fmtDate(stay.start)} to {fmtDate(stay.end)}, is ready{done.total ? <>: <b>${Math.round(done.total).toLocaleString()}</b> TOTAL</> : ''}.</p>
-      <p>Open it to review, accept and pay. Your dates are held as soon as you accept. We also have your details and will follow up.</p>
+      <p>Open it to review, accept and pay. Your dates are held as soon as you accept. We also emailed you the link, and we will follow up.</p>
       {done.quote_url && <a className="bk-btn" href={done.quote_url} target="_blank" rel="noopener noreferrer">Review and pay your quote</a>}
     </div>
   )
   return (
     <form className="bk-form" onSubmit={submit}>
       <p className="book-ways-h">Book direct</p>
-      <p className="bk-sub">Best savings: the TOTAL above with no platform fees. Pay by Zelle and the 10% processing is waived.</p>
+      <p className="bk-sub">{instant ? 'Best savings: the TOTAL above with no platform fees. Pay securely by card and your booking is confirmed instantly.' : 'Best savings: the TOTAL above with no platform fees. Pay by Zelle and the 10% processing is waived.'}</p>
       <div className="bk-row"><input placeholder="First name" value={f.first_name} onChange={set('first_name')} required autoComplete="given-name" /><input placeholder="Last name" value={f.last_name} onChange={set('last_name')} required autoComplete="family-name" /></div>
       <div className="bk-row"><input type="email" placeholder="Email" value={f.email} onChange={set('email')} required autoComplete="email" /><input type="tel" placeholder="Phone" value={f.phone} onChange={set('phone')} required autoComplete="tel" /></div>
       <div className="bk-row"><input type="number" min="1" max="20" placeholder="Guests" value={f.guests} onChange={set('guests')} /><span /></div>
       <textarea rows={3} placeholder="Anything we should know? Pickup or delivery, pets, event, questions..." value={f.message} onChange={set('message')} />
       <input className="bk-trap" tabIndex={-1} autoComplete="off" value={f.company_website} onChange={set('company_website')} aria-hidden="true" />
       {err && <p className="bk-status no">{err}</p>}
-      <button type="submit" className="bk-btn" disabled={sending || clash}>{sending ? 'Sending...' : 'Request to Book'}</button>
-      <p className="bk-note">No charge yet. You get your quote right away to review, accept and pay. Prefer email? <a href={mailto}>Email Katya</a>.</p>
+      <button type="submit" className="bk-btn" disabled={sending || clash}>{sending ? (instant ? 'Opening secure checkout...' : 'Sending...') : (instant ? 'Book now' : 'Request to Book')}</button>
+      <p className="bk-note">{instant ? 'Next you pay securely by card and get your confirmation by email. Your dates are held for 45 minutes while you check out.' : 'No charge yet. You get your quote right away to review, accept and pay.'} Prefer email? <a href={mailto}>Email Katya</a>.</p>
     </form>
   )
 }
