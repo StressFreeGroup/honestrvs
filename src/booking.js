@@ -31,12 +31,13 @@ let _info = null
 async function info() {
   if (!_info) {
     const d = await get({})
-    _info = { mode: d.org?.booking_mode || 'request', codes: Object.fromEntries((d.units || []).filter((u) => u.slug).map((u) => [u.slug, u.code])) }
+    _info = { mode: d.org?.booking_mode || 'request', hold: d.org?.hold_hours || 12, codes: Object.fromEntries((d.units || []).filter((u) => u.slug).map((u) => [u.slug, u.code])) }
   }
   return _info
 }
 export async function codeFor(slug) { return (await info()).codes[slug] || null }
 export async function bookingMode() { return (await info().catch(() => ({ mode: 'request' }))).mode }
+export async function holdHours() { return (await info().catch(() => ({ hold: 12 }))).hold }
 
 export const overlapsAny = (start, end, ranges) => ranges.some((b) => start < b.end && b.start < end)
 

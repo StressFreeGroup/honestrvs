@@ -1,7 +1,7 @@
 import fleet from './fleet.json'
 import { SITE_URL, faqItems } from './site.js'
 import { useState, useEffect } from 'react'
-import { availability, bookedRanges, codeFor, bookingMode, overlapsAny, requestBooking } from './booking.js'
+import { availability, bookedRanges, codeFor, bookingMode, holdHours, overlapsAny, requestBooking } from './booking.js'
 
 // ============================================================
 // FLEET DATA
@@ -881,7 +881,8 @@ const RequestToBook = ({ rv, stay, trip, mailto }) => {
   const [err, setErr] = useState('')
   const [done, setDone] = useState(null)
   const [mode, setMode] = useState('request')
-  useEffect(() => { let on = true; bookingMode().then(m => on && setMode(m)); return () => { on = false } }, [])
+  const [hold, setHold] = useState(12)
+  useEffect(() => { let on = true; bookingMode().then(m => on && setMode(m)); holdHours().then(h => on && setHold(h)); return () => { on = false } }, [])
   const instant = mode === 'instant'
   const set = k => e => setF(s => ({ ...s, [k]: e.target.value }))
   const live = bookingState[rv.slug] || {}
@@ -905,7 +906,7 @@ const RequestToBook = ({ rv, stay, trip, mailto }) => {
     <div className="bk-done">
       <p className="bk-done-h">Request received</p>
       <p>Your quote <b>Q-{done.quote_number}</b> for the {rv.name}, {fmtDate(stay.start)} to {fmtDate(stay.end)}, is ready{done.total ? <>: <b>${Math.round(done.total).toLocaleString()}</b> TOTAL</> : ''}.</p>
-      <p>Open it to review, accept and pay. Your dates are held as soon as you accept. We also emailed you the link, and we will follow up.</p>
+      <p>Open it to review, accept and pay. When you accept, your dates are held for {hold} hours while you pay. We also emailed you the link, and we will follow up.</p>
       {done.quote_url && <a className="bk-btn" href={done.quote_url} target="_blank" rel="noopener noreferrer">Review and pay your quote</a>}
     </div>
   )
@@ -920,7 +921,7 @@ const RequestToBook = ({ rv, stay, trip, mailto }) => {
       <input className="bk-trap" tabIndex={-1} autoComplete="off" value={f.company_website} onChange={set('company_website')} aria-hidden="true" />
       {err && <p className="bk-status no">{err}</p>}
       <button type="submit" className="bk-btn" disabled={sending || clash}>{sending ? (instant ? 'Opening secure checkout...' : 'Sending...') : (instant ? 'Book now' : 'Request to Book')}</button>
-      <p className="bk-note">{instant ? 'Next you pay securely by card and get your confirmation by email. Your dates are held for 45 minutes while you check out.' : 'No charge yet. You get your quote right away to review, accept and pay.'} Prefer email? <a href={mailto}>Email Katya</a>.</p>
+      <p className="bk-note">{instant ? `Next you pay securely by card and get your confirmation by email. Your dates are held for ${hold} hours while you check out.` : 'No charge yet. You get your quote right away to review, accept and pay.'} Prefer email? <a href={mailto}>Email Katya</a>.</p>
     </form>
   )
 }
